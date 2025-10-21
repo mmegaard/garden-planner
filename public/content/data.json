@@ -1,0 +1,140 @@
+{
+  "plants": [
+    {
+      "plantId": "roma-tomato",
+      "scientificName": "Solanum lycopersicum 'Roma'",
+      "whenToPlant": "After last frost (mid-March to April) or start indoors 6-8 weeks earlier",
+      "timeToRipe": "75-80 days",
+      "distanceBetweenPlants": "24-36 inches",
+      "friends": [
+        "Basil",
+        "Carrots",
+        "Marigolds",
+        "Parsley",
+        "Onions",
+        "Asparagus"
+      ],
+      "foes": [
+        "Brassicas (cabbage, broccoli)",
+        "Corn",
+        "Potatoes",
+        "Fennel",
+        "Kohlrabi"
+      ],
+      "heightWhenGrown": "4-6 feet tall",
+      "widthWhenGrown": "2-3 feet wide",
+      "perennialOrAnnual": "Annual"
+    },
+    {
+      "plantId": "sungold-tomato",
+      "scientificName": "Solanum lycopersicum 'Sun Gold'",
+      "whenToPlant": "After last frost (mid-March to April) or start indoors 6-8 weeks earlier",
+      "timeToRipe": "55-65 days",
+      "distanceBetweenPlants": "24-36 inches",
+      "friends": [
+        "Basil",
+        "Carrots",
+        "Marigolds",
+        "Parsley",
+        "Onions",
+        "Nasturtiums"
+      ],
+      "foes": [
+        "Brassicas (cabbage, broccoli)",
+        "Corn",
+        "Potatoes",
+        "Fennel",
+        "Dill"
+      ],
+      "heightWhenGrown": "6-8 feet tall (indeterminate)",
+      "widthWhenGrown": "2-3 feet wide",
+      "perennialOrAnnual": "Annual"
+    },
+    {
+      "plantId": "marigold",
+      "scientificName": "Tagetes spp.",
+      "whenToPlant": "After last frost (March-May) or start indoors 4-6 weeks earlier",
+      "timeToRipe": "45-50 days to bloom",
+      "distanceBetweenPlants": "8-12 inches",
+      "friends": [
+        "Tomatoes",
+        "Peppers",
+        "Cucumbers",
+        "Squash",
+        "Beans",
+        "Most vegetables"
+      ],
+      "foes": ["Beans (some varieties)", "Cabbage"],
+      "heightWhenGrown": "6-36 inches tall (variety dependent)",
+      "widthWhenGrown": "6-18 inches wide",
+      "perennialOrAnnual": "Annual"
+    },
+    {
+      "plantId": "basil",
+      "scientificName": "Ocimum basilicum",
+      "whenToPlant": "After last frost when soil is warm (April-May) or start indoors 6 weeks earlier",
+      "timeToRipe": "30-60 days for harvest",
+      "distanceBetweenPlants": "10-12 inches",
+      "friends": ["Tomatoes", "Peppers", "Oregano", "Asparagus", "Petunias"],
+      "foes": ["Rue", "Sage", "Thyme (can stunt growth)"],
+      "heightWhenGrown": "12-24 inches tall",
+      "widthWhenGrown": "12-18 inches wide",
+      "perennialOrAnnual": "Annual (perennial in tropical climates)"
+    },
+    {
+      "plantId": "zucchini",
+      "scientificName": "Cucurbita pepo",
+      "whenToPlant": "After last frost (April-June)",
+      "timeToRipe": "45-55 days",
+      "distanceBetweenPlants": "24-36 inches",
+      "friends": [
+        "Beans",
+        "Corn",
+        "Peas",
+        "Radishes",
+        "Nasturtiums",
+        "Marigolds"
+      ],
+      "foes": ["Potatoes", "Brassicas (cabbage, broccoli)"],
+      "heightWhenGrown": "2-3 feet tall",
+      "widthWhenGrown": "3-4 feet wide",
+      "perennialOrAnnual": "Annual"
+    },
+    {
+      "plantId": "carrots",
+      "scientificName": "Daucus carota subsp. sativus",
+      "whenToPlant": "Spring (February-April) and fall (August-September)",
+      "timeToRipe": "50-80 days depending on variety",
+      "distanceBetweenPlants": "2-4 inches (thin to this spacing)",
+      "friends": ["Onions", "Leeks", "Lettuce", "Tomatoes", "Rosemary", "Sage"],
+      "foes": ["Dill", "Parsnips", "Celery", "Fennel"],
+      "heightWhenGrown": "8-12 inches tall (foliage)",
+      "widthWhenGrown": "3-4 inches wide spread",
+      "perennialOrAnnual": "Biennial (grown as annual)"
+    },
+    {
+      "plantId": "jalapeno",
+      "scientificName": "Capsicum annuum 'Jalapeño'",
+      "whenToPlant": "After soil warms (April-May) or start indoors 8-10 weeks before last frost",
+      "timeToRipe": "70-80 days",
+      "distanceBetweenPlants": "14-18 inches",
+      "friends": [
+        "Basil",
+        "Onions",
+        "Spinach",
+        "Tomatoes",
+        "Carrots",
+        "Oregano"
+      ],
+      "foes": [
+        "Fennel",
+        "Beans",
+        "Brassicas (cabbage, broccoli)",
+        "Apricot trees"
+      ],
+      "heightWhenGrown": "24-36 inches tall",
+      "widthWhenGrown": "18-24 inches wide",
+      "perennialOrAnnual": "Annual (perennial in tropical climates)"
+    }
+  ]
+}
