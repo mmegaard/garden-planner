@@ -1,0 +1,16 @@
+{
+  "garden": {
+    "width": { "value": 20, "measure": "ft" },
+    "height": { "value": 20, "measure": "ft" }
+  },
+  "boxes": [
+    {
+      "shape": "rectangle",
+      "width": { "value": 2, "measure": "ft" },
+      "length": { "value": 5, "measure": "ft" },
+      "height": { "value": 2, "measure": "ft" },
+      "position": { "top": 10, "left": 10 },
+      "plants": []
+    }
+  ]
+}
