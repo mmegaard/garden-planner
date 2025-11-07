@@ -1,7 +1,9 @@
 {
   "garden": {
-    "width": { "value": 20, "measure": "ft" },
-    "height": { "value": 20, "measure": "ft" }
+    "width": { "value": 10, "measure": "ft" },
+    "length": { "value": 10, "measure": "ft" },
+    "x": 4,
+    "y": 4
   },
   "boxes": [
     {
@@ -9,8 +11,31 @@
       "width": { "value": 2, "measure": "ft" },
       "length": { "value": 5, "measure": "ft" },
       "height": { "value": 2, "measure": "ft" },
-      "position": { "top": 10, "left": 10 },
+      "position": { "top": 4, "left": 1 },
+      "plants": []
+    },
+    {
+      "shape": "rectangle",
+      "width": { "value": 3, "measure": "ft" },
+      "length": { "value": 5, "measure": "ft" },
+      "height": { "value": 2, "measure": "ft" },
+      "position": { "top": 4, "left": 5 },
+      "plants": []
+    },
+    {
+      "shape": "rectangle",
+      "width": { "value": 5, "measure": "ft" },
+      "length": { "value": 2, "measure": "ft" },
+      "height": { "value": 2, "measure": "ft" },
+      "position": { "top": 1, "left": 3 },
       "plants": []
     }
-  ]
+  ],
+  "viewport": {
+    "width": { "value": 10, "measure": "ft" },
+    "length": { "value": 10, "measure": "ft" },
+    "x": 2,
+    "y": 2,
+    "zoom-level": 100
+  }
 }

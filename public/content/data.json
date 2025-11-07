@@ -2,10 +2,47 @@
   "plants": [
     {
       "plantId": "roma-tomato",
+      "displayName": "Roma Tomato",
       "scientificName": "Solanum lycopersicum 'Roma'",
-      "whenToPlant": "After last frost (mid-March to April) or start indoors 6-8 weeks earlier",
-      "timeToRipe": "75-80 days",
-      "distanceBetweenPlants": "24-36 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.25,
+            "maxVal": 0.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 24,
+              "maxVal": 36,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "03-15",
+              "maxDate": "04-30",
+              "description": "After last frost (mid-March to April)"
+            }
+          },
+          "indoor": {
+            "spacingBetweenPlants": {
+              "minVal": 2,
+              "maxVal": 3,
+              "unit": "inches"
+            },
+            "whenToStart": {
+              "minDate": "02-01",
+              "maxDate": "02-15",
+              "description": "Start indoors 6-8 weeks before last frost"
+            },
+            "transplantOutdoor": {
+              "condition": "After last frost",
+              "minDate": "03-15",
+              "maxDate": "04-30"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 75, "maxVal": 80, "unit": "days" },
       "friends": [
         "Basil",
         "Carrots",
@@ -21,16 +58,53 @@
         "Fennel",
         "Kohlrabi"
       ],
-      "heightWhenGrown": "4-6 feet tall",
-      "widthWhenGrown": "2-3 feet wide",
+      "heightWhenGrown": { "minVal": 4, "maxVal": 6, "unit": "feet" },
+      "widthWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
       "perennialOrAnnual": "Annual"
     },
     {
       "plantId": "sungold-tomato",
+      "displayName": "Sungold Tomato",
       "scientificName": "Solanum lycopersicum 'Sun Gold'",
-      "whenToPlant": "After last frost (mid-March to April) or start indoors 6-8 weeks earlier",
-      "timeToRipe": "55-65 days",
-      "distanceBetweenPlants": "24-36 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.25,
+            "maxVal": 0.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 24,
+              "maxVal": 36,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "03-15",
+              "maxDate": "04-30",
+              "description": "After last frost (mid-March to April)"
+            }
+          },
+          "indoor": {
+            "spacingBetweenPlants": {
+              "minVal": 2,
+              "maxVal": 3,
+              "unit": "inches"
+            },
+            "whenToStart": {
+              "minDate": "02-01",
+              "maxDate": "02-15",
+              "description": "Start indoors 6-8 weeks before last frost"
+            },
+            "transplantOutdoor": {
+              "condition": "After last frost",
+              "minDate": "03-15",
+              "maxDate": "04-30"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 55, "maxVal": 65, "unit": "days" },
       "friends": [
         "Basil",
         "Carrots",
@@ -46,16 +120,53 @@
         "Fennel",
         "Dill"
       ],
-      "heightWhenGrown": "6-8 feet tall (indeterminate)",
-      "widthWhenGrown": "2-3 feet wide",
+      "heightWhenGrown": { "minVal": 6, "maxVal": 8, "unit": "feet" },
+      "widthWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
       "perennialOrAnnual": "Annual"
     },
     {
       "plantId": "marigold",
+      "displayName": "Marigold",
       "scientificName": "Tagetes spp.",
-      "whenToPlant": "After last frost (March-May) or start indoors 4-6 weeks earlier",
-      "timeToRipe": "45-50 days to bloom",
-      "distanceBetweenPlants": "8-12 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.125,
+            "maxVal": 0.25,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 8,
+              "maxVal": 12,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "03-15",
+              "maxDate": "05-31",
+              "description": "After last frost (March-May)"
+            }
+          },
+          "indoor": {
+            "spacingBetweenPlants": {
+              "minVal": 1,
+              "maxVal": 2,
+              "unit": "inches"
+            },
+            "whenToStart": {
+              "minDate": "02-15",
+              "maxDate": "03-01",
+              "description": "Start indoors 4-6 weeks before last frost"
+            },
+            "transplantOutdoor": {
+              "condition": "After last frost",
+              "minDate": "03-15",
+              "maxDate": "05-31"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 45, "maxVal": 50, "unit": "days" },
       "friends": [
         "Tomatoes",
         "Peppers",
@@ -65,28 +176,85 @@
         "Most vegetables"
       ],
       "foes": ["Beans (some varieties)", "Cabbage"],
-      "heightWhenGrown": "6-36 inches tall (variety dependent)",
-      "widthWhenGrown": "6-18 inches wide",
+      "heightWhenGrown": { "minVal": 6, "maxVal": 36, "unit": "inches" },
+      "widthWhenGrown": { "minVal": 6, "maxVal": 18, "unit": "inches" },
       "perennialOrAnnual": "Annual"
     },
     {
       "plantId": "basil",
+      "displayName": "Basil",
       "scientificName": "Ocimum basilicum",
-      "whenToPlant": "After last frost when soil is warm (April-May) or start indoors 6 weeks earlier",
-      "timeToRipe": "30-60 days for harvest",
-      "distanceBetweenPlants": "10-12 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.25,
+            "maxVal": 0.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 10,
+              "maxVal": 12,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "04-01",
+              "maxDate": "05-31",
+              "description": "After last frost when soil is warm (April-May)"
+            }
+          },
+          "indoor": {
+            "spacingBetweenPlants": {
+              "minVal": 2,
+              "maxVal": 3,
+              "unit": "inches"
+            },
+            "whenToStart": {
+              "minDate": "02-15",
+              "maxDate": "02-15",
+              "description": "Start indoors 6 weeks before last frost"
+            },
+            "transplantOutdoor": {
+              "condition": "After last frost when soil is warm",
+              "minDate": "04-01",
+              "maxDate": "05-31"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 30, "maxVal": 60, "unit": "days" },
       "friends": ["Tomatoes", "Peppers", "Oregano", "Asparagus", "Petunias"],
       "foes": ["Rue", "Sage", "Thyme (can stunt growth)"],
-      "heightWhenGrown": "12-24 inches tall",
-      "widthWhenGrown": "12-18 inches wide",
+      "heightWhenGrown": { "minVal": 12, "maxVal": 24, "unit": "inches" },
+      "widthWhenGrown": { "minVal": 12, "maxVal": 18, "unit": "inches" },
       "perennialOrAnnual": "Annual (perennial in tropical climates)"
     },
     {
       "plantId": "zucchini",
+      "displayName": "Zucchini",
       "scientificName": "Cucurbita pepo",
-      "whenToPlant": "After last frost (April-June)",
-      "timeToRipe": "45-55 days",
-      "distanceBetweenPlants": "24-36 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 1,
+            "maxVal": 1.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 24,
+              "maxVal": 36,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "04-01",
+              "maxDate": "06-30",
+              "description": "After last frost (April-June)"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 45, "maxVal": 55, "unit": "days" },
       "friends": [
         "Beans",
         "Corn",
@@ -96,28 +264,85 @@
         "Marigolds"
       ],
       "foes": ["Potatoes", "Brassicas (cabbage, broccoli)"],
-      "heightWhenGrown": "2-3 feet tall",
-      "widthWhenGrown": "3-4 feet wide",
+      "heightWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
+      "widthWhenGrown": { "minVal": 3, "maxVal": 4, "unit": "feet" },
       "perennialOrAnnual": "Annual"
     },
     {
       "plantId": "carrots",
+      "displayName": "Carrots",
       "scientificName": "Daucus carota subsp. sativus",
-      "whenToPlant": "Spring (February-April) and fall (August-September)",
-      "timeToRipe": "50-80 days depending on variety",
-      "distanceBetweenPlants": "2-4 inches (thin to this spacing)",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.25,
+            "maxVal": 0.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 2,
+              "maxVal": 4,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "02-01",
+              "maxDate": "04-30",
+              "description": "Spring (February-April) and fall (August-September)"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 50, "maxVal": 80, "unit": "days" },
       "friends": ["Onions", "Leeks", "Lettuce", "Tomatoes", "Rosemary", "Sage"],
       "foes": ["Dill", "Parsnips", "Celery", "Fennel"],
-      "heightWhenGrown": "8-12 inches tall (foliage)",
-      "widthWhenGrown": "3-4 inches wide spread",
+      "heightWhenGrown": { "minVal": 8, "maxVal": 12, "unit": "inches" },
+      "widthWhenGrown": { "minVal": 3, "maxVal": 4, "unit": "inches" },
       "perennialOrAnnual": "Biennial (grown as annual)"
     },
     {
       "plantId": "jalapeno",
+      "displayName": "Jalapeño Pepper",
       "scientificName": "Capsicum annuum 'Jalapeño'",
-      "whenToPlant": "After soil warms (April-May) or start indoors 8-10 weeks before last frost",
-      "timeToRipe": "70-80 days",
-      "distanceBetweenPlants": "14-18 inches",
+      "planting": {
+        "fromSeed": {
+          "depth": {
+            "minVal": 0.25,
+            "maxVal": 0.5,
+            "unit": "inches"
+          },
+          "outdoor": {
+            "spacingBetweenPlants": {
+              "minVal": 14,
+              "maxVal": 18,
+              "unit": "inches"
+            },
+            "whenToPlant": {
+              "minDate": "04-01",
+              "maxDate": "05-31",
+              "description": "After soil warms (April-May)"
+            }
+          },
+          "indoor": {
+            "spacingBetweenPlants": {
+              "minVal": 2,
+              "maxVal": 3,
+              "unit": "inches"
+            },
+            "whenToStart": {
+              "minDate": "01-15",
+              "maxDate": "02-01",
+              "description": "Start indoors 8-10 weeks before last frost"
+            },
+            "transplantOutdoor": {
+              "condition": "After soil warms",
+              "minDate": "04-01",
+              "maxDate": "05-31"
+            }
+          }
+        }
+      },
+      "timeToRipe": { "minVal": 70, "maxVal": 80, "unit": "days" },
       "friends": [
         "Basil",
         "Onions",
@@ -132,8 +357,8 @@
         "Brassicas (cabbage, broccoli)",
         "Apricot trees"
       ],
-      "heightWhenGrown": "24-36 inches tall",
-      "widthWhenGrown": "18-24 inches wide",
+      "heightWhenGrown": { "minVal": 24, "maxVal": 36, "unit": "inches" },
+      "widthWhenGrown": { "minVal": 18, "maxVal": 24, "unit": "inches" },
       "perennialOrAnnual": "Annual (perennial in tropical climates)"
     }
   ]
