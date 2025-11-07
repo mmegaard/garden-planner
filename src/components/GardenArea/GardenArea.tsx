@@ -55,7 +55,7 @@ function GardenArea() {
   const constraintsRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    function handleMouseScroll(event: Event) {
+    function handleMouseScroll(event: WheelEvent) {
       const deltaY = event.deltaY; // Vertical scroll amount
 
       if (deltaY < 0) {
