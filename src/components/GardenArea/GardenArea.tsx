@@ -108,6 +108,7 @@ function GardenArea() {
       }
       console.log("clientx", event.clientX);
       console.log("movementX", event.movementX);
+      console.log("move", event.offsetY);
       const newX = event.movementX + viewportPosition.x;
       const newY = event.movementY + viewportPosition.y;
       setViewportPosition({

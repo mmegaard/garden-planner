@@ -1,0 +1,19 @@
+.world {
+  width: inherit;
+  height: inherit;
+  position: relative;
+  transform-origin: center center;
+}
+
+.viewport {
+  border: 1px black solid;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+
+.pan_button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
