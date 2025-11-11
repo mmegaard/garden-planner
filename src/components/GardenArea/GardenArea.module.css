@@ -2,7 +2,7 @@
   width: inherit;
   height: inherit;
   position: relative;
-  transform-origin: center center;
+  transform-origin: left top;
 }
 
 .viewport {

@@ -31,11 +31,10 @@
       "plants": []
     }
   ],
-  "viewport": {
-    "width": { "value": 10, "measure": "ft" },
-    "length": { "value": 10, "measure": "ft" },
+  "defaultView": {
+    "width": 10,
+    "height": 10,
     "x": 2,
-    "y": 2,
-    "zoom-level": 100
+    "y": 2
   }
 }

@@ -5,7 +5,10 @@ import layout from "@/public/content/boxes.json";
 import GardenContainer from "../GardenContainer";
 import { Button } from "@radix-ui/themes";
 import { Move } from "react-feather";
+import Viewport from "../../helpers/Viewport";
+
 import styles from "./GardenArea.module.css";
+
 function checkCollision(event: Event) {
   const draggedElement: HTMLElement = event.target as HTMLElement;
   if (!draggedElement.classList.contains("draggable")) {
@@ -46,83 +49,83 @@ function checkCollision(event: Event) {
 }
 
 function GardenArea() {
-  const { garden, boxes, viewport } = layout;
-  const [zoomLevel, setZoomLevel] = React.useState(viewport["zoom-level"]);
+  const constraintsRef = React.useRef<HTMLDivElement>(null);
+
+  const { garden, boxes, defaultView } = layout;
+
   const [panMode, setPanMode] = React.useState(false);
   const [isPanning, setIsPanning] = React.useState(false);
-  const [viewportPosition, setViewportPosition] = React.useState({
-    x: viewport.x,
-    y: viewport.y,
-  });
-  const constraintsRef = React.useRef<HTMLDivElement>(null);
+  const [viewport, setViewport] = React.useState(
+    new Viewport(
+      defaultView.x,
+      defaultView.y,
+      defaultView.width,
+      defaultView.height
+    )
+  );
+  const [mouseCoord, setMouseCoord] = React.useState({ x: 0, y: 0 });
+  const clientViewWidth = constraintsRef.current?.clientWidth ?? 1;
+  const clientViewHeight = constraintsRef.current?.clientHeight ?? 1;
 
   React.useEffect(() => {
     function handleMouseScroll(event: WheelEvent) {
-      const deltaY = event.deltaY; // Vertical scroll amount
-
-      if (deltaY < 0) {
-        setZoomLevel(zoomLevel + 5);
-      } else if (deltaY > 0) {
-        if (zoomLevel >= 5) {
-          setZoomLevel(zoomLevel - 5);
-        }
-      }
+      event.preventDefault;
+      const zoomSpeed = 0.001;
+      const deltaY = event.deltaY;
+      const zoomLevel = 1 + deltaY * zoomSpeed;
+      const newViewport = viewport.zoom(zoomLevel);
+      setViewport(newViewport);
     }
 
-    window.addEventListener("wheel", handleMouseScroll);
+    constraintsRef.current?.addEventListener("wheel", handleMouseScroll);
 
     // Cleanup function:
     return () => {
-      window.removeEventListener("wheel", handleMouseScroll);
+      constraintsRef.current?.removeEventListener("wheel", handleMouseScroll);
     };
-  }, [zoomLevel]);
+  }, [viewport]);
 
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     setIsPanning(true);
-    //capture start of pan
-    const newX = event.movementX + viewportPosition.x;
-    const newY = event.movementY + viewportPosition.y;
-    setViewportPosition({
-      x: newX,
-      y: newY,
-    });
   }
   function handlePanEnd(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     //capture end of pan and set it
-
-    const newX = event.movementX + viewportPosition.x;
-    const newY = event.movementY + viewportPosition.y;
-    setViewportPosition({
-      x: newX,
-      y: newY,
-    });
     setIsPanning(false);
   }
 
   React.useEffect(() => {
     function handlePanMove(event: MouseEvent) {
+      setMouseCoord({ x: event.offsetX, y: event.offsetY });
       if (!isPanning) {
         return;
       }
-      console.log("clientx", event.clientX);
-      console.log("movementX", event.movementX);
-      console.log("move", event.offsetY);
-      const newX = event.movementX + viewportPosition.x;
-      const newY = event.movementY + viewportPosition.y;
-      setViewportPosition({
-        x: newX,
-        y: newY,
-      });
-    }
+      const viewportWidthPixels = constraintsRef.current?.clientWidth ?? 1;
+      const viewportHeightPixels = constraintsRef.current?.clientHeight ?? 1;
 
-    window.addEventListener("mousemove", handlePanMove);
+      const xBefore = (event.offsetX - event.movementX) / viewportWidthPixels;
+      const yBefore = (event.offsetY - event.movementY) / viewportHeightPixels;
+
+      const xAfter = event.offsetX / viewportWidthPixels;
+      const yAfter = event.offsetY / viewportHeightPixels;
+
+      const beforeWorld = viewport.screenToWorld(xBefore, yBefore);
+      const afterWorld = viewport.screenToWorld(xAfter, yAfter);
+
+      const newViewport = viewport.pan(
+        afterWorld[0] - beforeWorld[0],
+        afterWorld[1] - beforeWorld[1]
+      );
+      setViewport(newViewport);
+    }
+    constraintsRef.current?.addEventListener("mousemove", handlePanMove);
+
     // Cleanup function:
     return () => {
-      window.removeEventListener("mousemove", handlePanMove);
+      constraintsRef.current?.removeEventListener("mousemove", handlePanMove);
     };
-  }, [isPanning, viewportPosition]);
+  }, [isPanning, viewport]);
 
   function handleDragEnd() {
     //get current coordinates based on absolute position from origin
@@ -130,64 +133,90 @@ function GardenArea() {
   }
 
   return (
-    <motion.div
-      className={styles.viewport}
-      ref={constraintsRef}
-      style={{
-        width: `${viewport.width.value * 100}px`,
-        height: `${viewport.length.value * 100}px`,
-      }}
-      onMouseDown={(event: React.MouseEvent<HTMLDivElement>) =>
-        handlePanStart(event)
-      }
-      onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
-        handlePanEnd(event)
-      }
-    >
-      <div
-        className={styles.world}
-        style={{
-          transform: `scale(${zoomLevel}%) translate(${viewportPosition.x}px, ${viewportPosition.y}px)`,
-        }}
-      >
-        {boxes.map((box, index) => {
-          return (
-            <GardenContainer
-              box={box}
-              gardenArea={garden}
-              key={`${index}-${box.shape}`}
-            />
-          );
-        })}
-        <motion.div
-          className="draggable"
-          drag={!panMode}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            width: 100,
-            height: 100,
-            borderRadius: 10,
-            backgroundColor: "blue",
-          }}
-          dragMomentum={false}
-          whileDrag={{ scale: 1.1, boxShadow: "0px 10px 20px rgba(0,0,0,0.2)" }}
-          onDragEnd={handleDragEnd}
-          data-distance={30}
-          onDrag={(event) => checkCollision(event)}
-        />
+    <div>
+      <div id="debug">
+        <ul>
+          <li>
+            Viewport top left in WORLD SPACE: {`[${viewport.x}, ${viewport.y}]`}
+          </li>
+          <li>
+            mouse position in VIEWPORT SPACE:{" "}
+            {`[${mouseCoord.x}, ${mouseCoord.y}]`}
+          </li>
+          <li>
+            viewport width and height in WORLD SPACE:{" "}
+            {`[${viewport.width}, ${viewport.height}]`}
+          </li>
+        </ul>
       </div>
-      <Button
-        className={styles.pan_button}
-        variant="soft"
-        onClick={() => setPanMode(!panMode)}
+      <motion.div
+        id="viewport"
+        className={styles.viewport}
+        ref={constraintsRef}
+        style={{
+          width: `70vh`,
+          height: `70vh`,
+        }}
+        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) =>
+          handlePanStart(event)
+        }
+        onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
+          handlePanEnd(event)
+        }
+        //take viewport and turn into
       >
-        <Move />
-        {panMode ? "Panning" : "Pan"}
-      </Button>
-    </motion.div>
+        <div
+          className={styles.world}
+          style={{
+            transform: `scale(${
+              (clientViewWidth / viewport.width,
+              clientViewHeight / viewport.height)
+            }%) translate(${viewport.x * 100}px, ${viewport.y * 100}px)`,
+          }}
+        >
+          {boxes.map((box, index) => {
+            return (
+              <GardenContainer
+                box={box}
+                gardenArea={garden}
+                key={`${index}-${box.shape}`}
+              />
+            );
+          })}
+        </div>
+        <Button
+          className={styles.pan_button}
+          variant="soft"
+          onClick={() => setPanMode(!panMode)}
+        >
+          <Move />
+          {panMode ? "Panning" : "Pan"}
+        </Button>
+      </motion.div>
+    </div>
   );
 }
 
 export default GardenArea;
+
+/*<motion.div
+            className="draggable"
+            drag={!panMode}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: 100,
+              height: 100,
+              borderRadius: 10,
+              backgroundColor: "blue",
+            }}
+            dragMomentum={false}
+            whileDrag={{
+              scale: 1.1,
+              boxShadow: "0px 10px 20px rgba(0,0,0,0.2)",
+            }}
+            onDragEnd={handleDragEnd}
+            data-distance={30}
+            onDrag={(event) => checkCollision(event)}
+          /> */
