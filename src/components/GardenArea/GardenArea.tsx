@@ -5,6 +5,7 @@ import layout from "@/public/content/boxes.json";
 import GardenContainer from "../GardenContainer";
 import { Button } from "@radix-ui/themes";
 import { Move } from "react-feather";
+import styles from "./GardenArea.module.css";
 function checkCollision(event: Event) {
   const draggedElement: HTMLElement = event.target as HTMLElement;
   if (!draggedElement.classList.contains("draggable")) {
@@ -34,7 +35,6 @@ function checkCollision(event: Event) {
       draggableRect.bottom < targetRect.bottom;
     if (fullyOverlap) {
       // Collision detected!
-
       draggedElement.style.backgroundColor = "green"; // Example reaction
 
       break;
@@ -91,6 +91,7 @@ function GardenArea() {
   function handlePanEnd(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     //capture end of pan and set it
+
     const newX = event.movementX + viewportPosition.x;
     const newY = event.movementY + viewportPosition.y;
     setViewportPosition({
@@ -105,6 +106,8 @@ function GardenArea() {
       if (!isPanning) {
         return;
       }
+      console.log("clientx", event.clientX);
+      console.log("movementX", event.movementX);
       const newX = event.movementX + viewportPosition.x;
       const newY = event.movementY + viewportPosition.y;
       setViewportPosition({
@@ -127,15 +130,11 @@ function GardenArea() {
 
   return (
     <motion.div
-      id="viewport"
+      className={styles.viewport}
       ref={constraintsRef}
       style={{
         width: `${viewport.width.value * 100}px`,
         height: `${viewport.length.value * 100}px`,
-        border: "1px black solid",
-        overflow: "hidden",
-        position: "relative",
-        margin: "auto",
       }}
       onMouseDown={(event: React.MouseEvent<HTMLDivElement>) =>
         handlePanStart(event)
@@ -145,12 +144,8 @@ function GardenArea() {
       }
     >
       <div
-        id="world"
+        className={styles.world}
         style={{
-          width: "inherit",
-          height: "inherit",
-          position: "relative",
-          transformOrigin: "center center",
           transform: `scale(${zoomLevel}%) translate(${viewportPosition.x}px, ${viewportPosition.y}px)`,
         }}
       >
@@ -163,21 +158,13 @@ function GardenArea() {
             />
           );
         })}
-      </div>
-      <Button
-        className="inline-block"
-        variant="soft"
-        style={{ position: "absolute", top: 0, right: 0 }}
-        onClick={() => setPanMode(!panMode)}
-      >
-        <Move />
-        {panMode ? "Panning" : "Pan"}
-      </Button>
-      {!panMode && (
         <motion.div
           className="draggable"
-          drag
+          drag={!panMode}
           style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
             width: 100,
             height: 100,
             borderRadius: 10,
@@ -188,8 +175,16 @@ function GardenArea() {
           onDragEnd={handleDragEnd}
           data-distance={30}
           onDrag={(event) => checkCollision(event)}
-        ></motion.div>
-      )}
+        />
+      </div>
+      <Button
+        className={styles.pan_button}
+        variant="soft"
+        onClick={() => setPanMode(!panMode)}
+      >
+        <Move />
+        {panMode ? "Panning" : "Pan"}
+      </Button>
     </motion.div>
   );
 }
