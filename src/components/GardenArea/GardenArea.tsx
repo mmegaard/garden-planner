@@ -50,11 +50,11 @@ function checkCollision(event: Event) {
 
 function GardenArea() {
   const constraintsRef = React.useRef<HTMLDivElement>(null);
-
   const { garden, boxes, defaultView } = layout;
 
   const [panMode, setPanMode] = React.useState(false);
   const [isPanning, setIsPanning] = React.useState(false);
+
   const [viewport, setViewport] = React.useState(
     new Viewport(
       defaultView.x,
@@ -64,8 +64,20 @@ function GardenArea() {
     )
   );
   const [mouseCoord, setMouseCoord] = React.useState({ x: 0, y: 0 });
-  const clientViewWidth = constraintsRef.current?.clientWidth ?? 1;
-  const clientViewHeight = constraintsRef.current?.clientHeight ?? 1;
+  const [clientSize, setClientSize] = React.useState({
+    width: 1000,
+    height: 1000,
+  });
+
+  React.useLayoutEffect(() => {
+    if (constraintsRef.current) {
+      // Access the div's dimensions using clientWidth, clientHeight, or getBoundingClientRect()
+      setClientSize({
+        width: constraintsRef.current.clientWidth,
+        height: constraintsRef.current.clientHeight,
+      });
+    }
+  }, []); // Empty dependency array ensures this runs only once after the initial render
 
   React.useEffect(() => {
     function handleMouseScroll(event: WheelEvent) {
@@ -97,26 +109,30 @@ function GardenArea() {
 
   React.useEffect(() => {
     function handlePanMove(event: MouseEvent) {
-      setMouseCoord({ x: event.offsetX, y: event.offsetY });
+      const target = event.target as HTMLElement;
+      if (target.id === "world") {
+        setMouseCoord({ x: event.offsetX, y: event.offsetY });
+      }
       if (!isPanning) {
         return;
       }
-      const viewportWidthPixels = constraintsRef.current?.clientWidth ?? 1;
-      const viewportHeightPixels = constraintsRef.current?.clientHeight ?? 1;
 
-      const xBefore = (event.offsetX - event.movementX) / viewportWidthPixels;
-      const yBefore = (event.offsetY - event.movementY) / viewportHeightPixels;
+      const xBefore = (event.offsetX - event.movementX) / clientSize.width;
+      const yBefore = (event.offsetY - event.movementY) / clientSize.height;
 
-      const xAfter = event.offsetX / viewportWidthPixels;
-      const yAfter = event.offsetY / viewportHeightPixels;
+      const xAfter = event.offsetX / clientSize.width;
+      const yAfter = event.offsetY / clientSize.height;
 
       const beforeWorld = viewport.screenToWorld(xBefore, yBefore);
       const afterWorld = viewport.screenToWorld(xAfter, yAfter);
 
       const newViewport = viewport.pan(
-        afterWorld[0] - beforeWorld[0],
-        afterWorld[1] - beforeWorld[1]
+        beforeWorld[0] - afterWorld[0],
+        beforeWorld[1] - afterWorld[1]
       );
+      //console.log("newX", newViewport.x);
+      ///console.log("newY", newViewport.y);
+
       setViewport(newViewport);
     }
     constraintsRef.current?.addEventListener("mousemove", handlePanMove);
@@ -147,6 +163,10 @@ function GardenArea() {
             viewport width and height in WORLD SPACE:{" "}
             {`[${viewport.width}, ${viewport.height}]`}
           </li>
+          <li>
+            should move this much:{" "}
+            {`[${viewport.x * (clientSize.height / viewport.height)}}]`}
+          </li>
         </ul>
       </div>
       <motion.div
@@ -167,11 +187,14 @@ function GardenArea() {
       >
         <div
           className={styles.world}
+          id="world"
           style={{
-            transform: `scale(${
-              (clientViewWidth / viewport.width,
-              clientViewHeight / viewport.height)
-            }%) translate(${viewport.x * 100}px, ${viewport.y * 100}px)`,
+            transform: ` translate(${
+              -viewport.x * (clientSize.width / viewport.width)
+            }px, ${-viewport.y * (clientSize.height / viewport.height)}px)
+            scale(${clientSize.width / viewport.width},
+              ${clientSize.height / viewport.height})
+            `,
           }}
         >
           {boxes.map((box, index) => {

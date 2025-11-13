@@ -10,11 +10,6 @@ class Viewport {
     this.height = height;
   }
 
-  screenToWorld(fx: number, fy: number): number[] {
-    console.log("fx", fx);
-    return [this.x + fx * this.width, this.y + fy * this.height];
-  }
-
   zoom(zoomlevel: number): Viewport {
     const newWidth = this.width * zoomlevel;
     const newHeight = this.height * zoomlevel;
@@ -22,11 +17,11 @@ class Viewport {
     const newY = this.y - (newHeight - this.height) / 2;
     return new Viewport(newX, newY, newWidth, newHeight);
   }
-
+  screenToWorld(fx: number, fy: number): number[] {
+    //console.log("fx", fx);
+    return [this.x + fx * this.width, this.y + fy * this.height];
+  }
   pan(deltaX: number, deltaY: number): Viewport {
-    console.log("curret position of viewport in world space", this.x, this.y);
-    console.log("moved this much on screen", deltaX, deltaY);
-
     const newX = this.x + deltaX;
     const newY = this.y + deltaY;
     return new Viewport(newX, newY, this.width, this.height);
