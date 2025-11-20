@@ -1,12 +1,14 @@
 {
   "garden": {
-    "width": { "value": 10, "measure": "ft" },
-    "length": { "value": 10, "measure": "ft" },
+    "name": "Front Yard",
+    "width": 10,
+    "length": 10,
     "x": 4,
     "y": 4
   },
   "boxes": [
     {
+      "id": 1,
       "shape": "rectangle",
       "width": { "value": 2, "measure": "ft" },
       "length": { "value": 5, "measure": "ft" },
@@ -15,6 +17,7 @@
       "plants": []
     },
     {
+      "id": 2,
       "shape": "rectangle",
       "width": { "value": 3, "measure": "ft" },
       "length": { "value": 5, "measure": "ft" },
@@ -23,6 +26,7 @@
       "plants": []
     },
     {
+      "id": 3,
       "shape": "rectangle",
       "width": { "value": 5, "measure": "ft" },
       "length": { "value": 2, "measure": "ft" },
@@ -34,7 +38,7 @@
   "defaultView": {
     "width": 10,
     "height": 10,
-    "x": 2,
-    "y": 2
+    "x": 0,
+    "y": 0
   }
 }

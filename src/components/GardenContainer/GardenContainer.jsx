@@ -1,19 +1,17 @@
 import React from "react";
 import styles from "./GardenContainer.module.css";
-function GardenContainer({ box, gardenArea }) {
+function GardenContainer({ box }) {
   const width = box.width.value;
   const height = box.length.value;
 
-  //should I represent all objects in some sort of inches to pixels ratio?
-  //garden area width is 20, box is 5. find percentage of
   return (
     <div
       className={`${styles.gardencontainer} bounding`}
       style={{
-        top: box.position.top,
-        left: box.position.left,
-        width,
-        height,
+        top: `${box.position.top * 10}%`,
+        left: `${box.position.left * 10}%`,
+        width: `${width * 10}%`,
+        height: `${height * 10}%`,
       }}
     ></div>
   );
