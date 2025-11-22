@@ -1,11 +1,11 @@
 {
-  "garden": {
+  "gardens": [{
     "name": "Front Yard",
     "width": 10,
     "length": 10,
     "x": 4,
     "y": 4
-  },
+  }],
   "boxes": [
     {
       "id": 1,

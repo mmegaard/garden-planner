@@ -3,15 +3,19 @@ import Header from "../components/Header";
 import GardenArea from "../components/GardenArea";
 import PlantLibrary from "../components/PlantLibrary";
 import Plant from "../components/Plant";
-
+import ViewportProvider from "../components/ViewportProvider";
+import Debug from "../components/Debug/Debug";
 export default function Home() {
   return (
     <div>
       <Header />
-      <main>
-        <Plant name={"Tomato"} />
-        <GardenArea />
-      </main>
+      <ViewportProvider>
+        <main>
+          <Debug />
+          <GardenArea />
+        </main>
+      </ViewportProvider>
+
       <footer />
     </div>
   );

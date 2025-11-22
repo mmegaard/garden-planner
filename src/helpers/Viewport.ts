@@ -17,10 +17,12 @@ class Viewport {
     const newY = this.y - (newHeight - this.height) / 2;
     return new Viewport(newX, newY, newWidth, newHeight);
   }
+
   screenToWorld(fx: number, fy: number): number[] {
     //console.log("fx", fx);
     return [this.x + fx * this.width, this.y + fy * this.height];
   }
+
   pan(deltaX: number, deltaY: number): Viewport {
     const newX = this.x + deltaX;
     const newY = this.y + deltaY;

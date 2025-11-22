@@ -10,6 +10,8 @@
   overflow: hidden;
   position: relative;
   margin: auto;
+  width: 90vh;
+  height: 90vh;
 }
 
 .pan_button {
