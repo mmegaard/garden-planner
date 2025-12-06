@@ -10,11 +10,11 @@ import Plant from "../Plant";
 import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
 import { useViewportContext } from "../ViewportProvider";
-
+import DraggableComponent from "../DraggableComponent";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { boxes } = layout;
+  const { boxes, plants } = layout;
   const [panMode, setPanMode] = React.useState(false);
 
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
@@ -28,7 +28,7 @@ function GardenArea() {
   }
 
   return (
-    <div>
+    <div style={{ display: "inline-block" }}>
       <motion.div
         id="viewport"
         className={styles.viewport}
@@ -58,9 +58,18 @@ function GardenArea() {
           {boxes.map((box, index) => {
             return <GardenContainer box={box} key={`${index}-${box.shape}`} />;
           })}
-          <Draggable>
-            <Plant name="tom" />
-          </Draggable>
+          {plants.map((plant, index) => {
+            return (
+              <Draggable
+                initialPosition={plant.position}
+                key={`${index}-${plant.name}`}
+              >
+                <Plant name={plant.name}></Plant>
+              </Draggable>
+            );
+          })}
+
+          <DraggableComponent />
         </div>
 
         <Button

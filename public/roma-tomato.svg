@@ -1,0 +1,16 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Roma Tomato (elongated) -->
+  <ellipse cx="50" cy="55" rx="20" ry="28" fill="#d32f2f"/>
+  <ellipse cx="50" cy="55" rx="18" ry="26" fill="#e53935" opacity="0.8"/>
+  
+  <!-- Highlight -->
+  <ellipse cx="42" cy="45" rx="8" ry="12" fill="#ef5350" opacity="0.6"/>
+  
+  <!-- Stem -->
+  <path d="M 50 25 Q 48 30, 50 35" stroke="#2e7d32" stroke-width="2" fill="none"/>
+  
+  <!-- Leaves -->
+  <ellipse cx="45" cy="28" rx="6" ry="3" fill="#4caf50" transform="rotate(-30 45 28)"/>
+  <ellipse cx="55" cy="27" rx="6" ry="3" fill="#4caf50" transform="rotate(30 55 27)"/>
+  <ellipse cx="50" cy="25" rx="5" ry="3" fill="#66bb6a" transform="rotate(0 50 25)"/>
+</svg>

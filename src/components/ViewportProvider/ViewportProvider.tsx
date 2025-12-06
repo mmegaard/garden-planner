@@ -68,6 +68,10 @@ function ViewportProvider({ children }: ViewportProps) {
   React.useLayoutEffect(() => {
     const updateDimensions = () => {
       if (viewportRef.current) {
+        console.log(
+          "resetting client width to be",
+          viewportRef.current.clientWidth
+        );
         if (viewportRef.current) {
           setClientSize({
             width: viewportRef.current.clientWidth,

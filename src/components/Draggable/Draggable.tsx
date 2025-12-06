@@ -7,6 +7,7 @@ import styles from "./Draggable.module.css";
 interface DraggableProps {
   children: React.ReactNode;
   constraint?: React.RefObject<HTMLDivElement | null>;
+  initialPosition: { x: number; y: number };
 }
 
 const COLORS = {
@@ -15,69 +16,76 @@ const COLORS = {
   red: { label: "invalid", value: "hsl(7deg 100% 50%)" },
 };
 
-function Draggable({ children, constraint }: DraggableProps) {
+function Draggable({ children, initialPosition, constraint }: DraggableProps) {
   const draggableRef = React.useRef<HTMLDivElement>(null);
-  const [position, setPosition] = React.useState({ x: 1, y: 1 });
+  const [position, setPosition] = React.useState({
+    x: initialPosition.x,
+    y: initialPosition.y,
+  });
   const [isDragging, setIsDragging] = React.useState(false);
-  const { viewportRef, viewport, clientSize, worldRef } = useViewportContext();
-  const [worldPos, setWorldPos] = React.useState({ x: 0, y: 0 });
+  const { viewportRef, viewport, clientSize } = useViewportContext();
   const [validity, setValidity] = React.useState<string>("");
+  const [offset, setOffset] = React.useState({ x: 0, y: 0 });
   function checkCollision() {
-    const draggableRect = draggableRef.current?.getBoundingClientRect()!;
+    //only show
+    const drag = draggableRef.current?.getBoundingClientRect()!;
     //for all of the other objects have a specific class, checkem
     const otherElements: HTMLCollectionOf<Element> =
       document.getElementsByClassName("bounding");
-
+    let isValid = true;
     for (let element of otherElements) {
-      const targetRect = element.getBoundingClientRect();
-      const fullyOverlap =
-        draggableRect.left > targetRect.left &&
-        draggableRect.right < targetRect.right &&
-        draggableRect.top > targetRect.top &&
-        draggableRect.bottom < targetRect.bottom;
-      if (fullyOverlap) {
-        setValidity(COLORS.green.value);
-      } else {
-        setValidity(COLORS.yellow.value);
+      const target = element.getBoundingClientRect();
+      const fullyInside =
+        drag.left >= target.left &&
+        drag.right <= target.right &&
+        drag.top >= target.top &&
+        drag.bottom <= target.bottom;
+
+      const isColliding =
+        drag.left < target.right &&
+        drag.right > target.left &&
+        drag.top < target.bottom &&
+        drag.bottom > target.top;
+
+      if (!fullyInside && isColliding) {
+        isValid = false;
+        break;
       }
+    }
+    if (isValid) {
+      setValidity(COLORS.green.value);
+    } else {
+      setValidity(COLORS.yellow.value);
     }
   }
 
   function handlePointerDown(event: React.PointerEvent) {
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
+    const rectDrag = draggableRef.current?.getBoundingClientRect()!;
+
+    const offsetX = event.clientX - rectDrag.left;
+    const offsetY = event.clientY - rectDrag.top;
+    setOffset({ x: offsetX, y: offsetY });
     checkCollision();
   }
-
   function handlePointerMove(event: React.PointerEvent) {
     if (isDragging) {
       const rect = viewportRef.current?.getBoundingClientRect()!;
-      const rectDrag = draggableRef.current?.getBoundingClientRect()!;
       checkCollision();
-      if (rect) {
-        const x = Math.floor(event.clientX - rect.left);
-        const y = Math.floor(event.clientY - rect.top);
-        //figure out difference between clientWidth and viewPortWidth
-        const clientViewportSpaceWidth = clientSize.xScale * viewport.width;
-        const clientViewportSpaceHeight = clientSize.yScale * viewport.height;
-
-        const viewX = x * (clientViewportSpaceWidth / clientSize.width);
-        const viewY = y * (clientViewportSpaceHeight / clientSize.height);
-
-        const worldCoords = viewport.screenToWorld(
-          viewX / clientViewportSpaceWidth,
-          viewY / clientViewportSpaceHeight
-        );
-        setWorldPos({
-          x: worldCoords[0] * (clientSize.width / viewport.width),
-          y: worldCoords[1] * (clientSize.height / viewport.height),
-        });
-
-        setPosition({
-          x: worldCoords[0] * clientSize.xScale,
-          y: worldCoords[1] * clientSize.yScale,
-        });
-      }
+      //mouse position relative to viewport
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      const x = mouseX - offset.x;
+      const y = mouseY - offset.y;
+      const worldCoords = viewport.screenToWorld(
+        x / clientSize.width,
+        y / clientSize.height
+      );
+      setPosition({
+        x: worldCoords[0],
+        y: worldCoords[1],
+      });
     }
   }
 
@@ -96,19 +104,20 @@ function Draggable({ children, constraint }: DraggableProps) {
       style={{
         width: "10%",
         height: "10%",
-        borderRadius: "10%",
-        backgroundColor: isDragging ? validity : "blue",
+        borderRadius: "100%",
+        backgroundColor: isDragging ? validity : "",
+        opacity: isDragging ? ".5" : "1",
         zIndex: 1,
         position: "absolute",
-        left: position.x,
-        top: position.y,
+        left: position.x * clientSize.xScale,
+        top: position.y * clientSize.yScale,
         transform: isDragging ? "scale(1.1)" : "scale(1)",
         boxShadow: isDragging ? "0px 10px 20px rgba(0,0,0,0.2)" : "none",
         touchAction: "none",
         color: "white",
       }}
     >
-      <div>{children}</div>
+      {children}
     </div>
   );
 }
@@ -116,6 +125,21 @@ function Draggable({ children, constraint }: DraggableProps) {
 export default Draggable;
 
 /*
+const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setImage(img);
+    };
+    img.src = "/cat.jpg";
+  }, []);
+
+
+
+
+
 
 function Draggable({ children, constraint, scale }: DraggableProps) {
   const x = useMotionValue(0);

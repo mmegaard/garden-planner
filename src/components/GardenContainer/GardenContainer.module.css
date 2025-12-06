@@ -1,5 +1,5 @@
 .gardencontainer {
-  background-color: brown;
+  background-color: lch(46% 49 66);
   position: absolute;
   user-select: none;
   -moz-user-select: none;

@@ -78,6 +78,7 @@ function Debug({}) {
           mouse position in world SPACE:{" "}
           {`[${mouseCoord.worldX}, ${mouseCoord.worldY}]`}
         </li>
+        <li>scale {clientSize.width / viewport.width / clientSize.xScale}</li>
       </ul>
     </div>
   );

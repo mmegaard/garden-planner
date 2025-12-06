@@ -12,6 +12,7 @@ export default function Home() {
       <ViewportProvider>
         <main>
           <Debug />
+          <PlantLibrary />
           <GardenArea />
         </main>
       </ViewportProvider>
