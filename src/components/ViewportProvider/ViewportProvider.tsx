@@ -32,10 +32,6 @@ export const ViewportContext = React.createContext<
           yScale: number;
         }>
       >;
-      currentTool:string;
-      setCurrentTool: React.Dispatch<
-        React.SetStateAction<string>
-      >;
     }
   | undefined
 >(undefined);
@@ -52,7 +48,6 @@ function ViewportProvider({ children }: ViewportProps) {
   const viewportRef = React.useRef<HTMLDivElement>(null);
   const [isPanning, setIsPanning] = React.useState(false);
   const worldRef = React.useRef<HTMLDivElement>(null);
-  const [currentTool, setCurrentTool] = React.useState('');
   
   const [viewport, setViewport] = React.useState(
     new Viewport(
@@ -151,8 +146,6 @@ function ViewportProvider({ children }: ViewportProps) {
       clientSize,
       setClientSize,
       worldRef,
-      currentTool,
-      setCurrentTool
     }),
     [viewport, clientSize, isPanning]
   );

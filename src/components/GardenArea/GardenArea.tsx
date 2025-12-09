@@ -13,6 +13,7 @@ import { useViewportContext } from "../ViewportProvider";
 import { useObjectContext } from "../ObjectProvider";
 import PlantClass from "@/src/helpers/PlantClass";
 import DraggableComponent from "../DraggableComponent"
+import CurrentTool from "../CurrentTool/CurrentTool";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
@@ -94,7 +95,7 @@ function GardenArea() {
           })}
         
         </div>
-        <img src={`${currentTool}.svg`} style={{display: currentTool === 'none' ? currentTool : "inline-block",position: "absolute", top:0, left:0, width:"100px", height:   "100px"}} />
+        <CurrentTool tool={currentTool}/>
         <Button
           className={styles.pan_button}
           variant="soft"
