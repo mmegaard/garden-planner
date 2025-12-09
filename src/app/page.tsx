@@ -5,16 +5,21 @@ import PlantLibrary from "../components/PlantLibrary";
 import Plant from "../components/Plant";
 import ViewportProvider from "../components/ViewportProvider";
 import Debug from "../components/Debug/Debug";
+import ObjectProvider from "../components/ObjectProvider";
 export default function Home() {
   return (
     <div>
-      <Header />
       <ViewportProvider>
-        <main>
-          <Debug />
-          <PlantLibrary />
-          <GardenArea />
+        <main style={{display:"grid", gridTemplateColumns: "minmax(min-content, 5vw) auto", }}>
+          
+          <ObjectProvider>
+            <PlantLibrary />
+            <GardenArea />
+          </ObjectProvider>
+          
+          
         </main>
+        <Debug/>
       </ViewportProvider>
 
       <footer />

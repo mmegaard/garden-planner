@@ -32,6 +32,10 @@ export const ViewportContext = React.createContext<
           yScale: number;
         }>
       >;
+      currentTool:string;
+      setCurrentTool: React.Dispatch<
+        React.SetStateAction<string>
+      >;
     }
   | undefined
 >(undefined);
@@ -48,7 +52,8 @@ function ViewportProvider({ children }: ViewportProps) {
   const viewportRef = React.useRef<HTMLDivElement>(null);
   const [isPanning, setIsPanning] = React.useState(false);
   const worldRef = React.useRef<HTMLDivElement>(null);
-
+  const [currentTool, setCurrentTool] = React.useState('');
+  
   const [viewport, setViewport] = React.useState(
     new Viewport(
       defaultView.x,
@@ -67,11 +72,7 @@ function ViewportProvider({ children }: ViewportProps) {
   //get scaling of world to viewport pixelspace
   React.useLayoutEffect(() => {
     const updateDimensions = () => {
-      if (viewportRef.current) {
-        console.log(
-          "resetting client width to be",
-          viewportRef.current.clientWidth
-        );
+
         if (viewportRef.current) {
           setClientSize({
             width: viewportRef.current.clientWidth,
@@ -80,15 +81,15 @@ function ViewportProvider({ children }: ViewportProps) {
             yScale: viewportRef.current.clientHeight / viewport.height,
           });
         }
-      }
+      
     }; // Get initial dimensions
-    updateDimensions();
+   //updateDimensions();
 
     // Update dimensions when window resizes
-    window.addEventListener("resize", updateDimensions);
+    //window.addEventListener("resize", updateDimensions);
 
     // Cleanup
-    return () => window.removeEventListener("resize", updateDimensions);
+    //return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   //ZOOMING
@@ -150,6 +151,8 @@ function ViewportProvider({ children }: ViewportProps) {
       clientSize,
       setClientSize,
       worldRef,
+      currentTool,
+      setCurrentTool
     }),
     [viewport, clientSize, isPanning]
   );

@@ -38,7 +38,6 @@ function Debug({}) {
           worldX: Math.floor(worldCoords[0]),
           worldY: Math.floor(worldCoords[1]),
         });
-      } else {
       }
     }
 

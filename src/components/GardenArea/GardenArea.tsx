@@ -10,26 +10,45 @@ import Plant from "../Plant";
 import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
 import { useViewportContext } from "../ViewportProvider";
-import DraggableComponent from "../DraggableComponent";
+import { useObjectContext } from "../ObjectProvider";
+import PlantClass from "@/src/helpers/PlantClass";
+import DraggableComponent from "../DraggableComponent"
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { boxes, plants } = layout;
+  const {boxes} = layout;
+  const {plants, setPlants, currentTool} = useObjectContext();
   const [panMode, setPanMode] = React.useState(false);
-
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     setIsPanning(true);
   }
+  
   function handlePanEnd(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     //capture end of pan and set it
     setIsPanning(false);
   }
+  
+  function handleSetObjectPosition(id:number,x:number,y:number){
+    const newPlants = plants.map((pl) => {
+      if(pl.id === id){
+        return pl
+      }else{
+       return {
+          ...pl,
+          position: {x,y},
+        };
+      }
+    })
+    setPlants(newPlants)
+  }
+  
+
 
   return (
     <div style={{ display: "inline-block" }}>
-      <motion.div
+      <div
         id="viewport"
         className={styles.viewport}
         ref={viewportRef}
@@ -39,7 +58,9 @@ function GardenArea() {
         onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanEnd(event)
         }
-        //take viewport and turn into
+        
+        //take viewport and turn into         
+
       >
         <div
           className={styles.world}
@@ -58,20 +79,22 @@ function GardenArea() {
           {boxes.map((box, index) => {
             return <GardenContainer box={box} key={`${index}-${box.shape}`} />;
           })}
-          {plants.map((plant, index) => {
+          {plants.map((plant:PlantClass, index) => {
             return (
               <Draggable
                 initialPosition={plant.position}
                 key={`${index}-${plant.name}`}
+                setObjectPosition={handleSetObjectPosition}
+                id={plant.id}
+                className={"planted"}
               >
                 <Plant name={plant.name}></Plant>
               </Draggable>
             );
           })}
-
-          <DraggableComponent />
+        
         </div>
-
+        <img src={`${currentTool}.svg`} style={{display: currentTool === 'none' ? currentTool : "inline-block",position: "absolute", top:0, left:0, width:"100px", height:   "100px"}} />
         <Button
           className={styles.pan_button}
           variant="soft"
@@ -80,7 +103,7 @@ function GardenArea() {
           <Move />
           {panMode ? "Panning" : "Pan"}
         </Button>
-      </motion.div>
+      </div>
     </div>
   );
 }

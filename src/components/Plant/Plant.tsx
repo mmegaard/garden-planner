@@ -6,7 +6,7 @@ import { plants } from "@/public/content/data.json";
 interface PlantProps {
   /** The text to display inside the button */
   name: string;
-}
+} 
 
 function Plant({ name }: PlantProps) {
   const [iconUrl, setIconUrl] = React.useState("");
@@ -31,7 +31,7 @@ function Plant({ name }: PlantProps) {
     }
   }
 
-  return <img src={`${name}.svg`} style={{ pointerEvents: "none" }} />;
+  return <img src={`${name}.svg`} style={{ pointerEvents: "none", width:"100%" }} />;
 }
 
 export default Plant;

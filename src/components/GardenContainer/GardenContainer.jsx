@@ -7,7 +7,6 @@ function GardenContainer({ box }) {
   const height = box.length.value;
   const { viewportRef, viewport, clientSize } =
     useViewportContext();
-
   return (
     <div
       className={`${styles.gardencontainer} bounding`}
