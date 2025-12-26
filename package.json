@@ -11,7 +11,7 @@
     "@linaria/core": "^6.3.0",
     "@linaria/react": "^6.3.0",
     "@radix-ui/themes": "^3.2.1",
-    "@wyw-in-js/babel-preset": "^0.7.0",
+    "@wyw-in-js/babel-preset": "^0.8.1",
     "clsx": "^2.1.1",
     "convex": "^1.31.2",
     "eslint-config-next": "^16.0.7",
