@@ -35,8 +35,8 @@ function Debug({}) {
           y: Math.floor(worldCoords[1] * (clientSize.height / viewport.height)),
           viewX: Math.floor(worldCoords[0] * clientSize.xScale),
           viewY: Math.floor(worldCoords[1] * clientSize.yScale),
-          worldX: Math.floor(worldCoords[0]),
-          worldY: Math.floor(worldCoords[1]),
+          worldX: worldCoords[0],
+          worldY: worldCoords[1],
         });
       }
     }

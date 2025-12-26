@@ -6,7 +6,6 @@ import { useObjectContext } from "../ObjectProvider";
 import PlantClass from "@/src/helpers/PlantClass";
 interface DraggableProps {
   children: React.ReactNode;
-  constraint?: React.RefObject<HTMLDivElement | null>;
   initialPosition: { x: number; y: number };
   setObjectPosition: (id:number,x:number,y:number)=>void;
   id:number;
@@ -20,7 +19,7 @@ const COLORS = {
   red: { label: "invalid", value: "hsl(7deg 100% 50%)" },
 };
 
-function Draggable({ children, initialPosition, constraint, setObjectPosition, id,className, dragging }: DraggableProps) {
+function Draggable({ children, initialPosition, setObjectPosition, id,className, dragging }: DraggableProps) {
   const draggableRef = React.useRef<HTMLDivElement>(null);
   const [position, setPosition] = React.useState({
     x: initialPosition.x,
@@ -70,6 +69,7 @@ function Draggable({ children, initialPosition, constraint, setObjectPosition, i
         drag.right > target.left &&
         drag.top < target.bottom &&
         drag.bottom > target.top) {
+        console.log(plant)
         setValidity(COLORS.yellow.value)
         return;
       }
@@ -87,7 +87,6 @@ function Draggable({ children, initialPosition, constraint, setObjectPosition, i
     const offsetX = event.clientX - rectDrag.left;
     const offsetY = event.clientY - rectDrag.top;
     setOffset({ x: offsetX, y: offsetY });
-    checkCollision();
 
   }
   function handlePointerMove(event: React.PointerEvent) {
@@ -96,10 +95,8 @@ function Draggable({ children, initialPosition, constraint, setObjectPosition, i
       const rect = viewportRef.current?.getBoundingClientRect()!;
       checkCollision();
       //mouse position relative to viewport
-      const mouseX = event.clientX - rect.left;
-      const mouseY = event.clientY - rect.top;
-      const x = mouseX - offset.x;
-      const y = mouseY - offset.y;
+      const x = event.clientX - rect.left - offset.x;
+      const y = event.clientY - rect.top - offset.y;
       const worldCoords = viewport.screenToWorld(
         x / clientSize.width,
         y / clientSize.height
@@ -117,7 +114,7 @@ function Draggable({ children, initialPosition, constraint, setObjectPosition, i
     event.currentTarget.releasePointerCapture(event.pointerId);
     setObjectPosition(id,position.x,position.y)
   }
-
+  console.log('XSCALE', clientSize.xScale)
   return (
     <div
       ref={draggableRef}

@@ -58,9 +58,7 @@ function GardenArea() {
         }
         onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanEnd(event)
-        }
-        
-        //take viewport and turn into         
+        }        
 
       >
         <div
@@ -78,7 +76,10 @@ function GardenArea() {
           }}
         >
           {boxes.map((box, index) => {
-            return <GardenContainer box={box} key={`${index}-${box.shape}`} />;
+            return <GardenContainer box={box} key={`${index}-${box.shape}`} />
+             //<Draggable id={box.id} initialPosition={{x: box.position.left, y: box.position.top}}  setObjectPosition={handleSetObjectPosition}>
+              
+            //</Draggable>;
           })}
           {plants.map((plant:PlantClass, index) => {
             return (

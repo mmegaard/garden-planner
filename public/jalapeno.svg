@@ -1,0 +1,14 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="jalGrad" x1="30%" y1="30%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#44bd32" />
+      <stop offset="100%" stop-color="#006266" />
+    </linearGradient>
+  </defs>
+
+  <g id="icon" transform="translate(50, 50) rotate(15)">
+    <path d="M-8 -20 Q-15 0 0 25 Q12 0 8 -20 Z" fill="url(#jalGrad)" />
+    <rect x="-3" y="-28" width="6" height="10" fill="#2d3436" />
+    <path d="M-5 -10 Q-8 0 -2 15" stroke="white" stroke-width="3" opacity="0.4" fill="none" />
+  </g>
+</svg>

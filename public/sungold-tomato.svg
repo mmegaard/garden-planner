@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sunGrad" cx="40%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#f9ca24" />
+      <stop offset="100%" stop-color="#f0932b" />
+    </radialGradient>
+  </defs>
+
+  <g id="icon" transform="translate(50, 50)">
+    <circle r="22" fill="url(#sunGrad)" />
+    <path d="M-4 -20 L0 -12 L4 -20 L2 -12 L9 -10 L2 -6 L0 0 L-2 -6 L-9 -10 L-2 -12 Z" fill="#6ab04c" />
+    <circle cx="-8" cy="-8" r="5" fill="white" opacity="0.4" />
+  </g>
+  
+</svg>

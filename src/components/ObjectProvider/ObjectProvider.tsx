@@ -42,35 +42,57 @@ function ObjectProvider({ children }: ObjectProps) {
   const [plants,setPlants] = React.useState(initialPlants)
   const [currentTool, setCurrentTool] = React.useState('none');
   const [toolPosition, setToolPosition] = React.useState({x:0,y:0});
-  const {viewportRef, viewport, clientSize} = useViewportContext();
+  const {viewportRef, viewport, clientSize, worldRef} = useViewportContext();
+
+  React.useEffect(()=>{
+    function handlePointerDown(event: PointerEvent) {
+      const clickedElement: HTMLElement = event.target as HTMLElement;
+
+      if(currentTool !== 'none' && clickedElement.classList.contains("toolSelector")){
+      event.preventDefault()
+      }
+       
+      }
+    document.addEventListener("pointerdown", handlePointerDown);
+     
+      // Cleanup function:
+      return () => {
+        document.removeEventListener("pointerdown", handlePointerDown);
+      };
+    }, [currentTool])
 
   React.useEffect(() => {
-     function handlePointerMove(event: PointerEvent) {
+    //TODO: Make mousedown place an object and then start dragging if they hold it down
+    function handlePointerMove(event: PointerEvent) {
     event.preventDefault()
-    console.log('hi', currentTool)
     if (currentTool !== 'none') {
       const rect = viewportRef.current?.getBoundingClientRect()!;
-      
+      console.log('x,y', event.clientX - rect.left, ',', event.clientY - rect.top)
+      const xOffset =  100 * (clientSize.width / viewport.width / clientSize.xScale) / 2;
+      const yOffset = 100 * (clientSize.height / viewport.height / clientSize.yScale) / 2;
+      //console.log({xOffset})
       //mouse position relative to viewport
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
+      const x = event.clientX - rect.left - xOffset;
+      const y = event.clientY - rect.top - yOffset;
+      //console.log('current position in client', x,y)
       const worldCoords = viewport.screenToWorld(
         x / clientSize.width,
         y / clientSize.height
       );
+
       setToolPosition({
         x: worldCoords[0],
         y: worldCoords[1],
       });
     }
     }
-      viewportRef.current?.addEventListener("pointermove", handlePointerMove);
+      document.addEventListener("pointermove", handlePointerMove);
      
       // Cleanup function:
       return () => {
-        viewportRef.current?.removeEventListener("pointermove", handlePointerMove);
+        document.removeEventListener("pointermove", handlePointerMove);
       };
-    }, [toolPosition,currentTool]);
+    }, [currentTool, viewport, clientSize, viewportRef]);
     
   React.useEffect(()=>{
     function handlePointerUp(event: PointerEvent) {
@@ -88,7 +110,7 @@ function ObjectProvider({ children }: ObjectProps) {
         viewportRef.current?.removeEventListener("pointerup", handlePointerUp);
       };
 
-  }, [currentTool,toolPosition])
+  }, [currentTool,toolPosition, clientSize, viewport])
   
   
   const contextValue = React.useMemo(
@@ -100,7 +122,7 @@ function ObjectProvider({ children }: ObjectProps) {
       toolPosition,
       setToolPosition
     }),
-    [plants,currentTool,toolPosition]
+    [plants,currentTool,toolPosition, clientSize, viewport]
   );
 
   return (

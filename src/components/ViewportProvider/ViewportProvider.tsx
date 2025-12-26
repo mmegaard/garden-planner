@@ -90,11 +90,26 @@ function ViewportProvider({ children }: ViewportProps) {
   //ZOOMING
   React.useEffect(() => {
     function handleMouseScroll(event: WheelEvent) {
+      const rect = viewportRef.current?.getBoundingClientRect()!;
       event.preventDefault;
       const zoomSpeed = 0.001;
       const deltaY = event.deltaY;
       const zoomLevel = 1 + deltaY * zoomSpeed;
-      const newViewport = viewport.zoom(zoomLevel);
+      /*
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const worldCoords = viewport.screenToWorld(
+        x / clientSize.width,
+        y / clientSize.height
+      );
+      const beforeScale = clientSize.width / viewport.width / clientSize.xScale;
+      */
+      let newViewport= viewport.zoom(zoomLevel);
+      /*const afterScale = clientSize.width / newViewport.width / clientSize.xScale;
+      const scalechange = afterScale - beforeScale;
+      const offsetX = (worldCoords[0] * scalechange);
+      const offsetY = (worldCoords[1] * scalechange);
+      newViewport = newViewport.pan(offsetX, offsetY)*/
       setViewport(newViewport);
     }
 
@@ -108,6 +123,7 @@ function ViewportProvider({ children }: ViewportProps) {
 
   React.useEffect(() => {
     function handlePanMove(event: MouseEvent) {
+      //TODO: Make pan mode always active, if you are on a draggable, only drag the item
       if (isPanning) {
         const xBefore = (event.offsetX - event.movementX) / clientSize.width;
         const yBefore = (event.offsetY - event.movementY) / clientSize.height;
@@ -124,9 +140,6 @@ function ViewportProvider({ children }: ViewportProps) {
         );
         setViewport(newViewport);
       }
-
-      //console.log("newX", newViewport.x);
-      ///console.log("newY", newViewport.y);
     }
     viewportRef.current?.addEventListener("mousemove", handlePanMove);
 

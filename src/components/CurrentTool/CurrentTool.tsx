@@ -7,20 +7,22 @@ interface CurrentToolProps {
 }
 
 function CurrentTool({ tool }: CurrentToolProps) {
-  const{toolPosition} =useObjectContext()
-  const { viewportRef, viewport, clientSize } = useViewportContext();
-  
-
-  
-
+  const{currentTool,toolPosition} =useObjectContext()
+  const {clientSize,viewport} = useViewportContext();
+  const imgWidth = 100 * (clientSize.width / viewport.width / clientSize.xScale);
+  const imgHeight = 100 * (clientSize.height / viewport.height / clientSize.yScale);
+  const imgX = toolPosition.x * clientSize.xScale;
+  const imgY = toolPosition.y * clientSize.yScale;
+  console.log("toolposition!!",toolPosition)
   return (
-    <img src={`${tool}.svg`}
+    <img src={`${currentTool}.svg`}
+    alt={`${currentTool}`}
     style={{display: tool === 'none' ? tool : "inline-block",
         position: "absolute", 
-        left: toolPosition.x * clientSize.xScale,
-        top: toolPosition.y * clientSize.yScale,
-        width:"100px", 
-        height:"100px"}} />
+        left: imgX,
+        top: imgY,
+        width: `${imgWidth}px`, 
+        height: `${imgHeight}px`}} />
     
   );
 }

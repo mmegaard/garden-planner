@@ -19,8 +19,7 @@ export default function Home() {
           
           
         </main>
-        <Debug/>
-      </ViewportProvider>
+        </ViewportProvider>
 
       <footer />
     </div>
