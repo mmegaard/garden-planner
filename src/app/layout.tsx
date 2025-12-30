@@ -3,7 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-
+import { ConvexClientProvider } from "../components/ConvexClientProvider";
+import ObjectProvider from "../components/ObjectProvider";
+import ViewportProvider from "../components/ViewportProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,7 +31,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Theme>{children}</Theme>
+        <ConvexClientProvider>
+          <ViewportProvider>
+          <ObjectProvider>
+          <Theme>{children}</Theme> 
+          </ObjectProvider>
+          </ViewportProvider>
+          
+        </ConvexClientProvider>
+        
       </body>
     </html>
   );

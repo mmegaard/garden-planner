@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import Header from "../components/Header";
 import GardenArea from "../components/GardenArea";
@@ -6,20 +7,17 @@ import Plant from "../components/Plant";
 import ViewportProvider from "../components/ViewportProvider";
 import Debug from "../components/Debug/Debug";
 import ObjectProvider from "../components/ObjectProvider";
+
 export default function Home() {
   return (
     <div>
-      <ViewportProvider>
         <main style={{display:"grid", gridTemplateColumns: "minmax(min-content, 5vw) auto", }}>
           
-          <ObjectProvider>
             <PlantLibrary />
             <GardenArea />
-          </ObjectProvider>
           
           
         </main>
-        </ViewportProvider>
 
       <footer />
     </div>

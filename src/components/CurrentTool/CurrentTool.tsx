@@ -13,7 +13,6 @@ function CurrentTool({ tool }: CurrentToolProps) {
   const imgHeight = 100 * (clientSize.height / viewport.height / clientSize.yScale);
   const imgX = toolPosition.x * clientSize.xScale;
   const imgY = toolPosition.y * clientSize.yScale;
-  console.log("toolposition!!",toolPosition)
   return (
     <img src={`${currentTool}.svg`}
     alt={`${currentTool}`}

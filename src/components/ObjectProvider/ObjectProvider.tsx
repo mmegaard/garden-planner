@@ -1,20 +1,22 @@
 "use client";
 import React from "react";
-import layout from "@/public/content/boxes.json";
 import PlantClass from "../../helpers/PlantClass"
 import { useViewportContext } from "../ViewportProvider";
-import { handlePointerMove } from "@/src/helpers/dragfunctions";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
+
 interface ObjectProps {
   children: React.ReactNode;
 }
 
-const { defaultView } = layout;
+
 
 export const ObjectContext = React.createContext<
   | {
       //containers: ;
       plants: PlantClass[];
-      setPlants:  React.Dispatch<React.SetStateAction<PlantClass[]>>;
+      setPlants:  (newPlants:PlantClass[])=>void;
       currentTool: string;
       setCurrentTool:  React.Dispatch<React.SetStateAction<string>>;
       toolPosition: {x:number,y:number};
@@ -30,16 +32,24 @@ export function useObjectContext() {
   }
   return context;
 }
-const initialPlants:PlantClass[] = layout.plants.map((plant)=>{
-  const newPlant:PlantClass = new PlantClass(plant.name, plant.position, plant.id)
-  if(plant.boxId){
-    newPlant.boxId = plant.boxId;
-  }
-  return newPlant;
-});
+// const initialPlants:PlantClass[] = layout.plants.map((plant)=>{
+//   const newPlant:PlantClass = new PlantClass(plant.name, plant.position, plant.id)
+//   if(plant.boxId){
+//     newPlant.boxId = plant.boxId;
+//   }
+//   return newPlant;
+// });
 
 function ObjectProvider({ children }: ObjectProps) {
-  const [plants,setPlants] = React.useState(initialPlants)
+  const layouts = useQuery(api.layouts.get) || [];
+  console.log('checkin query', layouts[0])
+  const data = layouts[0]?.data || {}
+  const {boxes, defaultView, gardens, initialPlants} = data
+  
+  const [plants,_setPlants] = React.useState<PlantClass[]>([])
+  const setPlants = (newPlants:PlantClass[])=> {
+    _setPlants(newPlants)
+  }
   const [currentTool, setCurrentTool] = React.useState('none');
   const [toolPosition, setToolPosition] = React.useState({x:0,y:0});
   const {viewportRef, viewport, clientSize, worldRef} = useViewportContext();

@@ -96,7 +96,8 @@ function GardenArea() {
           })}
         
         </div>
-        <CurrentTool tool={currentTool}/>
+        {currentTool !== 'none' && <CurrentTool tool={currentTool}/>}
+        
         <Button
           className={styles.pan_button}
           variant="soft"

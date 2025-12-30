@@ -114,7 +114,6 @@ function Draggable({ children, initialPosition, setObjectPosition, id,className,
     event.currentTarget.releasePointerCapture(event.pointerId);
     setObjectPosition(id,position.x,position.y)
   }
-  console.log('XSCALE', clientSize.xScale)
   return (
     <div
       ref={draggableRef}
