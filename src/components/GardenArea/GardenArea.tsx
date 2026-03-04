@@ -11,41 +11,40 @@ import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
 import { useViewportContext } from "../ViewportProvider";
 import { useObjectContext } from "../ObjectProvider";
-import PlantClass from "@/src/helpers/PlantClass";
-import DraggableComponent from "../DraggableComponent"
+import PlantItem from "@/src/helpers/PlantItem";
+import DraggableComponent from "../DraggableComponent";
 import CurrentTool from "../CurrentTool/CurrentTool";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const {boxes} = layout;
-  const {plants, setPlants, currentTool} = useObjectContext();
+  const { boxes } = layout;
+  const { plants, setPlants, currentTool } = useObjectContext();
   const [panMode, setPanMode] = React.useState(false);
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     setIsPanning(true);
   }
-  
+
   function handlePanEnd(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
     //capture end of pan and set it
     setIsPanning(false);
   }
-  
-  function handleSetObjectPosition(id:number,x:number,y:number){
-    const newPlants = plants.map((pl) => {
-      if(pl.id === id){
-        return pl
-      }else{
-       return {
-          ...pl,
-          position: {x,y},
-        };
-      }
-    })
-    setPlants(newPlants)
-  }
-  
 
+  function handleSetObjectPosition(id: number, x: number, y: number) {
+    //TODO: is this even working?
+    const newPlants = plants.map((pl) => {
+      if (pl.id !== id) {
+        return pl;
+      } else {
+        return PlantItem.fromJson({
+          ...pl,
+          position: { x, y },
+        });
+      }
+    });
+    setPlants(newPlants);
+  }
 
   return (
     <div style={{ display: "inline-block" }}>
@@ -58,8 +57,7 @@ function GardenArea() {
         }
         onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanEnd(event)
-        }        
-
+        }
       >
         <div
           className={styles.world}
@@ -76,12 +74,12 @@ function GardenArea() {
           }}
         >
           {boxes.map((box, index) => {
-            return <GardenContainer box={box} key={`${index}-${box.shape}`} />
-             //<Draggable id={box.id} initialPosition={{x: box.position.left, y: box.position.top}}  setObjectPosition={handleSetObjectPosition}>
-              
+            return <GardenContainer box={box} key={`${index}-${box.shape}`} />;
+            //<Draggable id={box.id} initialPosition={{x: box.position.left, y: box.position.top}}  setObjectPosition={handleSetObjectPosition}>
+
             //</Draggable>;
           })}
-          {plants.map((plant:PlantClass, index) => {
+          {plants.map((plant: PlantItem, index) => {
             return (
               <Draggable
                 initialPosition={plant.position}
@@ -94,10 +92,9 @@ function GardenArea() {
               </Draggable>
             );
           })}
-        
         </div>
-        {currentTool !== 'none' && <CurrentTool tool={currentTool}/>}
-        
+        {currentTool !== "none" && <CurrentTool tool={currentTool} />}
+
         <Button
           className={styles.pan_button}
           variant="soft"

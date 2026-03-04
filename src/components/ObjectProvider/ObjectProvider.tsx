@@ -1,26 +1,25 @@
 "use client";
 import React from "react";
-import PlantClass from "../../helpers/PlantClass"
+import { PlantItem } from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-
-
+import layout from "@/public/content/boxes.json";
 interface ObjectProps {
   children: React.ReactNode;
 }
 
-
-
 export const ObjectContext = React.createContext<
   | {
       //containers: ;
-      plants: PlantClass[];
-      setPlants:  (newPlants:PlantClass[])=>void;
+      plants: PlantItem[];
+      setPlants: (newPlants: PlantItem[]) => void;
       currentTool: string;
-      setCurrentTool:  React.Dispatch<React.SetStateAction<string>>;
-      toolPosition: {x:number,y:number};
-      setToolPosition: React.Dispatch<React.SetStateAction<{x:number,y:number}>>;
+      setCurrentTool: React.Dispatch<React.SetStateAction<string>>;
+      toolPosition: { x: number; y: number };
+      setToolPosition: React.Dispatch<
+        React.SetStateAction<{ x: number; y: number }>
+      >;
     }
   | undefined
 >(undefined);
@@ -32,97 +31,121 @@ export function useObjectContext() {
   }
   return context;
 }
-// const initialPlants:PlantClass[] = layout.plants.map((plant)=>{
-//   const newPlant:PlantClass = new PlantClass(plant.name, plant.position, plant.id)
+// const initialPlants:PlantItem[] = layout.plants.map((plant)=>{
+//   const newPlant:PlantItem = new PlantItem(plant.name, plant.position, plant.id)
 //   if(plant.boxId){
 //     newPlant.boxId = plant.boxId;
 //   }
 //   return newPlant;
 // });
-
 function ObjectProvider({ children }: ObjectProps) {
   const layouts = useQuery(api.layouts.get) || [];
-  console.log('checkin query', layouts[0])
-  const data = layouts[0]?.data || {}
-  const {boxes, defaultView, gardens, initialPlants} = data
-  
-  const [plants,_setPlants] = React.useState<PlantClass[]>([])
-  const setPlants = (newPlants:PlantClass[])=> {
-    _setPlants(newPlants)
-  }
-  const [currentTool, setCurrentTool] = React.useState('none');
-  const [toolPosition, setToolPosition] = React.useState({x:0,y:0});
-  const {viewportRef, viewport, clientSize, worldRef} = useViewportContext();
+  console.log("checkin query", layouts[0]);
+  const plantList = layouts[0]?.plants || [];
+  const plants = plantList.map((plant) => PlantItem.fromJson(plant));
 
-  React.useEffect(()=>{
+  const layoutMutation = useMutation(
+    api.layouts.setGarden,
+  ).withOptimisticUpdate((localStore, args) => {
+    const layoutsList = localStore.getQuery(api.layouts.get);
+    if (layoutsList !== undefined) {
+      const newLayoutsList = [
+        { ...layoutsList[0], plants: args.plants },
+        ...layoutsList.slice(1),
+      ];
+      console.log(layoutsList);
+      console.log(newLayoutsList);
+      localStore.setQuery(api.layouts.get, {}, newLayoutsList);
+    }
+  });
+  const setPlants = (newPlants: PlantItem[]) => {
+    const jsonPlants = newPlants.map((plant) => plant.toJson());
+    layoutMutation({ plants: jsonPlants });
+  };
+  const [currentTool, setCurrentTool] = React.useState("none");
+  const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
+  const { viewportRef, viewport, clientSize, worldRef } = useViewportContext();
+
+  React.useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
       const clickedElement: HTMLElement = event.target as HTMLElement;
 
-      if(currentTool !== 'none' && clickedElement.classList.contains("toolSelector")){
-      event.preventDefault()
+      if (
+        currentTool !== "none" &&
+        clickedElement.classList.contains("toolSelector")
+      ) {
+        event.preventDefault();
       }
-       
-      }
+    }
     document.addEventListener("pointerdown", handlePointerDown);
-     
-      // Cleanup function:
-      return () => {
-        document.removeEventListener("pointerdown", handlePointerDown);
-      };
-    }, [currentTool])
+
+    // Cleanup function:
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [currentTool]);
 
   React.useEffect(() => {
     //TODO: Make mousedown place an object and then start dragging if they hold it down
     function handlePointerMove(event: PointerEvent) {
-    event.preventDefault()
-    if (currentTool !== 'none') {
-      const rect = viewportRef.current?.getBoundingClientRect()!;
-      console.log('x,y', event.clientX - rect.left, ',', event.clientY - rect.top)
-      const xOffset =  100 * (clientSize.width / viewport.width / clientSize.xScale) / 2;
-      const yOffset = 100 * (clientSize.height / viewport.height / clientSize.yScale) / 2;
-      //console.log({xOffset})
-      //mouse position relative to viewport
-      const x = event.clientX - rect.left - xOffset;
-      const y = event.clientY - rect.top - yOffset;
-      //console.log('current position in client', x,y)
-      const worldCoords = viewport.screenToWorld(
-        x / clientSize.width,
-        y / clientSize.height
-      );
+      event.preventDefault();
+      if (currentTool !== "none") {
+        const rect = viewportRef.current?.getBoundingClientRect()!;
+        console.log(
+          "x,y",
+          event.clientX - rect.left,
+          ",",
+          event.clientY - rect.top,
+        );
+        const xOffset =
+          (100 * (clientSize.width / viewport.width / clientSize.xScale)) / 2;
+        const yOffset =
+          (100 * (clientSize.height / viewport.height / clientSize.yScale)) / 2;
+        //console.log({xOffset})
+        //mouse position relative to viewport
+        const x = event.clientX - rect.left - xOffset;
+        const y = event.clientY - rect.top - yOffset;
+        //console.log('current position in client', x,y)
+        const worldCoords = viewport.screenToWorld(
+          x / clientSize.width,
+          y / clientSize.height,
+        );
 
-      setToolPosition({
-        x: worldCoords[0],
-        y: worldCoords[1],
-      });
-    }
-    }
-      document.addEventListener("pointermove", handlePointerMove);
-     
-      // Cleanup function:
-      return () => {
-        document.removeEventListener("pointermove", handlePointerMove);
-      };
-    }, [currentTool, viewport, clientSize, viewportRef]);
-    
-  React.useEffect(()=>{
-    function handlePointerUp(event: PointerEvent) {
-      event.preventDefault() 
-        if(currentTool!== "none"){
-          const newPlant:PlantClass = new PlantClass(currentTool, toolPosition,plants.length + 1)
-          const newPlants = [...plants, newPlant]
-          setPlants(newPlants)
-        }
+        setToolPosition({
+          x: worldCoords[0],
+          y: worldCoords[1],
+        });
       }
-        viewportRef.current?.addEventListener("pointerup", handlePointerUp);
-     
-      // Cleanup function:
-      return () => {
-        viewportRef.current?.removeEventListener("pointerup", handlePointerUp);
-      };
+    }
+    document.addEventListener("pointermove", handlePointerMove);
 
-  }, [currentTool,toolPosition, clientSize, viewport])
-  
-  
+    // Cleanup function:
+    return () => {
+      document.removeEventListener("pointermove", handlePointerMove);
+    };
+  }, [currentTool, viewport, clientSize, viewportRef]);
+
+  React.useEffect(() => {
+    function handlePointerUp(event: PointerEvent) {
+      event.preventDefault();
+      if (currentTool !== "none") {
+        const newPlant: PlantItem = new PlantItem(
+          currentTool,
+          toolPosition,
+          plants.length + 1,
+        );
+        const newPlants = [...plants, newPlant];
+        setPlants(newPlants);
+      }
+    }
+    viewportRef.current?.addEventListener("pointerup", handlePointerUp);
+
+    // Cleanup function:
+    return () => {
+      viewportRef.current?.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [currentTool, toolPosition, clientSize, viewport]);
+
   const contextValue = React.useMemo(
     () => ({
       plants,
@@ -130,9 +153,9 @@ function ObjectProvider({ children }: ObjectProps) {
       currentTool,
       setCurrentTool,
       toolPosition,
-      setToolPosition
+      setToolPosition,
     }),
-    [plants,currentTool,toolPosition, clientSize, viewport]
+    [plants, currentTool, toolPosition, clientSize, viewport],
   );
 
   return (

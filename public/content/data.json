@@ -1,365 +1,2986 @@
 {
   "plants": [
-    {
-      "plantId": "roma-tomato",
-      "displayName": "Roma Tomato",
-      "scientificName": "Solanum lycopersicum 'Roma'",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.25,
-            "maxVal": 0.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 24,
-              "maxVal": 36,
+    [
+      {
+        "plantId": "roma-tomato",
+        "displayName": "Roma Tomato",
+        "scientificName": "Solanum lycopersicum 'Roma'",
+        "family": "nightshade",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "03-15",
-              "maxDate": "04-30",
-              "description": "After last frost (mid-March to April)"
-            }
-          },
-          "indoor": {
-            "spacingBetweenPlants": {
-              "minVal": 2,
-              "maxVal": 3,
-              "unit": "inches"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-01",
+                "maxDate": "06-15",
+                "description": "After last frost, when soil is warm (May-June)"
+              }
             },
-            "whenToStart": {
-              "minDate": "02-01",
-              "maxDate": "02-15",
-              "description": "Start indoors 6-8 weeks before last frost"
-            },
-            "transplantOutdoor": {
-              "condition": "After last frost",
-              "minDate": "03-15",
-              "maxDate": "04-30"
-            }
-          }
-        }
-      },
-      "timeToRipe": { "minVal": 75, "maxVal": 80, "unit": "days" },
-      "friends": [
-        "Basil",
-        "Carrots",
-        "Marigolds",
-        "Parsley",
-        "Onions",
-        "Asparagus"
-      ],
-      "foes": [
-        "Brassicas (cabbage, broccoli)",
-        "Corn",
-        "Potatoes",
-        "Fennel",
-        "Kohlrabi"
-      ],
-      "heightWhenGrown": { "minVal": 4, "maxVal": 6, "unit": "feet" },
-      "widthWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
-      "perennialOrAnnual": "Annual"
-    },
-    {
-      "plantId": "sungold-tomato",
-      "displayName": "Sungold Tomato",
-      "scientificName": "Solanum lycopersicum 'Sun Gold'",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.25,
-            "maxVal": 0.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 24,
-              "maxVal": 36,
-              "unit": "inches"
-            },
-            "whenToPlant": {
-              "minDate": "03-15",
-              "maxDate": "04-30",
-              "description": "After last frost (mid-March to April)"
-            }
-          },
-          "indoor": {
-            "spacingBetweenPlants": {
-              "minVal": 2,
-              "maxVal": 3,
-              "unit": "inches"
-            },
-            "whenToStart": {
-              "minDate": "02-01",
-              "maxDate": "02-15",
-              "description": "Start indoors 6-8 weeks before last frost"
-            },
-            "transplantOutdoor": {
-              "condition": "After last frost",
-              "minDate": "03-15",
-              "maxDate": "04-30"
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, soil above 60\u00b0F",
+                "minDate": "05-01",
+                "maxDate": "06-15"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 75,
+          "maxVal": 80,
+          "unit": "days"
+        },
+        "friends": [
+          "Basil",
+          "Carrots",
+          "Marigolds",
+          "Parsley",
+          "Onions",
+          "Asparagus"
+        ],
+        "foes": ["Brassicas", "Corn", "Potatoes", "Fennel", "Kohlrabi"],
+        "height": {
+          "minVal": 48,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
       },
-      "timeToRipe": { "minVal": 55, "maxVal": 65, "unit": "days" },
-      "friends": [
-        "Basil",
-        "Carrots",
-        "Marigolds",
-        "Parsley",
-        "Onions",
-        "Nasturtiums"
-      ],
-      "foes": [
-        "Brassicas (cabbage, broccoli)",
-        "Corn",
-        "Potatoes",
-        "Fennel",
-        "Dill"
-      ],
-      "heightWhenGrown": { "minVal": 6, "maxVal": 8, "unit": "feet" },
-      "widthWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
-      "perennialOrAnnual": "Annual"
-    },
-    {
-      "plantId": "marigold",
-      "displayName": "Marigold",
-      "scientificName": "Tagetes spp.",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.125,
-            "maxVal": 0.25,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 8,
-              "maxVal": 12,
+      {
+        "plantId": "cherry-tomato",
+        "displayName": "Cherry Tomato",
+        "scientificName": "Solanum lycopersicum var. cerasiforme",
+        "family": "nightshade",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "03-15",
-              "maxDate": "05-31",
-              "description": "After last frost (March-May)"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-01",
+                "maxDate": "06-15",
+                "description": "After last frost, when soil is warm"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, soil above 60\u00b0F",
+                "minDate": "05-01",
+                "maxDate": "06-15"
+              }
             }
-          },
-          "indoor": {
-            "spacingBetweenPlants": {
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 75,
+          "unit": "days"
+        },
+        "friends": ["Basil", "Carrots", "Marigolds", "Parsley", "Chives"],
+        "foes": ["Brassicas", "Fennel", "Potatoes", "Dill"],
+        "height": {
+          "minVal": 36,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "sugar-snap-peas",
+        "displayName": "Sugar Snap Peas",
+        "scientificName": "Pisum sativum var. macrocarpon",
+        "family": "legume",
+        "planting": {
+          "fromSeed": {
+            "depth": {
               "minVal": 1,
               "maxVal": 2,
               "unit": "inches"
             },
-            "whenToStart": {
-              "minDate": "02-15",
-              "maxDate": "03-01",
-              "description": "Start indoors 4-6 weeks before last frost"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "As soon as soil is workable in late winter/early spring"
+              }
             },
-            "transplantOutdoor": {
-              "condition": "After last frost",
-              "minDate": "03-15",
-              "maxDate": "05-31"
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 58,
+          "maxVal": 70,
+          "unit": "days"
+        },
+        "friends": [
+          "Carrots",
+          "Radishes",
+          "Turnips",
+          "Cucumbers",
+          "Corn",
+          "Beans"
+        ],
+        "foes": ["Onions", "Garlic", "Leeks", "Chives"],
+        "height": {
+          "minVal": 48,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
       },
-      "timeToRipe": { "minVal": 45, "maxVal": 50, "unit": "days" },
-      "friends": [
-        "Tomatoes",
-        "Peppers",
-        "Cucumbers",
-        "Squash",
-        "Beans",
-        "Most vegetables"
-      ],
-      "foes": ["Beans (some varieties)", "Cabbage"],
-      "heightWhenGrown": { "minVal": 6, "maxVal": 36, "unit": "inches" },
-      "widthWhenGrown": { "minVal": 6, "maxVal": 18, "unit": "inches" },
-      "perennialOrAnnual": "Annual"
-    },
-    {
-      "plantId": "basil",
-      "displayName": "Basil",
-      "scientificName": "Ocimum basilicum",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.25,
-            "maxVal": 0.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 10,
-              "maxVal": 12,
+      {
+        "plantId": "zucchini",
+        "displayName": "Zucchini",
+        "scientificName": "Cucurbita pepo",
+        "family": "cucurbit",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "04-01",
-              "maxDate": "05-31",
-              "description": "After last frost when soil is warm (April-May)"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-30",
+                "description": "After last frost, soil above 60\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-01",
+                "maxDate": "05-01",
+                "description": "Start indoors 3-4 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, warm soil",
+                "minDate": "05-15",
+                "maxDate": "06-30"
+              }
             }
-          },
-          "indoor": {
-            "spacingBetweenPlants": {
+          }
+        },
+        "timeToRipe": {
+          "minVal": 45,
+          "maxVal": 60,
+          "unit": "days"
+        },
+        "friends": [
+          "Corn",
+          "Beans",
+          "Nasturtiums",
+          "Marigolds",
+          "Radishes",
+          "Peas"
+        ],
+        "foes": ["Potatoes", "Pumpkins", "Other Squash"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "cucumber",
+        "displayName": "Cucumber",
+        "scientificName": "Cucumis sativus",
+        "family": "cucurbit",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-30",
+                "description": "After last frost, soil above 60\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-01",
+                "maxDate": "05-01",
+                "description": "Start indoors 3-4 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, warm soil",
+                "minDate": "05-15",
+                "maxDate": "06-30"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 50,
+          "maxVal": 70,
+          "unit": "days"
+        },
+        "friends": ["Beans", "Corn", "Peas", "Sunflowers", "Lettuce", "Dill"],
+        "foes": ["Potatoes", "Aromatic Herbs", "Melons"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "bell-pepper",
+        "displayName": "Bell Pepper",
+        "scientificName": "Capsicum annuum",
+        "family": "nightshade",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-15",
+                "description": "After last frost, warm soil and nights above 55\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 8-10 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, nights consistently above 55\u00b0F",
+                "minDate": "05-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": [
+          "Basil",
+          "Tomatoes",
+          "Carrots",
+          "Onions",
+          "Spinach",
+          "Marigolds"
+        ],
+        "foes": ["Fennel", "Kohlrabi", "Beans"],
+        "height": {
+          "minVal": 18,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "bush-beans",
+        "displayName": "Bush Beans",
+        "scientificName": "Phaseolus vulgaris",
+        "family": "legume",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 1,
+              "maxVal": 2,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-01",
+                "maxDate": "07-01",
+                "description": "After last frost, soil above 60\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-01",
+                "maxDate": "04-30",
+                "description": "Start indoors 3-4 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "05-01",
+                "maxDate": "07-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 50,
+          "maxVal": 60,
+          "unit": "days"
+        },
+        "friends": [
+          "Corn",
+          "Squash",
+          "Cucumbers",
+          "Carrots",
+          "Celery",
+          "Strawberries"
+        ],
+        "foes": ["Onions", "Garlic", "Fennel", "Peppers"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "sweet-corn",
+        "displayName": "Sweet Corn",
+        "scientificName": "Zea mays var. saccharata",
+        "family": "grass",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 1,
+              "maxVal": 2,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 8,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-15",
+                "description": "After last frost, soil above 60\u00b0F, plant in blocks for pollination"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-15",
+                "maxDate": "05-15",
+                "description": "Start indoors 2-3 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, warm soil",
+                "minDate": "05-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 100,
+          "unit": "days"
+        },
+        "friends": [
+          "Beans",
+          "Squash",
+          "Pumpkins",
+          "Cucumbers",
+          "Peas",
+          "Sunflowers"
+        ],
+        "foes": ["Tomatoes", "Celery"],
+        "height": {
+          "minVal": 60,
+          "maxVal": 96,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "lettuce",
+        "displayName": "Lettuce",
+        "scientificName": "Lactuca sativa",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 6,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-01",
+                "maxDate": "05-15",
+                "description": "Early spring as soon as soil is workable; succession plant every 2 weeks"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "03-01",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 30,
+          "maxVal": 70,
+          "unit": "days"
+        },
+        "friends": [
+          "Carrots",
+          "Radishes",
+          "Strawberries",
+          "Chives",
+          "Onions",
+          "Garlic"
+        ],
+        "foes": ["Celery", "Parsley"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 12,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "spinach",
+        "displayName": "Spinach",
+        "scientificName": "Spinacia oleracea",
+        "family": "amaranth",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-30",
+                "description": "Early spring, tolerates cool soil and light frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates frost",
+                "minDate": "02-15",
+                "maxDate": "04-30"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 37,
+          "maxVal": 50,
+          "unit": "days"
+        },
+        "friends": [
+          "Strawberries",
+          "Peas",
+          "Beans",
+          "Cauliflower",
+          "Celery",
+          "Radishes"
+        ],
+        "foes": ["Potatoes", "Sunflowers"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 12,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "kale",
+        "displayName": "Kale",
+        "scientificName": "Brassica oleracea var. sabellica",
+        "family": "brassica",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-01",
+                "maxDate": "04-30",
+                "description": "Early spring for spring crop; July for fall crop"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, frost tolerant",
+                "minDate": "03-15",
+                "maxDate": "04-30"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 55,
+          "maxVal": 75,
+          "unit": "days"
+        },
+        "friends": [
+          "Beets",
+          "Celery",
+          "Herbs",
+          "Onions",
+          "Potatoes",
+          "Nasturtiums"
+        ],
+        "foes": ["Strawberries", "Tomatoes", "Pole Beans"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "broccoli",
+        "displayName": "Broccoli",
+        "scientificName": "Brassica oleracea var. italica",
+        "family": "brassica",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-15",
+                "maxDate": "05-01",
+                "description": "Early spring; also late June-July for fall harvest"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start indoors 6-8 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "03-15",
+                "maxDate": "05-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 100,
+          "unit": "days"
+        },
+        "friends": [
+          "Beets",
+          "Celery",
+          "Onions",
+          "Potatoes",
+          "Chamomile",
+          "Dill"
+        ],
+        "foes": ["Tomatoes", "Strawberries", "Pole Beans"],
+        "height": {
+          "minVal": 18,
+          "maxVal": 30,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "carrots",
+        "displayName": "Carrots",
+        "scientificName": "Daucus carota subsp. sativus",
+        "family": "umbellifer",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-01",
+                "maxDate": "06-01",
+                "description": "Early spring when soil is workable; succession sow monthly"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Can start indoors but direct sow preferred for best root development"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable",
+                "minDate": "03-01",
+                "maxDate": "06-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 80,
+          "unit": "days"
+        },
+        "friends": [
+          "Tomatoes",
+          "Lettuce",
+          "Onions",
+          "Rosemary",
+          "Sage",
+          "Peas"
+        ],
+        "foes": ["Dill", "Parsnips", "Celery"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 12,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "radishes",
+        "displayName": "Radishes",
+        "scientificName": "Raphanus sativus",
+        "family": "brassica",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 1,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "05-15",
+                "description": "Early spring; succession plant every 2-3 weeks"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 1,
+                "maxVal": 2,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "02-15",
+                "description": "Direct sow preferred; indoor starting not typical"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable",
+                "minDate": "02-15",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 22,
+          "maxVal": 30,
+          "unit": "days"
+        },
+        "friends": [
+          "Lettuce",
+          "Peas",
+          "Carrots",
+          "Spinach",
+          "Cucumbers",
+          "Nasturtiums"
+        ],
+        "foes": ["Hyssop", "Grapes"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 10,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "beets",
+        "displayName": "Beets",
+        "scientificName": "Beta vulgaris",
+        "family": "amaranth",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-01",
+                "maxDate": "06-01",
+                "description": "Early spring when soil is workable; succession sow for continuous harvest"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Can start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "03-01",
+                "maxDate": "06-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 50,
+          "maxVal": 70,
+          "unit": "days"
+        },
+        "friends": ["Garlic", "Lettuce", "Onions", "Brassicas", "Bush Beans"],
+        "foes": ["Pole Beans", "Mustard"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 18,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "potatoes",
+        "displayName": "Potatoes",
+        "scientificName": "Solanum tuberosum",
+        "family": "nightshade",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 3,
+              "maxVal": 5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 10,
+                "maxVal": 14,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-01",
+                "maxDate": "04-30",
+                "description": "Early spring, 2-4 weeks before last frost (plant seed potatoes)"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 10,
+                "maxVal": 14,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Chit (sprout) seed potatoes indoors before planting out"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, 2-4 weeks before last frost",
+                "minDate": "03-01",
+                "maxDate": "04-30"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": [
+          "Beans",
+          "Corn",
+          "Peas",
+          "Horseradish",
+          "Marigolds",
+          "Nasturtiums"
+        ],
+        "foes": [
+          "Tomatoes",
+          "Cucumbers",
+          "Squash",
+          "Sunflowers",
+          "Raspberries"
+        ],
+        "height": {
+          "minVal": 18,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "garlic",
+        "displayName": "Garlic",
+        "scientificName": "Allium sativum",
+        "family": "allium",
+        "planting": {
+          "fromSeed": {
+            "depth": {
               "minVal": 2,
               "maxVal": 3,
               "unit": "inches"
             },
-            "whenToStart": {
-              "minDate": "02-15",
-              "maxDate": "02-15",
-              "description": "Start indoors 6 weeks before last frost"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "10-01",
+                "maxDate": "11-15",
+                "description": "Plant cloves in fall for summer harvest; can also plant in early spring"
+              }
             },
-            "transplantOutdoor": {
-              "condition": "After last frost when soil is warm",
-              "minDate": "04-01",
-              "maxDate": "05-31"
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "09-15",
+                "maxDate": "10-15",
+                "description": "Direct planting preferred; not typically started indoors"
+              },
+              "transplantOutdoor": {
+                "condition": "Fall planting preferred",
+                "minDate": "10-01",
+                "maxDate": "11-15"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 240,
+          "maxVal": 270,
+          "unit": "days"
+        },
+        "friends": [
+          "Tomatoes",
+          "Beets",
+          "Cabbage",
+          "Roses",
+          "Strawberries",
+          "Lettuce"
+        ],
+        "foes": ["Beans", "Peas", "Asparagus", "Sage"],
+        "height": {
+          "minVal": 18,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
       },
-      "timeToRipe": { "minVal": 30, "maxVal": 60, "unit": "days" },
-      "friends": ["Tomatoes", "Peppers", "Oregano", "Asparagus", "Petunias"],
-      "foes": ["Rue", "Sage", "Thyme (can stunt growth)"],
-      "heightWhenGrown": { "minVal": 12, "maxVal": 24, "unit": "inches" },
-      "widthWhenGrown": { "minVal": 12, "maxVal": 18, "unit": "inches" },
-      "perennialOrAnnual": "Annual (perennial in tropical climates)"
-    },
-    {
-      "plantId": "zucchini",
-      "displayName": "Zucchini",
-      "scientificName": "Cucurbita pepo",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 1,
-            "maxVal": 1.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 24,
-              "maxVal": 36,
+      {
+        "plantId": "onions",
+        "displayName": "Onions",
+        "scientificName": "Allium cepa",
+        "family": "allium",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "04-01",
-              "maxDate": "06-30",
-              "description": "After last frost (April-June)"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Early spring as soon as soil is workable; use sets or transplants"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 1,
+                "maxVal": 2,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-01",
+                "maxDate": "02-01",
+                "description": "Start indoors 8-10 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": [
+          "Carrots",
+          "Beets",
+          "Lettuce",
+          "Tomatoes",
+          "Strawberries",
+          "Chamomile"
+        ],
+        "foes": ["Beans", "Peas", "Asparagus"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 18,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
       },
-      "timeToRipe": { "minVal": 45, "maxVal": 55, "unit": "days" },
-      "friends": [
-        "Beans",
-        "Corn",
-        "Peas",
-        "Radishes",
-        "Nasturtiums",
-        "Marigolds"
-      ],
-      "foes": ["Potatoes", "Brassicas (cabbage, broccoli)"],
-      "heightWhenGrown": { "minVal": 2, "maxVal": 3, "unit": "feet" },
-      "widthWhenGrown": { "minVal": 3, "maxVal": 4, "unit": "feet" },
-      "perennialOrAnnual": "Annual"
-    },
-    {
-      "plantId": "carrots",
-      "displayName": "Carrots",
-      "scientificName": "Daucus carota subsp. sativus",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.25,
-            "maxVal": 0.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 2,
-              "maxVal": 4,
+      {
+        "plantId": "basil",
+        "displayName": "Basil",
+        "scientificName": "Ocimum basilicum",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "02-01",
-              "maxDate": "04-30",
-              "description": "Spring (February-April) and fall (August-September)"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-30",
+                "description": "After last frost, when soil is warm"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-15",
+                "maxDate": "04-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, warm soil",
+                "minDate": "05-15",
+                "maxDate": "06-30"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 50,
+          "maxVal": 75,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Peppers", "Oregano", "Marigolds", "Asparagus"],
+        "foes": ["Sage", "Rue", "Common Rue"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
       },
-      "timeToRipe": { "minVal": 50, "maxVal": 80, "unit": "days" },
-      "friends": ["Onions", "Leeks", "Lettuce", "Tomatoes", "Rosemary", "Sage"],
-      "foes": ["Dill", "Parsnips", "Celery", "Fennel"],
-      "heightWhenGrown": { "minVal": 8, "maxVal": 12, "unit": "inches" },
-      "widthWhenGrown": { "minVal": 3, "maxVal": 4, "unit": "inches" },
-      "perennialOrAnnual": "Biennial (grown as annual)"
-    },
-    {
-      "plantId": "jalapeno",
-      "displayName": "Jalapeño Pepper",
-      "scientificName": "Capsicum annuum 'Jalapeño'",
-      "planting": {
-        "fromSeed": {
-          "depth": {
-            "minVal": 0.25,
-            "maxVal": 0.5,
-            "unit": "inches"
-          },
-          "outdoor": {
-            "spacingBetweenPlants": {
-              "minVal": 14,
-              "maxVal": 18,
+      {
+        "plantId": "rosemary",
+        "displayName": "Rosemary",
+        "scientificName": "Salvia rosmarinus",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
               "unit": "inches"
             },
-            "whenToPlant": {
-              "minDate": "04-01",
-              "maxDate": "05-31",
-              "description": "After soil warms (April-May)"
-            }
-          },
-          "indoor": {
-            "spacingBetweenPlants": {
-              "minVal": 2,
-              "maxVal": 3,
-              "unit": "inches"
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-01",
+                "maxDate": "06-30",
+                "description": "After last frost; best to plant starts rather than seed"
+              }
             },
-            "whenToStart": {
-              "minDate": "01-15",
-              "maxDate": "02-01",
-              "description": "Start indoors 8-10 weeks before last frost"
-            },
-            "transplantOutdoor": {
-              "condition": "After soil warms",
-              "minDate": "04-01",
-              "maxDate": "05-31"
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "03-01",
+                "description": "Start indoors 10-12 weeks before transplanting (slow germinator)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "05-01",
+                "maxDate": "06-30"
+              }
             }
           }
-        }
+        },
+        "timeToRipe": {
+          "minVal": 80,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": ["Beans", "Cabbage", "Carrots", "Sage", "Thyme"],
+        "foes": ["Cucumbers", "Basil"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
       },
-      "timeToRipe": { "minVal": 70, "maxVal": 80, "unit": "days" },
-      "friends": [
-        "Basil",
-        "Onions",
-        "Spinach",
-        "Tomatoes",
-        "Carrots",
-        "Oregano"
-      ],
-      "foes": [
-        "Fennel",
-        "Beans",
-        "Brassicas (cabbage, broccoli)",
-        "Apricot trees"
-      ],
-      "heightWhenGrown": { "minVal": 24, "maxVal": 36, "unit": "inches" },
-      "widthWhenGrown": { "minVal": 18, "maxVal": 24, "unit": "inches" },
-      "perennialOrAnnual": "Annual (perennial in tropical climates)"
-    }
+      {
+        "plantId": "thyme",
+        "displayName": "Thyme",
+        "scientificName": "Thymus vulgaris",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost danger has passed"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Roses", "Cabbage", "Tomatoes", "Eggplant", "Strawberries"],
+        "foes": ["Basil", "Cilantro"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 12,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "chives",
+        "displayName": "Chives",
+        "scientificName": "Allium schoenoprasum",
+        "family": "allium",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 8,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-15",
+                "maxDate": "05-15",
+                "description": "Early spring; frost tolerant"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 6-8 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, frost tolerant",
+                "minDate": "03-15",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Carrots", "Tomatoes", "Roses", "Grapes", "Apple Trees"],
+        "foes": ["Beans", "Peas"],
+        "height": {
+          "minVal": 10,
+          "maxVal": 18,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "dill",
+        "displayName": "Dill",
+        "scientificName": "Anethum graveolens",
+        "family": "umbellifer",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-01",
+                "maxDate": "06-01",
+                "description": "After last frost; succession sow every 2-3 weeks"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-01",
+                "maxDate": "04-01",
+                "description": "Start indoors 4-6 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-01",
+                "maxDate": "06-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 40,
+          "maxVal": 60,
+          "unit": "days"
+        },
+        "friends": ["Lettuce", "Cucumbers", "Onions", "Cabbage", "Corn"],
+        "foes": ["Carrots", "Tomatoes"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "cilantro",
+        "displayName": "Cilantro",
+        "scientificName": "Coriandrum sativum",
+        "family": "umbellifer",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 6,
+                "maxVal": 8,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-15",
+                "maxDate": "05-15",
+                "description": "Early spring when soil is cool; succession sow every 3 weeks"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 4-6 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, prefers cool weather",
+                "minDate": "03-15",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 45,
+          "maxVal": 70,
+          "unit": "days"
+        },
+        "friends": ["Beans", "Peas", "Tomatoes", "Spinach", "Lettuce"],
+        "foes": ["Fennel", "Dill"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "parsley",
+        "displayName": "Parsley",
+        "scientificName": "Petroselinum crispum",
+        "family": "umbellifer",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 6,
+                "maxVal": 10,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-15",
+                "maxDate": "05-15",
+                "description": "Early spring; slow to germinate (2-4 weeks)"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 6-8 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "03-15",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Asparagus", "Corn", "Roses", "Peppers"],
+        "foes": ["Lettuce", "Mint"],
+        "height": {
+          "minVal": 10,
+          "maxVal": 18,
+          "unit": "inches"
+        },
+        "growthDuration": "Biennial"
+      },
+      {
+        "plantId": "oregano",
+        "displayName": "Oregano",
+        "scientificName": "Origanum vulgare",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost danger has passed"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 80,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Peppers", "Tomatoes", "Basil", "Beans", "Squash"],
+        "foes": ["Mint", "Chives"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "sage",
+        "displayName": "Sage",
+        "scientificName": "Salvia officinalis",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost; starts preferred over seed"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 75,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Rosemary", "Cabbage", "Carrots", "Strawberries", "Thyme"],
+        "foes": ["Basil", "Cucumbers", "Onions"],
+        "height": {
+          "minVal": 18,
+          "maxVal": 30,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "lavender",
+        "displayName": "Lavender",
+        "scientificName": "Lavandula angustifolia",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost; starts strongly preferred"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start indoors 10-12 weeks before transplanting (slow germinator, needs cold stratification)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, well-drained soil",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 200,
+          "unit": "days"
+        },
+        "friends": ["Roses", "Echinacea", "Yarrow", "Thyme", "Oregano"],
+        "foes": ["Mint", "Impatiens", "Hostas"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "eggplant",
+        "displayName": "Eggplant",
+        "scientificName": "Solanum melongena",
+        "family": "nightshade",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-15",
+                "description": "After last frost, warm soil and nights above 55\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 8-10 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, nights consistently above 55\u00b0F",
+                "minDate": "05-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 85,
+          "unit": "days"
+        },
+        "friends": ["Beans", "Peppers", "Spinach", "Thyme", "Marigolds"],
+        "foes": ["Fennel", "Kohlrabi"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "winter-squash",
+        "displayName": "Winter Squash (Butternut)",
+        "scientificName": "Cucurbita moschata",
+        "family": "cucurbit",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 1,
+              "maxVal": 1.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 36,
+                "maxVal": 60,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-15",
+                "maxDate": "06-15",
+                "description": "After last frost, soil above 60\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-01",
+                "maxDate": "05-01",
+                "description": "Start indoors 3-4 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, warm soil",
+                "minDate": "05-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 80,
+          "maxVal": 110,
+          "unit": "days"
+        },
+        "friends": ["Corn", "Beans", "Nasturtiums", "Marigolds", "Radishes"],
+        "foes": ["Potatoes", "Other Squash Varieties"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 24,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "sunflower",
+        "displayName": "Sunflower",
+        "scientificName": "Helianthus annuus",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 1,
+              "maxVal": 1.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost, soil above 50\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-15",
+                "maxDate": "04-15",
+                "description": "Start indoors 2-3 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 70,
+          "maxVal": 100,
+          "unit": "days"
+        },
+        "friends": ["Cucumbers", "Corn", "Squash", "Lettuce", "Beans"],
+        "foes": ["Potatoes", "Pole Beans"],
+        "height": {
+          "minVal": 36,
+          "maxVal": 120,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "marigold",
+        "displayName": "Marigold",
+        "scientificName": "Tagetes spp.",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 8,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-01",
+                "maxDate": "04-01",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 50,
+          "maxVal": 65,
+          "unit": "days"
+        },
+        "friends": [
+          "Tomatoes",
+          "Peppers",
+          "Squash",
+          "Cucumbers",
+          "Beans",
+          "Roses"
+        ],
+        "foes": ["Beans (French)", "Cabbage"],
+        "height": {
+          "minVal": 8,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "nasturtium",
+        "displayName": "Nasturtium",
+        "scientificName": "Tropaeolum majus",
+        "family": "brassicales",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 10,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-15",
+                "maxDate": "04-15",
+                "description": "Start indoors 2-4 weeks before transplanting (direct sow preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 35,
+          "maxVal": 52,
+          "unit": "days"
+        },
+        "friends": [
+          "Cucumbers",
+          "Tomatoes",
+          "Squash",
+          "Brassicas",
+          "Radishes",
+          "Beans"
+        ],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "dahlia",
+        "displayName": "Dahlia",
+        "scientificName": "Dahlia spp.",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-01",
+                "description": "After last frost; plant tubers 4-6 inches deep"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 6,
+                "maxVal": 8,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-01",
+                "maxDate": "04-01",
+                "description": "Start tubers indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-01"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": ["Marigolds", "Zinnias", "Cilantro", "Parsley"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "echinacea",
+        "displayName": "Echinacea (Coneflower)",
+        "scientificName": "Echinacea purpurea",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-01",
+                "maxDate": "06-15",
+                "description": "Spring after frost danger has passed; also fall planting"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-01",
+                "description": "Start indoors 8-10 weeks before last frost (needs cold stratification)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": ["Black-Eyed Susan", "Lavender", "Bee Balm", "Yarrow"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "black-eyed-susan",
+        "displayName": "Black-Eyed Susan",
+        "scientificName": "Rudbeckia hirta",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-01",
+                "maxDate": "06-15",
+                "description": "Spring after last frost; fall sowing also works"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 75,
+          "maxVal": 100,
+          "unit": "days"
+        },
+        "friends": ["Echinacea", "Lavender", "Ornamental Grasses", "Asters"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "yarrow",
+        "displayName": "Yarrow",
+        "scientificName": "Achillea millefolium",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-01",
+                "maxDate": "06-15",
+                "description": "Spring after last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-01",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": ["Echinacea", "Lavender", "Rosemary", "Catmint"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "blanket-flower",
+        "displayName": "Blanket Flower",
+        "scientificName": "Gaillardia x grandiflora",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 120,
+          "unit": "days"
+        },
+        "friends": [
+          "Echinacea",
+          "Black-Eyed Susan",
+          "Lavender",
+          "Ornamental Grasses"
+        ],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 30,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "russian-sage",
+        "displayName": "Russian Sage",
+        "scientificName": "Perovskia atriplicifolia",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost; starts preferred over seed"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-15",
+                "description": "Start indoors 8-10 weeks before transplanting (cuttings preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost, well-drained soil",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 120,
+          "maxVal": 150,
+          "unit": "days"
+        },
+        "friends": ["Lavender", "Echinacea", "Ornamental Grasses", "Yarrow"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 36,
+          "maxVal": 60,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "catmint",
+        "displayName": "Catmint",
+        "scientificName": "Nepeta x faassenii",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-15",
+                "maxDate": "03-15",
+                "description": "Start indoors 6-8 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 80,
+          "maxVal": 100,
+          "unit": "days"
+        },
+        "friends": ["Roses", "Lavender", "Squash", "Brassicas"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "bee-balm",
+        "displayName": "Bee Balm",
+        "scientificName": "Monarda didyma",
+        "family": "mint",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "02-01",
+                "maxDate": "03-15",
+                "description": "Start indoors 8-10 weeks before last frost (needs cold stratification)"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 110,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Peppers", "Echinacea", "Basil"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "zinnia",
+        "displayName": "Zinnia",
+        "scientificName": "Zinnia elegans",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 6,
+                "maxVal": 12,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "05-01",
+                "maxDate": "06-30",
+                "description": "After last frost, soil above 60\u00b0F"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-15",
+                "maxDate": "04-15",
+                "description": "Start indoors 4-6 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "05-01",
+                "maxDate": "06-30"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 75,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Beans", "Squash", "Cucumbers", "Peppers"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 12,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "cosmos",
+        "displayName": "Cosmos",
+        "scientificName": "Cosmos bipinnatus",
+        "family": "aster",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "04-15",
+                "maxDate": "06-15",
+                "description": "After last frost"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "03-15",
+                "maxDate": "04-15",
+                "description": "Start indoors 4-6 weeks before last frost"
+              },
+              "transplantOutdoor": {
+                "condition": "After last frost",
+                "minDate": "04-15",
+                "maxDate": "06-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Squash", "Beans", "Dill"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "sweet-pea-flower",
+        "displayName": "Sweet Pea (Flower)",
+        "scientificName": "Lathyrus odoratus",
+        "family": "legume",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 4,
+                "maxVal": 6,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Early spring as soon as soil is workable; prefers cool weather"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start indoors 4-6 weeks before transplanting; nick or soak seeds"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, tolerates light frost",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 65,
+          "maxVal": 85,
+          "unit": "days"
+        },
+        "friends": ["Beans", "Peas", "Corn", "Alyssum"],
+        "foes": ["None commonly noted"],
+        "height": {
+          "minVal": 48,
+          "maxVal": 96,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "strawberry",
+        "displayName": "Strawberry",
+        "scientificName": "Fragaria \u00d7 ananassa",
+        "family": "rose",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.0625,
+              "maxVal": 0.125,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "03-15",
+                "maxDate": "05-15",
+                "description": "Early spring; plant crowns or starts"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Start seeds indoors 10-12 weeks before transplanting (starts preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, after hard frost risk",
+                "minDate": "03-15",
+                "maxDate": "05-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 60,
+          "maxVal": 90,
+          "unit": "days"
+        },
+        "friends": ["Lettuce", "Spinach", "Beans", "Onions", "Thyme", "Borage"],
+        "foes": ["Brassicas", "Fennel", "Kohlrabi"],
+        "height": {
+          "minVal": 6,
+          "maxVal": 12,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "blueberry",
+        "displayName": "Blueberry",
+        "scientificName": "Vaccinium corymbosum",
+        "family": "heath",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.125,
+              "maxVal": 0.25,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 48,
+                "maxVal": 72,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Late winter to early spring; plant bare-root or container starts"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-01",
+                "maxDate": "02-01",
+                "description": "Starts/bare-root strongly preferred over seed"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, acidic soil (pH 4.5-5.5)",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 365,
+          "maxVal": 730,
+          "unit": "days"
+        },
+        "friends": ["Strawberries", "Rhododendrons", "Azaleas", "Cranberries"],
+        "foes": ["Tomatoes", "Peppers", "Eggplant"],
+        "height": {
+          "minVal": 48,
+          "maxVal": 96,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "raspberry",
+        "displayName": "Raspberry",
+        "scientificName": "Rubus idaeus",
+        "family": "rose",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 24,
+                "maxVal": 36,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Late winter to early spring; plant canes or bare-root"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-15",
+                "maxDate": "02-15",
+                "description": "Canes/bare-root strongly preferred over seed"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 365,
+          "maxVal": 545,
+          "unit": "days"
+        },
+        "friends": ["Garlic", "Tansy", "Yarrow", "Marigolds"],
+        "foes": ["Potatoes", "Blackberries", "Tomatoes"],
+        "height": {
+          "minVal": 36,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "brussels-sprouts",
+        "displayName": "Brussels Sprouts",
+        "scientificName": "Brassica oleracea var. gemmifera",
+        "family": "brassica",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 18,
+                "maxVal": 24,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "06-01",
+                "maxDate": "07-15",
+                "description": "Mid-summer for fall/winter harvest; Seattle's cool falls are ideal"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 2,
+                "maxVal": 3,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "04-15",
+                "maxDate": "06-01",
+                "description": "Start indoors 4-6 weeks before transplanting"
+              },
+              "transplantOutdoor": {
+                "condition": "Transplant mid-summer for fall harvest",
+                "minDate": "06-01",
+                "maxDate": "07-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 90,
+          "maxVal": 130,
+          "unit": "days"
+        },
+        "friends": ["Beets", "Carrots", "Onions", "Dill", "Sage", "Thyme"],
+        "foes": ["Strawberries", "Tomatoes", "Pole Beans"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 36,
+          "unit": "inches"
+        },
+        "growthDuration": "Annual"
+      },
+      {
+        "plantId": "asparagus",
+        "displayName": "Asparagus",
+        "scientificName": "Asparagus officinalis",
+        "family": "asparagus",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.5,
+              "maxVal": 1,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 12,
+                "maxVal": 18,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Early spring; plant crowns 6-8 inches deep in trenches"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-01",
+                "maxDate": "02-01",
+                "description": "Start seeds indoors 12-14 weeks before transplanting (crowns preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable, permanent bed location",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 730,
+          "maxVal": 1095,
+          "unit": "days"
+        },
+        "friends": ["Tomatoes", "Parsley", "Basil", "Marigolds", "Nasturtiums"],
+        "foes": ["Onions", "Garlic", "Potatoes"],
+        "height": {
+          "minVal": 48,
+          "maxVal": 72,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      },
+      {
+        "plantId": "rhubarb",
+        "displayName": "Rhubarb",
+        "scientificName": "Rheum rhabarbarum",
+        "family": "buckwheat",
+        "planting": {
+          "fromSeed": {
+            "depth": {
+              "minVal": 0.25,
+              "maxVal": 0.5,
+              "unit": "inches"
+            },
+            "outdoor": {
+              "spacingBetweenPlants": {
+                "minVal": 36,
+                "maxVal": 48,
+                "unit": "inches"
+              },
+              "whenToPlant": {
+                "minDate": "02-15",
+                "maxDate": "04-15",
+                "description": "Early spring; plant crowns/divisions"
+              }
+            },
+            "indoor": {
+              "spacingBetweenPlants": {
+                "minVal": 3,
+                "maxVal": 4,
+                "unit": "inches"
+              },
+              "whenToStart": {
+                "minDate": "01-01",
+                "maxDate": "02-01",
+                "description": "Start seeds indoors 8-10 weeks before transplanting (divisions preferred)"
+              },
+              "transplantOutdoor": {
+                "condition": "Soil workable",
+                "minDate": "02-15",
+                "maxDate": "04-15"
+              }
+            }
+          }
+        },
+        "timeToRipe": {
+          "minVal": 365,
+          "maxVal": 730,
+          "unit": "days"
+        },
+        "friends": ["Garlic", "Onions", "Strawberries", "Beans", "Brassicas"],
+        "foes": ["Dock", "Sunflowers"],
+        "height": {
+          "minVal": 24,
+          "maxVal": 48,
+          "unit": "inches"
+        },
+        "growthDuration": "Perennial"
+      }
+    ]
   ]
 }
