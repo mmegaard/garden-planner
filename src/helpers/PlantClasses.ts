@@ -1,57 +1,3 @@
-export interface Measurement {
-  minVal: number;
-  maxVal: number;
-  unit: string;
-}
-
-export interface DateRange {
-  minDate: string;
-  maxDate: string;
-  description: string;
-}
-
-export interface TransplantWindow {
-  condition: string;
-  minDate: string;
-  maxDate: string;
-}
-
-export interface OutdoorPlanting {
-  spacingBetweenPlants: Measurement;
-  whenToPlant: DateRange;
-}
-
-export interface IndoorPlanting {
-  spacingBetweenPlants: Measurement;
-  whenToStart: DateRange;
-  transplantOutdoor: TransplantWindow;
-}
-
-export interface FromSeed {
-  depth: Measurement;
-  outdoor: OutdoorPlanting;
-  indoor: IndoorPlanting;
-}
-
-export interface Planting {
-  fromSeed: FromSeed;
-}
-
-export type LifeCycle = "Annual" | "Perennial" | "Biennial";
-
-export interface PlantLibraryItemJson {
-  plantId: string;
-  displayName: string;
-  scientificName: string;
-  family: string;
-  planting: Planting;
-  timeToRipe: Measurement;
-  friends: string[];
-  foes: string[];
-  height: Measurement;
-  growthDuration: LifeCycle;
-}
-
 export class PlantItem {
   name: string;
   position: { x: number; y: number };
@@ -94,6 +40,88 @@ export class PlantItem {
   }
 }
 
+// ─── Nested Interfaces ───────────────────────────────────────────────────────
+
+export interface Measurement {
+  minVal: number;
+  maxVal: number;
+  unit: string;
+}
+
+export interface DateRange {
+  minDate: string;
+  maxDate: string;
+  description: string;
+}
+
+export interface TransplantWindow {
+  condition: string;
+  minDate: string;
+  maxDate: string;
+}
+
+export interface OutdoorPlanting {
+  spacingBetweenPlants: Measurement;
+  whenToPlant: DateRange;
+}
+
+export interface IndoorPlanting {
+  spacingBetweenPlants: Measurement;
+  whenToStart: DateRange;
+  transplantOutdoor: TransplantWindow;
+}
+
+export interface FromSeed {
+  depth: Measurement;
+  outdoor: OutdoorPlanting;
+  indoor: IndoorPlanting;
+}
+
+export interface Planting {
+  fromSeed: FromSeed;
+}
+
+export type LifeCycle = "Annual" | "Perennial" | "Biennial";
+
+// ─── Icon config ─────────────────────────────────────────────────────────────
+
+/**
+ * Describes how to render a plant's icon.
+ *
+ * Think of it like a theatre costume note:
+ *   base  → which actor (the SVG shape)
+ *   color → what colour costume they wear
+ *   scale → how close to the audience they stand (apparent size)
+ */
+export interface PlantIconConfig {
+  /** Key into the icon registry, e.g. "tomato", "pepper", "leafy-green" */
+  base: string;
+  /** Primary fill colour – hex string, e.g. "#FF6347" */
+  color: string;
+  /** Multiplier relative to the default icon size (1 = 100%) */
+  scale: number;
+  /** Optional secondary colour for accents like stems or leaves */
+  accentColor?: string;
+}
+
+// ─── Raw JSON shape (what comes in / goes out) ──────────────────────────────
+
+export interface PlantLibraryItemJson {
+  plantId: string;
+  displayName: string;
+  scientificName: string;
+  family: string;
+  planting: Planting;
+  timeToRipe: Measurement;
+  friends: string[];
+  foes: string[];
+  height: Measurement;
+  growthDuration: LifeCycle;
+  icon: PlantIconConfig;
+}
+
+// ─── Class ───────────────────────────────────────────────────────────────────
+
 export class PlantLibraryItem {
   plantId: string;
   displayName: string;
@@ -105,6 +133,7 @@ export class PlantLibraryItem {
   foes: string[];
   height: Measurement;
   growthDuration: LifeCycle;
+  icon: PlantIconConfig;
 
   constructor(data: PlantLibraryItemJson) {
     this.plantId = data.plantId;
@@ -117,43 +146,26 @@ export class PlantLibraryItem {
     this.foes = [...data.foes];
     this.height = data.height;
     this.growthDuration = data.growthDuration;
+    this.icon = { ...data.icon };
   }
 
   // ── Deserialise ──────────────────────────────────────────────────────────
 
-  /**
-   * Build a PlantLibraryItem from a plain object (e.g. parsed JSON).
-   *
-   * Think of it like a factory assembly line: raw materials (JSON) come in,
-   * and a fully-formed class instance rolls off the end.
-   */
   static fromJson(json: PlantLibraryItemJson): PlantLibraryItem {
     return new PlantLibraryItem(json);
   }
 
-  /**
-   * Convenience helper – parse a raw JSON *string* directly.
-   */
   static fromJsonString(raw: string): PlantLibraryItem {
     const parsed: PlantLibraryItemJson = JSON.parse(raw);
     return PlantLibraryItem.fromJson(parsed);
   }
 
-  /**
-   * Build an array of PlantLibraryItems from a JSON array.
-   */
   static fromJsonArray(items: PlantLibraryItemJson[]): PlantLibraryItem[] {
     return items.map((item) => PlantLibraryItem.fromJson(item));
   }
 
   // ── Serialise ────────────────────────────────────────────────────────────
 
-  /**
-   * Return a plain object that matches the original JSON shape.
-   *
-   * This is the reverse trip on that assembly line – taking the class
-   * instance apart into a simple object that JSON.stringify understands.
-   */
   toJson(): PlantLibraryItemJson {
     return {
       plantId: this.plantId,
@@ -166,12 +178,10 @@ export class PlantLibraryItem {
       foes: [...this.foes],
       height: this.height,
       growthDuration: this.growthDuration,
+      icon: { ...this.icon },
     };
   }
 
-  /**
-   * Serialise straight to a JSON string.
-   */
   toJsonString(pretty = false): string {
     return JSON.stringify(this.toJson(), null, pretty ? 2 : undefined);
   }

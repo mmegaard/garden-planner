@@ -19,3 +19,9 @@
   top: 0;
   right: 0;
 }
+
+.planted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -6,14 +6,18 @@ import GardenContainer from "../GardenContainer";
 import { Button } from "@radix-ui/themes";
 import { Move } from "react-feather";
 import Viewport from "../../helpers/Viewport";
-import Plant from "../Plant";
+import PlantIcon from "../PlantIcon";
 import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
 import { useViewportContext } from "../ViewportProvider";
 import { useObjectContext } from "../ObjectProvider";
-import PlantItem from "@/src/helpers/PlantItem";
-import DraggableComponent from "../DraggableComponent";
+import {
+  PlantLibraryItem,
+  PlantLibraryItemJson,
+  PlantItem,
+} from "@/src/helpers/PlantClasses";
 import CurrentTool from "../CurrentTool/CurrentTool";
+import data from "../../../public/content/data.json";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
@@ -45,7 +49,11 @@ function GardenArea() {
     });
     setPlants(newPlants);
   }
-
+  const plantLibraryMap = new Map(
+    PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map(
+      (p) => [p.plantId, p],
+    ),
+  );
   return (
     <div style={{ display: "inline-block" }}>
       <div
@@ -80,15 +88,18 @@ function GardenArea() {
             //</Draggable>;
           })}
           {plants.map((plant: PlantItem, index) => {
+            const libraryItem = plantLibraryMap.get(plant.name);
             return (
               <Draggable
                 initialPosition={plant.position}
                 key={`${index}-${plant.name}`}
                 setObjectPosition={handleSetObjectPosition}
                 id={plant.id}
-                className={"planted"}
+                className={styles.planted}
               >
-                <Plant name={plant.name}></Plant>
+                {libraryItem && (
+                  <PlantIcon icon={libraryItem.icon} baseSize={48} />
+                )}
               </Draggable>
             );
           })}

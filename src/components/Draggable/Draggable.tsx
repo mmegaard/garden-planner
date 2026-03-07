@@ -3,7 +3,6 @@ import React from "react";
 import { useViewportContext } from "../ViewportProvider";
 import styles from "./Draggable.module.css";
 import { useObjectContext } from "../ObjectProvider";
-import PlantItem from "@/src/helpers/PlantItem";
 interface DraggableProps {
   children: React.ReactNode;
   initialPosition: { x: number; y: number };
@@ -127,6 +126,9 @@ function Draggable({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         width: "100px",
         height: "100px",
         borderRadius: "100%",

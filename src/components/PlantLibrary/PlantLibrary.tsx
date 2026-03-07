@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import data from "@/public/content/data.json";
-import Plant from "../Plant";
+import PlantIcon from "../PlantIcon";
 import { PlantItem, PlantLibraryItem } from "../../helpers/PlantClasses";
 import { useObjectContext } from "../ObjectProvider";
 import { MousePointer } from "react-feather";
@@ -23,7 +23,9 @@ function PlantLibrary() {
       document.removeEventListener("keydown", handleEscapeKey);
     };
   }, []);
-  //TODO: Make the escape key clear the tool
+  const plants = PlantLibraryItem.fromJsonArray(
+    data.plants as PlantLibraryItem[],
+  );
   return (
     <div
       id="plantLibraryContainer"
@@ -33,6 +35,8 @@ function PlantLibrary() {
         justifyContent: "space-around",
         alignItems: "center",
         userSelect: "none",
+        overflow: "scroll",
+        height: "100vh",
       }}
     >
       <div
@@ -49,14 +53,14 @@ function PlantLibrary() {
       >
         <MousePointer width={"100%"} height={"100%"} />
       </div>
-      {data.plants.map((plant: PlantLibraryItem) => {
-        console.log("logging plant", plant);
+      {plants.map((plant: PlantLibraryItem) => {
         //if clicked, make a draggable copy of the plant
         return (
           <div
             key={plant?.scientificName}
             onPointerDown={(event) => handlePointerDown(event, plant.plantId)}
             className="toolSelector"
+            title={plant.displayName}
             style={{
               width: "100px",
               height: "100px",
@@ -64,7 +68,7 @@ function PlantLibrary() {
               borderRadius: "20%",
             }}
           >
-            <Plant name={plant.plantId} />
+            <PlantIcon icon={plant.icon} baseSize={48} />
           </div>
         );
       })}
