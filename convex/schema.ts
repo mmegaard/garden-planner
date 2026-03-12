@@ -29,13 +29,13 @@ const gardenValidator = v.object({
 });
 
 // Box validator
-const boxValidator = v.object({
+export const boxValidator = v.object({
   id: v.number(),
   shape: v.string(),
   width: measurementValidator,
   length: measurementValidator,
   height: measurementValidator,
-  position: positionValidator,
+  position: plantPositionValidator,
 });
 
 // Plant validator
@@ -57,14 +57,12 @@ const defaultViewValidator = v.object({
 // Complete garden layout validator
 export const gardenLayoutValidator = v.object({
   plants: v.array(plantValidator),
+  boxes: v.optional(v.array(boxValidator)),
 });
 
-// You can also extract TypeScript types if needed
-// Example: type GardenLayout = Infer<typeof gardenLayoutValidator>;
-
 export default defineSchema({
-  // Other tables here...
   layouts: defineTable({
     plants: v.array(plantValidator),
+    boxes: v.optional(v.array(boxValidator)),
   })
 });

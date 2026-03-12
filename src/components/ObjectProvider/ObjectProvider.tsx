@@ -1,12 +1,27 @@
 "use client";
 import React from "react";
-import { PlantItem } from "../../helpers/PlantClasses";
+import { PlantItem, Box } from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import layout from "@/public/content/boxes.json";
 interface ObjectProps {
   children: React.ReactNode;
+}
+
+export type DraggableType = "plant" | "container";
+
+export interface PlantFilters {
+  family: string | null;
+  plantableMonth: number | null;
+  matureMonth: number | null;
+}
+
+export interface RegistryEntry {
+  ref: React.RefObject<HTMLDivElement | null>;
+  type: DraggableType;
+  shape: string;
+  id: number;
 }
 
 export const ObjectContext = React.createContext<
@@ -20,6 +35,24 @@ export const ObjectContext = React.createContext<
       setToolPosition: React.Dispatch<
         React.SetStateAction<{ x: number; y: number }>
       >;
+      refRegistry: React.MutableRefObject<Map<string, RegistryEntry>>;
+      registerRef: (id: number, ref: React.RefObject<HTMLDivElement | null>, type: DraggableType, shape: string) => void;
+      unregisterRef: (id: number, type: DraggableType) => void;
+      collidingId: number | null;
+      setCollidingId: React.Dispatch<React.SetStateAction<number | null>>;
+      searchQuery: string;
+      setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+      filters: PlantFilters;
+      setFilters: React.Dispatch<React.SetStateAction<PlantFilters>>;
+      boxes: Box[];
+      setBoxPosition: (id: number, x: number, y: number) => void;
+      selected: { id: number; type: DraggableType } | null;
+      setSelected: React.Dispatch<React.SetStateAction<{ id: number; type: DraggableType } | null>>;
+      deleteSelected: () => void;
+      undo: () => void;
+      redo: () => void;
+      canUndo: boolean;
+      canRedo: boolean;
     }
   | undefined
 >(undefined);
@@ -40,9 +73,9 @@ export function useObjectContext() {
 // });
 function ObjectProvider({ children }: ObjectProps) {
   const layouts = useQuery(api.layouts.get) || [];
-  console.log("checkin query", layouts[0]);
   const plantList = layouts[0]?.plants || [];
   const plants = plantList.map((plant) => PlantItem.fromJson(plant));
+  const boxes: Box[] = (layouts[0]?.boxes as Box[] | undefined) || layout.boxes;
 
   const layoutMutation = useMutation(
     api.layouts.setGarden,
@@ -53,17 +86,67 @@ function ObjectProvider({ children }: ObjectProps) {
         { ...layoutsList[0], plants: args.plants },
         ...layoutsList.slice(1),
       ];
-      console.log(layoutsList);
-      console.log(newLayoutsList);
       localStore.setQuery(api.layouts.get, {}, newLayoutsList);
     }
   });
-  const setPlants = (newPlants: PlantItem[]) => {
-    const jsonPlants = newPlants.map((plant) => plant.toJson());
-    layoutMutation({ plants: jsonPlants });
+
+  const boxesMutation = useMutation(
+    api.layouts.setBoxes,
+  ).withOptimisticUpdate((localStore, args) => {
+    const layoutsList = localStore.getQuery(api.layouts.get);
+    if (layoutsList !== undefined) {
+      const newLayoutsList = [
+        { ...layoutsList[0], boxes: args.boxes },
+        ...layoutsList.slice(1),
+      ];
+      localStore.setQuery(api.layouts.get, {}, newLayoutsList);
+    }
+  });
+
+  const historyStack = React.useRef<{ plants: PlantItem[]; boxes: Box[] }[]>([]);
+  const redoStack = React.useRef<{ plants: PlantItem[]; boxes: Box[] }[]>([]);
+  const [canUndo, setCanUndo] = React.useState(false);
+  const [canRedo, setCanRedo] = React.useState(false);
+
+  const pushHistory = (currentPlants: PlantItem[], currentBoxes: Box[]) => {
+    historyStack.current.push({ plants: currentPlants, boxes: currentBoxes });
+    redoStack.current = [];
+    setCanUndo(true);
+    setCanRedo(false);
   };
+
+  const setPlants = (newPlants: PlantItem[]) => {
+    pushHistory(plants, boxes);
+    layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
+  };
+
+  const setBoxPosition = (id: number, x: number, y: number) => {
+    pushHistory(plants, boxes);
+    const newBoxes = boxes.map((box) =>
+      box.id !== id ? box : { ...box, position: { x, y } },
+    );
+    boxesMutation({ boxes: newBoxes });
+  };
+  const [selected, setSelected] = React.useState<{ id: number; type: DraggableType } | null>(null);
   const [currentTool, setCurrentTool] = React.useState("none");
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
+  const [collidingId, setCollidingId] = React.useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [filters, setFilters] = React.useState<PlantFilters>({
+    family: null,
+    plantableMonth: null,
+    matureMonth: null,
+  });
+  const refRegistry = React.useRef<Map<string, RegistryEntry>>(new Map());
+  const registerRef = React.useCallback(
+    (id: number, ref: React.RefObject<HTMLDivElement | null>, type: DraggableType, shape: string) => {
+      refRegistry.current.set(`${type}-${id}`, { ref, type, shape, id });
+    },
+    [],
+  );
+  const unregisterRef = React.useCallback((id: number, type: DraggableType) => {
+    refRegistry.current.delete(`${type}-${id}`);
+  }, []);
   const { viewportRef, viewport, clientSize, worldRef } = useViewportContext();
 
   React.useEffect(() => {
@@ -129,10 +212,11 @@ function ObjectProvider({ children }: ObjectProps) {
     function handlePointerUp(event: PointerEvent) {
       event.preventDefault();
       if (currentTool !== "none") {
+        const newId = plants.length > 0 ? Math.max(...plants.map((p) => p.id)) + 1 : 1;
         const newPlant: PlantItem = new PlantItem(
           currentTool,
           toolPosition,
-          plants.length + 1,
+          newId,
         );
         const newPlants = [...plants, newPlant];
         setPlants(newPlants);
@@ -146,6 +230,62 @@ function ObjectProvider({ children }: ObjectProps) {
     };
   }, [currentTool, toolPosition, clientSize, viewport]);
 
+  const deleteSelected = React.useCallback(() => {
+    if (!selected) return;
+    pushHistory(plants, boxes);
+    if (selected.type === "plant") {
+      const newPlants = plants.filter((p) => p.id !== selected.id);
+      layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
+    } else {
+      const newBoxes = boxes.filter((b) => b.id !== selected.id);
+      const newPlants = plants.filter((p) => p.boxId !== selected.id);
+      boxesMutation({ boxes: newBoxes });
+      layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
+    }
+    setSelected(null);
+  }, [selected, plants, boxes]);
+
+  const undo = React.useCallback(() => {
+    const prev = historyStack.current.pop();
+    if (!prev) return;
+    redoStack.current.push({ plants, boxes });
+    layoutMutation({ plants: prev.plants.map((p) => p.toJson()) });
+    boxesMutation({ boxes: prev.boxes });
+    setCanUndo(historyStack.current.length > 0);
+    setCanRedo(true);
+  }, [plants, boxes]);
+
+  const redo = React.useCallback(() => {
+    const next = redoStack.current.pop();
+    if (!next) return;
+    historyStack.current.push({ plants, boxes });
+    layoutMutation({ plants: next.plants.map((p) => p.toJson()) });
+    boxesMutation({ boxes: next.boxes });
+    setCanUndo(true);
+    setCanRedo(redoStack.current.length > 0);
+  }, [plants, boxes]);
+
+  React.useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Delete" || event.key === "Backspace") {
+        deleteSelected();
+      }
+      if ((event.ctrlKey || event.metaKey) && !event.shiftKey && event.key === "z") {
+        event.preventDefault();
+        undo();
+      }
+      if (
+        ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === "z") ||
+        ((event.ctrlKey || event.metaKey) && event.key === "y")
+      ) {
+        event.preventDefault();
+        redo();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [deleteSelected, undo, redo]);
+
   const contextValue = React.useMemo(
     () => ({
       plants,
@@ -154,8 +294,26 @@ function ObjectProvider({ children }: ObjectProps) {
       setCurrentTool,
       toolPosition,
       setToolPosition,
+      refRegistry,
+      registerRef,
+      unregisterRef,
+      collidingId,
+      setCollidingId,
+      searchQuery,
+      setSearchQuery,
+      filters,
+      setFilters,
+      boxes,
+      setBoxPosition,
+      selected,
+      setSelected,
+      deleteSelected,
+      undo,
+      redo,
+      canUndo,
+      canRedo,
     }),
-    [plants, currentTool, toolPosition, clientSize, viewport],
+    [plants, boxes, currentTool, toolPosition, clientSize, viewport, collidingId, searchQuery, filters, selected, deleteSelected, undo, redo, canUndo, canRedo],
   );
 
   return (

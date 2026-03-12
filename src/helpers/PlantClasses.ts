@@ -1,3 +1,12 @@
+export interface Box {
+  id: number;
+  shape: string;
+  width: { value: number; measure: string };
+  length: { value: number; measure: string };
+  height: { value: number; measure: string };
+  position: { x: number; y: number };
+}
+
 export class PlantItem {
   name: string;
   position: { x: number; y: number };

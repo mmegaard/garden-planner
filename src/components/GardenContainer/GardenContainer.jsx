@@ -3,17 +3,14 @@ import styles from "./GardenContainer.module.css";
 import { useViewportContext } from "../ViewportProvider";
 
 function GardenContainer({ box }) {
-  const { viewportRef, viewport, clientSize } =
-    useViewportContext();
-    const width = box.width.value * clientSize.xScale
+  const { viewportRef, viewport, clientSize } = useViewportContext();
+  const width = box.width.value * clientSize.xScale;
   const height = box.length.value * clientSize.yScale;
   return (
     <div
       className={`${styles.gardencontainer} bounding`}
       style={{
-        top: `${box.position.top * clientSize.xScale}px`,
-        left: `${box.position.left * clientSize.yScale}px`,
-        width: `${width }px`,
+        width: `${width}px`,
         height: `${height}px`,
       }}
     ></div>

@@ -6,7 +6,7 @@
       "width": { "value": 2, "measure": "ft" },
       "length": { "value": 5, "measure": "ft" },
       "height": { "value": 2, "measure": "ft" },
-      "position": { "top": 4, "left": 1 }
+      "position": { "y": 4, "x": 1 }
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "width": { "value": 3, "measure": "ft" },
       "length": { "value": 5, "measure": "ft" },
       "height": { "value": 2, "measure": "ft" },
-      "position": { "top": 4, "left": 5 }
+      "position": { "y": 4, "x": 5 }
     },
     {
       "id": 3,
@@ -22,15 +22,40 @@
       "width": { "value": 5, "measure": "ft" },
       "length": { "value": 2, "measure": "ft" },
       "height": { "value": 2, "measure": "ft" },
-      "position": { "top": 1, "left": 3 }
+      "position": { "y": 1, "x": 3 }
     }
   ],
   "plants": [
-    { "id": 1, "boxId": 2, "name": "roma-tomato", "position": { "x": 1.5, "y": 4 } },
-    { "id": 2, "boxId": 2, "name": "roma-tomato", "position": { "x": 1.5, "y": 6 } },
-    { "id":4, "boxId": 2, "name": "marigold", "position": { "x": 1.5, "y": 5 } },
-    { "id":5, "boxId": 2, "name": "marigold", "position": { "x": 1.5, "y": 7 } },
-    { "id":6, "boxId": 2, "name": "roma-tomato", "position": { "x": 1.5, "y": 8 } }
+    {
+      "id": 1,
+      "boxId": 2,
+      "name": "roma-tomato",
+      "position": { "x": 1.5, "y": 4 }
+    },
+    {
+      "id": 2,
+      "boxId": 2,
+      "name": "roma-tomato",
+      "position": { "x": 1.5, "y": 6 }
+    },
+    {
+      "id": 4,
+      "boxId": 2,
+      "name": "marigold",
+      "position": { "x": 1.5, "y": 5 }
+    },
+    {
+      "id": 5,
+      "boxId": 2,
+      "name": "marigold",
+      "position": { "x": 1.5, "y": 7 }
+    },
+    {
+      "id": 6,
+      "boxId": 2,
+      "name": "roma-tomato",
+      "position": { "x": 1.5, "y": 8 }
+    }
   ],
   "defaultView": {
     "width": 10,
