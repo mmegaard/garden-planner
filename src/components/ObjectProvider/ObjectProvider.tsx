@@ -4,7 +4,6 @@ import { PlantItem, Box } from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import layout from "@/public/content/boxes.json";
 interface ObjectProps {
   children: React.ReactNode;
 }
@@ -38,8 +37,8 @@ export const ObjectContext = React.createContext<
       refRegistry: React.MutableRefObject<Map<string, RegistryEntry>>;
       registerRef: (id: number, ref: React.RefObject<HTMLDivElement | null>, type: DraggableType, shape: string) => void;
       unregisterRef: (id: number, type: DraggableType) => void;
-      collidingId: number | null;
-      setCollidingId: React.Dispatch<React.SetStateAction<number | null>>;
+      collidingId: Set<number>;
+      setCollidingId: React.Dispatch<React.SetStateAction<Set<number>>>;
       searchQuery: string;
       setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
       filters: PlantFilters;
@@ -75,7 +74,7 @@ function ObjectProvider({ children }: ObjectProps) {
   const layouts = useQuery(api.layouts.get) || [];
   const plantList = layouts[0]?.plants || [];
   const plants = plantList.map((plant) => PlantItem.fromJson(plant));
-  const boxes: Box[] = (layouts[0]?.boxes as Box[] | undefined) || layout.boxes;
+  const boxes: Box[] = (layouts[0]?.boxes as Box[] | undefined) ?? [];
 
   const layoutMutation = useMutation(
     api.layouts.setGarden,
@@ -130,7 +129,7 @@ function ObjectProvider({ children }: ObjectProps) {
   const [selected, setSelected] = React.useState<{ id: number; type: DraggableType } | null>(null);
   const [currentTool, setCurrentTool] = React.useState("none");
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
-  const [collidingId, setCollidingId] = React.useState<number | null>(null);
+  const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filters, setFilters] = React.useState<PlantFilters>({
     family: null,

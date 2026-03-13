@@ -78,7 +78,7 @@ function Draggable({
     if (!drag) return;
 
     let containerCollidingId: number | null = null;
-    let plantCollidingId: number | null = null;
+    const plantCollidingIds = new Set<number>();
 
     for (const [
       compositeKey,
@@ -102,7 +102,7 @@ function Draggable({
         if (!fullyInside && isColliding) {
           containerCollidingId = otherId;
         }
-      } else {
+      } else if (type !== "container") {
         const bothCircles = shape === "circle" && otherShape === "circle";
         let isColliding: boolean;
         if (bothCircles) {
@@ -115,7 +115,6 @@ function Draggable({
           const distance = Math.sqrt((cx1 - cx2) ** 2 + (cy1 - cy2) ** 2);
           isColliding = distance < r1 + r2;
         } else {
-          console.log("checking collision with container");
           isColliding =
             drag.left < target.right &&
             drag.right > target.left &&
@@ -123,26 +122,27 @@ function Draggable({
             drag.bottom > target.top;
         }
         if (isColliding) {
-          plantCollidingId = otherId;
+          plantCollidingIds.add(otherId);
         }
       }
     }
 
     if (containerCollidingId !== null) {
       setValidity(COLORS.red.value);
-      setCollidingId(plantCollidingId ?? containerCollidingId);
-    } else if (plantCollidingId !== null) {
+      setCollidingId(plantCollidingIds);
+    } else if (plantCollidingIds.size > 0) {
       setValidity(COLORS.yellow.value);
-      setCollidingId(plantCollidingId);
+      setCollidingId(plantCollidingIds);
     } else {
       setValidity(COLORS.green.value);
-      setCollidingId(null);
+      setCollidingId(new Set());
     }
   }
 
   function handlePointerDown(event: React.PointerEvent) {
     event.preventDefault();
     setIsDragging(true);
+    checkCollision();
     event.currentTarget.setPointerCapture(event.pointerId);
     const rectDrag = draggableRef.current?.getBoundingClientRect()!;
     const offsetX = event.clientX - rectDrag.left;
@@ -172,7 +172,7 @@ function Draggable({
   function handlePointerUp(event: React.PointerEvent) {
     event.preventDefault();
     setIsDragging(false);
-    setCollidingId(null);
+    setCollidingId(new Set());
     event.currentTarget.releasePointerCapture(event.pointerId);
     if (pointerDownPos.current) {
       const dx = event.clientX - pointerDownPos.current.x;
@@ -197,10 +197,10 @@ function Draggable({
       style={{
         backgroundColor: isDragging
           ? validity
-          : collidingId === id
+          : collidingId.has(id)
           ? COLORS.red.value
           : "",
-        opacity: isDragging || collidingId == id ? ".5" : "1",
+        opacity: isDragging || collidingId.has(id) ? ".5" : "1",
         borderRadius: shape === "circle" ? "50%" : "0",
         outline: isSelected ? "2px solid #4A90D9" : "none",
         outlineOffset: "2px",
