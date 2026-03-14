@@ -2,19 +2,44 @@
 import React, { useEffect, useMemo } from "react";
 import data from "@/public/content/data.json";
 import Plant from "../Plant";
-import { PlantLibraryItem, PlantLibraryItemJson } from "../../helpers/PlantClasses";
+import {
+  PlantLibraryItem,
+  PlantLibraryItemJson,
+} from "../../helpers/PlantClasses";
 import { useObjectContext } from "../ObjectProvider";
 import { MousePointer } from "react-feather";
 
 const MONTHS = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const ALL_FAMILIES = [
-  "allium", "amaranth", "asparagus", "aster", "brassica", "brassicales",
-  "buckwheat", "cucurbit", "grass", "heath", "legume", "mint",
-  "nightshade", "rose", "umbellifer",
+  "allium",
+  "amaranth",
+  "asparagus",
+  "aster",
+  "brassica",
+  "brassicales",
+  "buckwheat",
+  "cucurbit",
+  "grass",
+  "heath",
+  "legume",
+  "mint",
+  "nightshade",
+  "rose",
+  "umbellifer",
 ];
 
 function addDaysToMonth(mmdd: string, days: number): number {
@@ -25,9 +50,17 @@ function addDaysToMonth(mmdd: string, days: number): number {
 }
 
 function PlantLibrary() {
-  const { currentTool, setCurrentTool, searchQuery, setSearchQuery, filters, setFilters } = useObjectContext();
+  const {
+    currentTool,
+    setCurrentTool,
+    searchQuery,
+    setSearchQuery,
+    filters,
+    setFilters,
+  } = useObjectContext();
 
   function handlePointerDown(event: React.PointerEvent, plantId: string) {
+    console.log("where am I?", event, plantId);
     setCurrentTool(plantId);
   }
 
@@ -64,20 +97,28 @@ function PlantLibrary() {
       }
 
       if (filters.plantableMonth !== null) {
-        const { minDate, maxDate } = plant.planting.fromSeed.outdoor.whenToPlant;
+        const { minDate, maxDate } =
+          plant.planting.fromSeed.outdoor.whenToPlant;
         const minMonth = parseInt(minDate.split("-")[0]);
         const maxMonth = parseInt(maxDate.split("-")[0]);
-        if (filters.plantableMonth < minMonth || filters.plantableMonth > maxMonth) {
+        if (
+          filters.plantableMonth < minMonth ||
+          filters.plantableMonth > maxMonth
+        ) {
           return false;
         }
       }
 
       if (filters.matureMonth !== null) {
-        const { minDate, maxDate } = plant.planting.fromSeed.outdoor.whenToPlant;
+        const { minDate, maxDate } =
+          plant.planting.fromSeed.outdoor.whenToPlant;
         const { minVal, maxVal } = plant.timeToRipe;
         const earliestMature = addDaysToMonth(minDate, minVal);
         const latestMature = addDaysToMonth(maxDate, maxVal);
-        if (filters.matureMonth < earliestMature || filters.matureMonth > latestMature) {
+        if (
+          filters.matureMonth < earliestMature ||
+          filters.matureMonth > latestMature
+        ) {
           return false;
         }
       }
@@ -86,7 +127,10 @@ function PlantLibrary() {
     });
   }, [searchQuery, filters]);
 
-  function setFilter<K extends keyof typeof filters>(key: K, value: typeof filters[K]) {
+  function setFilter<K extends keyof typeof filters>(
+    key: K,
+    value: (typeof filters)[K],
+  ) {
     setFilters((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -119,29 +163,45 @@ function PlantLibrary() {
       >
         <option value="">All families</option>
         {ALL_FAMILIES.map((f) => (
-          <option key={f} value={f}>{f}</option>
+          <option key={f} value={f}>
+            {f}
+          </option>
         ))}
       </select>
 
       <select
         value={filters.plantableMonth ?? ""}
-        onChange={(e) => setFilter("plantableMonth", e.target.value ? parseInt(e.target.value) : null)}
+        onChange={(e) =>
+          setFilter(
+            "plantableMonth",
+            e.target.value ? parseInt(e.target.value) : null,
+          )
+        }
         style={{ width: "100%" }}
       >
         <option value="">Plantable any month</option>
         {MONTHS.map((name, i) => (
-          <option key={name} value={i + 1}>{name}</option>
+          <option key={name} value={i + 1}>
+            {name}
+          </option>
         ))}
       </select>
 
       <select
         value={filters.matureMonth ?? ""}
-        onChange={(e) => setFilter("matureMonth", e.target.value ? parseInt(e.target.value) : null)}
+        onChange={(e) =>
+          setFilter(
+            "matureMonth",
+            e.target.value ? parseInt(e.target.value) : null,
+          )
+        }
         style={{ width: "100%" }}
       >
         <option value="">Mature any month</option>
         {MONTHS.map((name, i) => (
-          <option key={name} value={i + 1}>{name}</option>
+          <option key={name} value={i + 1}>
+            {name}
+          </option>
         ))}
       </select>
 
@@ -167,17 +227,18 @@ function PlantLibrary() {
           className="toolSelector"
           title={plant.displayName}
           style={{
-            width: "100px",
-            height: "100px",
+            width: "max-content%",
+            height: "max-content",
+            padding: "50px 0px",
             backgroundColor: currentTool === plant.plantId ? "#acfda0" : "",
             borderRadius: "20%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20%",
+            overflow: "hidden",
           }}
         >
-          <Plant plant={plant} icon={plant.icon} />
+          <Plant plant={plant} icon={plant.icon} displaySize={100} />
         </div>
       ))}
     </div>

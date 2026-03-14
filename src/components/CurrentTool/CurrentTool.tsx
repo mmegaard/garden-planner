@@ -2,27 +2,40 @@
 import React from "react";
 import { useViewportContext } from "../ViewportProvider";
 import { useObjectContext } from "../ObjectProvider";
+import Plant from "../Plant";
+import { PlantLibraryItem, PlantLibraryItemJson } from "@/src/helpers/PlantClasses";
+import data from "@/public/content/data.json";
+
+const plantLibraryMap = new Map(
+  PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map((p) => [p.plantId, p])
+);
+
 interface CurrentToolProps {
-  tool:string
+  tool: string;
 }
 
 function CurrentTool({ tool }: CurrentToolProps) {
-  const{currentTool,toolPosition} =useObjectContext()
-  const {clientSize,viewport} = useViewportContext();
-  const imgWidth = 100 * (clientSize.width / viewport.width / clientSize.xScale);
-  const imgHeight = 100 * (clientSize.height / viewport.height / clientSize.yScale);
-  const imgX = toolPosition.x * clientSize.xScale;
-  const imgY = toolPosition.y * clientSize.yScale;
+  const { currentTool, toolPosition } = useObjectContext();
+  const { clientSize, viewport } = useViewportContext();
+  const scale = clientSize.width / viewport.width;
+  const imgX = (toolPosition.x - viewport.x) * scale;
+  const imgY = (toolPosition.y - viewport.y) * scale;
+
+  const libraryItem = plantLibraryMap.get(currentTool);
+  if (!libraryItem) return null;
+
   return (
-    <img src={`${currentTool}.svg`}
-    alt={`${currentTool}`}
-    style={{display: tool === 'none' ? tool : "inline-block",
-        position: "absolute", 
+    <div
+      style={{
+        position: "absolute",
         left: imgX,
         top: imgY,
-        width: `${imgWidth}px`, 
-        height: `${imgHeight}px`}} />
-    
+        pointerEvents: "none",
+        opacity: 0.7,
+      }}
+    >
+      <Plant plant={libraryItem} icon={libraryItem.icon} displaySize={100} />
+    </div>
   );
 }
 

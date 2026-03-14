@@ -179,10 +179,8 @@ function ObjectProvider({ children }: ObjectProps) {
           ",",
           event.clientY - rect.top,
         );
-        const xOffset =
-          (100 * (clientSize.width / viewport.width / clientSize.xScale)) / 2;
-        const yOffset =
-          (100 * (clientSize.height / viewport.height / clientSize.yScale)) / 2;
+        const xOffset = 50;
+        const yOffset = 50;
         //console.log({xOffset})
         //mouse position relative to viewport
         const x = event.clientX - rect.left - xOffset;

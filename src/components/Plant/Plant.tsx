@@ -12,15 +12,18 @@ interface PlantProps {
   /** The text to display inside the button */
   plant: PlantLibraryItem;
   icon: PlantIconConfig;
+  displaySize?: number;
 }
 
-function Plant({ plant, icon }: PlantProps) {
+function Plant({ plant, icon, displaySize }: PlantProps) {
   //TODO: give the plant a size based on it's attributes from plant. It will drive the collision stuff in draggable.
   const { clientSize } = useViewportContext();
   const diameterInFeet =
     plant.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12;
-  const width = diameterInFeet * clientSize.xScale;
-  const height = diameterInFeet * clientSize.yScale;
+  const width = displaySize ?? diameterInFeet * clientSize.xScale;
+  const height = displaySize ?? diameterInFeet * clientSize.yScale;
+  const baseSize = displaySize ? Math.round(displaySize / icon.scale) : 48;
+
   return (
     <div
       style={{
@@ -31,7 +34,7 @@ function Plant({ plant, icon }: PlantProps) {
         justifyContent: "center",
       }}
     >
-      <PlantIcon icon={icon} baseSize={48} />
+      <PlantIcon icon={icon} baseSize={baseSize} />
     </div>
   );
 }

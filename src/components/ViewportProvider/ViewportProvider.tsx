@@ -69,22 +69,20 @@ function ViewportProvider({ children }: ViewportProps) {
     const updateDimensions = () => {
 
         if (viewportRef.current) {
+          const scale = viewportRef.current.clientWidth / viewport.width;
           setClientSize({
             width: viewportRef.current.clientWidth,
-            height: viewportRef.current.clientHeight,
-            xScale: viewportRef.current.clientWidth / viewport.width,
-            yScale: viewportRef.current.clientHeight / viewport.height,
+            height: viewportRef.current.clientWidth,
+            xScale: scale,
+            yScale: scale,
           });
         }
       
-    }; // Get initial dimensions
-   //updateDimensions();
+    };
 
-    // Update dimensions when window resizes
-    //window.addEventListener("resize", updateDimensions);
-
-    // Cleanup
-    //return () => window.removeEventListener("resize", updateDimensions);
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   //ZOOMING
