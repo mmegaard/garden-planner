@@ -1,9 +1,14 @@
 "use client";
 import React from "react";
-import { PlantItem, Box } from "../../helpers/PlantClasses";
+import { PlantItem, Box, PlantLibraryItem, PlantLibraryItemJson } from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import data from "@/public/content/data.json";
+
+const plantLibraryMap = new Map(
+  PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map((p) => [p.plantId, p])
+);
 interface ObjectProps {
   children: React.ReactNode;
 }
@@ -179,12 +184,9 @@ function ObjectProvider({ children }: ObjectProps) {
           ",",
           event.clientY - rect.top,
         );
-        const xOffset = 50;
-        const yOffset = 50;
-        //console.log({xOffset})
         //mouse position relative to viewport
-        const x = event.clientX - rect.left - xOffset;
-        const y = event.clientY - rect.top - yOffset;
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
         //console.log('current position in client', x,y)
         const worldCoords = viewport.screenToWorld(
           x / clientSize.width,
@@ -210,9 +212,13 @@ function ObjectProvider({ children }: ObjectProps) {
       event.preventDefault();
       if (currentTool !== "none") {
         const newId = plants.length > 0 ? Math.max(...plants.map((p) => p.id)) + 1 : 1;
+        const libraryItem = plantLibraryMap.get(currentTool);
+        const radius = libraryItem
+          ? (libraryItem.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12) / 2
+          : 0;
         const newPlant: PlantItem = new PlantItem(
           currentTool,
-          toolPosition,
+          { x: toolPosition.x - radius, y: toolPosition.y - radius },
           newId,
         );
         const newPlants = [...plants, newPlant];

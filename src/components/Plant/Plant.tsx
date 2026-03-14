@@ -22,7 +22,7 @@ function Plant({ plant, icon, displaySize }: PlantProps) {
     plant.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12;
   const width = displaySize ?? diameterInFeet * clientSize.xScale;
   const height = displaySize ?? diameterInFeet * clientSize.yScale;
-  const baseSize = displaySize ? Math.round(displaySize / icon.scale) : 48;
+  const baseSize = Math.round(width / icon.scale);
 
   return (
     <div
