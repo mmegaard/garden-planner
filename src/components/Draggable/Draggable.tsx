@@ -2,16 +2,17 @@
 import React from "react";
 import { useViewportContext } from "../ViewportProvider";
 import styles from "./Draggable.module.css";
-import { useObjectContext, DraggableType } from "../ObjectProvider";
+import { useObjectContext } from "../ObjectProvider";
+import { WorldObject } from "@/src/helpers/PlantClasses";
 interface DraggableProps {
   children: React.ReactNode;
   initialPosition: { x: number; y: number };
   setObjectPosition: (id: number, x: number, y: number) => void;
-  id: number;
-  type: DraggableType;
+  object: WorldObject;
   shape: string;
   className?: string;
   dragging?: boolean;
+  enabled: boolean;
 }
 
 const COLORS = {
@@ -41,10 +42,9 @@ function Draggable({
   children,
   initialPosition,
   setObjectPosition,
-  id,
-  type,
+  object,
   shape,
-  className,
+  enabled,
   dragging,
 }: DraggableProps) {
   const draggableRef = React.useRef<HTMLDivElement>(null);
@@ -55,6 +55,8 @@ function Draggable({
   const [isDragging, setIsDragging] = React.useState(dragging || false);
   const { viewportRef, viewport, clientSize } = useViewportContext();
   const {
+    plants,
+    containers: containers,
     refRegistry,
     registerRef,
     unregisterRef,
@@ -63,15 +65,15 @@ function Draggable({
     selected,
     setSelected,
   } = useObjectContext();
-  const isSelected = selected?.id === id;
+  const isSelected = selected?.id === object.id;
   const pointerDownPos = React.useRef<{ x: number; y: number } | null>(null);
   const [validity, setValidity] = React.useState<string>("");
   const [offset, setOffset] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {
-    registerRef(id, draggableRef, type, shape);
-    return () => unregisterRef(id, type);
-  }, [id, type, shape]);
+    registerRef(object.id, draggableRef, object.type, shape);
+    return () => unregisterRef(object.id, object.type);
+  }, [object.id, object.type, shape]);
 
   function checkCollision() {
     const drag = draggableRef.current?.getBoundingClientRect();
@@ -84,7 +86,7 @@ function Draggable({
       compositeKey,
       { ref, type: otherType, shape: otherShape, id: otherId },
     ] of refRegistry.current) {
-      if (compositeKey === `${type}-${id}`) continue;
+      if (compositeKey === `${object.type}-${object.id}`) continue;
       const target = ref.current?.getBoundingClientRect();
       if (!target) continue;
 
@@ -102,7 +104,7 @@ function Draggable({
         if (!fullyInside && isColliding) {
           containerCollidingId = otherId;
         }
-      } else if (type !== "container") {
+      } else if (object.type !== "container") {
         const bothCircles = shape === "circle" && otherShape === "circle";
         let isColliding: boolean;
         if (bothCircles) {
@@ -140,6 +142,7 @@ function Draggable({
   }
 
   function handlePointerDown(event: React.PointerEvent) {
+    if (enabled) return;
     event.preventDefault();
     setIsDragging(true);
     checkCollision();
@@ -170,6 +173,7 @@ function Draggable({
   }
 
   function handlePointerUp(event: React.PointerEvent) {
+    if (enabled) return;
     event.preventDefault();
     setIsDragging(false);
     setCollidingId(new Set());
@@ -178,13 +182,21 @@ function Draggable({
       const dx = event.clientX - pointerDownPos.current.x;
       const dy = event.clientY - pointerDownPos.current.y;
       if (Math.sqrt(dx * dx + dy * dy) < 8) {
-        setSelected(isSelected ? null : { id, type });
+        console.log("object is", object);
+        if (object.type === "plant") {
+          setSelected(plants.find((plant) => plant.id === object.id) ?? null);
+        } else if (object.type === "container") {
+          setSelected(
+            containers.find((container) => container.id === object.id) ?? null,
+          );
+        }
+
         pointerDownPos.current = null;
         return;
       }
       pointerDownPos.current = null;
     }
-    setObjectPosition(id, dragPosition.x, dragPosition.y);
+    setObjectPosition(object.id, dragPosition.x, dragPosition.y);
   }
 
   return (
@@ -197,15 +209,21 @@ function Draggable({
       style={{
         backgroundColor: isDragging
           ? validity
-          : collidingId.has(id)
+          : collidingId.has(object.id)
           ? COLORS.red.value
           : "",
-        opacity: isDragging || collidingId.has(id) ? ".5" : "1",
+        opacity: isDragging || collidingId.has(object.id) ? ".5" : "1",
         borderRadius: shape === "circle" ? "50%" : "0",
         outline: isSelected ? "2px solid #4A90D9" : "none",
         outlineOffset: "2px",
         zIndex:
-          type === "container" ? (isSelected ? 1 : 0) : isSelected ? 3 : 2,
+          object.type === "container"
+            ? isSelected
+              ? 1
+              : 0
+            : isSelected
+            ? 3
+            : 2,
         position: "absolute",
         left:
           (isDragging ? dragPosition.x : initialPosition.x) * clientSize.xScale,

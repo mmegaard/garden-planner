@@ -8,7 +8,7 @@ import {
 } from "../../helpers/PlantClasses";
 import { useObjectContext } from "../ObjectProvider";
 import { MousePointer } from "react-feather";
-
+import styles from "./PlantLibrary.module.css";
 const MONTHS = [
   "Jan",
   "Feb",
@@ -136,111 +136,119 @@ function PlantLibrary() {
 
   return (
     <div
-      id="plantLibraryContainer"
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        userSelect: "none",
-        overflow: "scroll",
-        height: "100vh",
-        gap: "8px",
-        padding: "8px",
+        width: "120px",
       }}
     >
-      <input
-        type="text"
-        placeholder="Search plants..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        style={{ width: "100%", padding: "6px 8px", boxSizing: "border-box" }}
-      />
+      <div className={styles.sticky}>
+        <input
+          type="text"
+          placeholder="Search plants..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: "100%", padding: "6px 8px", boxSizing: "border-box" }}
+        />
 
-      <select
-        value={filters.family ?? ""}
-        onChange={(e) => setFilter("family", e.target.value || null)}
-        style={{ width: "100%" }}
-      >
-        <option value="">All families</option>
-        {ALL_FAMILIES.map((f) => (
-          <option key={f} value={f}>
-            {f}
-          </option>
-        ))}
-      </select>
+        <select
+          value={filters.family ?? ""}
+          onChange={(e) => setFilter("family", e.target.value || null)}
+          style={{ width: "100%" }}
+        >
+          <option value="">All families</option>
+          {ALL_FAMILIES.map((f) => (
+            <option key={f} value={f}>
+              {f}
+            </option>
+          ))}
+        </select>
 
-      <select
-        value={filters.plantableMonth ?? ""}
-        onChange={(e) =>
-          setFilter(
-            "plantableMonth",
-            e.target.value ? parseInt(e.target.value) : null,
-          )
-        }
-        style={{ width: "100%" }}
-      >
-        <option value="">Plantable any month</option>
-        {MONTHS.map((name, i) => (
-          <option key={name} value={i + 1}>
-            {name}
-          </option>
-        ))}
-      </select>
+        <select
+          value={filters.plantableMonth ?? ""}
+          onChange={(e) =>
+            setFilter(
+              "plantableMonth",
+              e.target.value ? parseInt(e.target.value) : null,
+            )
+          }
+          style={{ width: "100%" }}
+        >
+          <option value="">Plantable any month</option>
+          {MONTHS.map((name, i) => (
+            <option key={name} value={i + 1}>
+              {name}
+            </option>
+          ))}
+        </select>
 
-      <select
-        value={filters.matureMonth ?? ""}
-        onChange={(e) =>
-          setFilter(
-            "matureMonth",
-            e.target.value ? parseInt(e.target.value) : null,
-          )
-        }
-        style={{ width: "100%" }}
-      >
-        <option value="">Mature any month</option>
-        {MONTHS.map((name, i) => (
-          <option key={name} value={i + 1}>
-            {name}
-          </option>
-        ))}
-      </select>
+        <select
+          value={filters.matureMonth ?? ""}
+          onChange={(e) =>
+            setFilter(
+              "matureMonth",
+              e.target.value ? parseInt(e.target.value) : null,
+            )
+          }
+          style={{ width: "100%" }}
+        >
+          <option value="">Mature any month</option>
+          {MONTHS.map((name, i) => (
+            <option key={name} value={i + 1}>
+              {name}
+            </option>
+          ))}
+        </select>
 
-      <div
-        key={"pointericon"}
-        onPointerDown={(event) => handlePointerDown(event, "none")}
-        className="toolSelector"
-        style={{
-          padding: "20%",
-          width: "100px",
-          height: "100px",
-          borderRadius: "20%",
-          backgroundColor: currentTool === "none" ? "#acfda0" : "",
-        }}
-      >
-        <MousePointer width={"100%"} height={"100%"} />
-      </div>
-
-      {filteredPlants.map((plant: PlantLibraryItem) => (
         <div
-          key={plant?.scientificName}
-          onPointerDown={(event) => handlePointerDown(event, plant.plantId)}
+          key={"pointericon"}
+          onPointerDown={(event) => handlePointerDown(event, "none")}
           className="toolSelector"
-          title={plant.displayName}
           style={{
-            width: "max-content%",
-            height: "max-content",
-            padding: "50px 0px",
-            backgroundColor: currentTool === plant.plantId ? "#acfda0" : "",
+            width: "100px",
+            padding: "5px",
+            height: "100px",
             borderRadius: "20%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
+            backgroundColor: currentTool === "none" ? "#acfda0" : "",
           }}
         >
-          <Plant plant={plant} icon={plant.icon} displaySize={100} />
+          <MousePointer width={"100%"} height={"100%"} />
         </div>
-      ))}
+      </div>
+      <div
+        id="plantLibraryContainer"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          userSelect: "none",
+          height: "100vh",
+          overflow: "scroll",
+          gap: "8px",
+          padding: "8px",
+          position: "fixed",
+          top: "200px",
+        }}
+      >
+        {filteredPlants.map((plant: PlantLibraryItem) => (
+          <div
+            key={plant?.scientificName}
+            onPointerDown={(event) => handlePointerDown(event, plant.plantId)}
+            className="toolSelector"
+            title={plant.displayName}
+            style={{
+              width: "max-content%",
+              height: "max-content",
+              padding: "5px 0px",
+              backgroundColor: currentTool === plant.plantId ? "#acfda0" : "",
+              borderRadius: "20%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Plant plant={plant} icon={plant.icon} displaySize={100} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

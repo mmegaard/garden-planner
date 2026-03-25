@@ -1,5 +1,8 @@
-export interface Box {
+export type WorldObject = Container | PlantItem;
+
+export interface Container {
   id: number;
+  type: "container";
   shape: string;
   width: { value: number; measure: string };
   length: { value: number; measure: string };
@@ -10,6 +13,7 @@ export interface Box {
 export class PlantItem {
   name: string;
   position: { x: number; y: number };
+  type: "plant" = "plant";
   id: number;
   boxId?: number;
   constructor(

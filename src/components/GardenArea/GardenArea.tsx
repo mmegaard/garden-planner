@@ -13,6 +13,7 @@ import {
   PlantLibraryItem,
   PlantLibraryItemJson,
   PlantItem,
+  Container,
 } from "@/src/helpers/PlantClasses";
 import CurrentTool from "../CurrentTool/CurrentTool";
 import data from "../../../public/content/data.json";
@@ -20,8 +21,10 @@ import Plant from "../Plant";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { plants, setPlants, currentTool, boxes, setBoxPosition } = useObjectContext();
+  const { plants, setPlants, currentTool, containers, setBoxPosition } =
+    useObjectContext();
   const [panMode, setPanMode] = React.useState(false);
+  const [editMode, setEditMode] = React.useState(false);
 
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
@@ -34,13 +37,15 @@ function GardenArea() {
   }
 
   function findContainerAtPosition(x: number, y: number) {
-    return boxes.find(
-      (box) =>
-        x >= box.position.x &&
-        x <= box.position.x + box.width.value &&
-        y >= box.position.y &&
-        y <= box.position.y + box.length.value,
-    ) ?? null;
+    return (
+      containers.find(
+        (container) =>
+          x >= container.position.x &&
+          x <= container.position.x + container.width.value &&
+          y >= container.position.y &&
+          y <= container.position.y + container.length.value,
+      ) ?? null
+    );
   }
 
   function handleSetPlantPosition(id: number, x: number, y: number) {
@@ -69,6 +74,21 @@ function GardenArea() {
   );
   return (
     <div style={{ display: "inline-block" }}>
+      <Button
+        className={styles.pan_button}
+        variant="soft"
+        onClick={() => setPanMode(!panMode)}
+      >
+        <Move />
+        {panMode ? "Panning" : "Pan"}
+      </Button>
+      <Button
+        className={styles.pan_button}
+        variant="soft"
+        onClick={() => setEditMode(!editMode)}
+      >
+        {editMode ? "Editing" : "Edit"}
+      </Button>
       <div
         id="viewport"
         className={styles.viewport}
@@ -94,22 +114,31 @@ function GardenArea() {
             `,
           }}
         >
-          {boxes.map((box, index) => (
-            <Draggable
-              key={`${index}-${box.shape}`}
-              id={box.id}
-              initialPosition={{ x: box.position.x, y: box.position.y }}
-              setObjectPosition={handleSetBoxPosition}
-              type="container"
-              shape={box.shape}
-            >
-              <GardenContainer box={box} />
-            </Draggable>
-          ))}
+          {containers.map((container: Container, index) => {
+            return (
+              <Draggable
+                key={`${index}-${container.shape}`}
+                object={container}
+                initialPosition={{
+                  x: container.position.x,
+                  y: container.position.y,
+                }}
+                setObjectPosition={handleSetBoxPosition}
+                shape={container.shape}
+                enabled={panMode}
+              >
+                <GardenContainer
+                  length={container.length.value * clientSize.xScale}
+                  width={container.width.value * clientSize.yScale}
+                  editable={editMode}
+                />
+              </Draggable>
+            );
+          })}
           {plants.map((planted: PlantItem, index) => {
             const libraryItem = plantLibraryMap.get(planted.name);
             const container = planted.boxId
-              ? boxes.find((b) => b.id === planted.boxId)
+              ? containers.find((b) => b.id === planted.boxId)
               : null;
             const initialPosition = container
               ? {
@@ -122,10 +151,10 @@ function GardenArea() {
                 initialPosition={initialPosition}
                 key={`${index}-${planted.name}`}
                 setObjectPosition={handleSetPlantPosition}
-                id={planted.id}
-                type="plant"
+                object={planted}
                 shape={"circle"}
                 className={styles.planted}
+                enabled={panMode || editMode}
               >
                 {libraryItem && (
                   <Plant plant={libraryItem} icon={libraryItem.icon} />
@@ -135,15 +164,6 @@ function GardenArea() {
           })}
         </div>
         {currentTool !== "none" && <CurrentTool tool={currentTool} />}
-
-        <Button
-          className={styles.pan_button}
-          variant="soft"
-          onClick={() => setPanMode(!panMode)}
-        >
-          <Move />
-          {panMode ? "Panning" : "Pan"}
-        </Button>
       </div>
     </div>
   );

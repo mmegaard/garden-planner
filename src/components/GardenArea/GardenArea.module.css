@@ -14,12 +14,6 @@
   height: 100%;
 }
 
-.pan_button {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .planted {
   display: flex;
   align-items: center;

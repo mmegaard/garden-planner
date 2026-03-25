@@ -1,19 +1,25 @@
 "use client";
 import React from "react";
-import { PlantItem, Box, PlantLibraryItem, PlantLibraryItemJson } from "../../helpers/PlantClasses";
+import {
+  PlantItem,
+  Container,
+  PlantLibraryItem,
+  PlantLibraryItemJson,
+  WorldObject,
+} from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import data from "@/public/content/data.json";
 
 const plantLibraryMap = new Map(
-  PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map((p) => [p.plantId, p])
+  PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map(
+    (p) => [p.plantId, p],
+  ),
 );
 interface ObjectProps {
   children: React.ReactNode;
 }
-
-export type DraggableType = "plant" | "container";
 
 export interface PlantFilters {
   family: string | null;
@@ -23,7 +29,7 @@ export interface PlantFilters {
 
 export interface RegistryEntry {
   ref: React.RefObject<HTMLDivElement | null>;
-  type: DraggableType;
+  type: WorldObject["type"];
   shape: string;
   id: number;
 }
@@ -40,18 +46,24 @@ export const ObjectContext = React.createContext<
         React.SetStateAction<{ x: number; y: number }>
       >;
       refRegistry: React.MutableRefObject<Map<string, RegistryEntry>>;
-      registerRef: (id: number, ref: React.RefObject<HTMLDivElement | null>, type: DraggableType, shape: string) => void;
-      unregisterRef: (id: number, type: DraggableType) => void;
+      registerRef: (
+        id: number,
+        ref: React.RefObject<HTMLDivElement | null>,
+        type: WorldObject["type"],
+        shape: string,
+      ) => void;
+      unregisterRef: (id: number, type: WorldObject["type"]) => void;
       collidingId: Set<number>;
       setCollidingId: React.Dispatch<React.SetStateAction<Set<number>>>;
       searchQuery: string;
       setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
       filters: PlantFilters;
       setFilters: React.Dispatch<React.SetStateAction<PlantFilters>>;
-      boxes: Box[];
+      containers: Container[];
       setBoxPosition: (id: number, x: number, y: number) => void;
-      selected: { id: number; type: DraggableType } | null;
-      setSelected: React.Dispatch<React.SetStateAction<{ id: number; type: DraggableType } | null>>;
+      setBoxSize: (id: number, width: number, length: number, height: number) => void;
+      selected: WorldObject | null;
+      setSelected: React.Dispatch<React.SetStateAction<WorldObject | null>>;
       deleteSelected: () => void;
       undo: () => void;
       redo: () => void;
@@ -79,7 +91,10 @@ function ObjectProvider({ children }: ObjectProps) {
   const layouts = useQuery(api.layouts.get) || [];
   const plantList = layouts[0]?.plants || [];
   const plants = plantList.map((plant) => PlantItem.fromJson(plant));
-  const boxes: Box[] = (layouts[0]?.boxes as Box[] | undefined) ?? [];
+  const containers: Container[] = (layouts[0]?.boxes ?? []).map((box) => ({
+    ...box,
+    type: "container" as const,
+  }));
 
   const layoutMutation = useMutation(
     api.layouts.setGarden,
@@ -94,25 +109,32 @@ function ObjectProvider({ children }: ObjectProps) {
     }
   });
 
-  const boxesMutation = useMutation(
-    api.layouts.setBoxes,
-  ).withOptimisticUpdate((localStore, args) => {
-    const layoutsList = localStore.getQuery(api.layouts.get);
-    if (layoutsList !== undefined) {
-      const newLayoutsList = [
-        { ...layoutsList[0], boxes: args.boxes },
-        ...layoutsList.slice(1),
-      ];
-      localStore.setQuery(api.layouts.get, {}, newLayoutsList);
-    }
-  });
+  const boxesMutation = useMutation(api.layouts.setBoxes).withOptimisticUpdate(
+    (localStore, args) => {
+      const layoutsList = localStore.getQuery(api.layouts.get);
+      if (layoutsList !== undefined) {
+        const newLayoutsList = [
+          { ...layoutsList[0], boxes: args.boxes },
+          ...layoutsList.slice(1),
+        ];
+        localStore.setQuery(api.layouts.get, {}, newLayoutsList);
+      }
+    },
+  );
 
-  const historyStack = React.useRef<{ plants: PlantItem[]; boxes: Box[] }[]>([]);
-  const redoStack = React.useRef<{ plants: PlantItem[]; boxes: Box[] }[]>([]);
+  const historyStack = React.useRef<
+    { plants: PlantItem[]; boxes: Container[] }[]
+  >([]);
+  const redoStack = React.useRef<{ plants: PlantItem[]; boxes: Container[] }[]>(
+    [],
+  );
   const [canUndo, setCanUndo] = React.useState(false);
   const [canRedo, setCanRedo] = React.useState(false);
 
-  const pushHistory = (currentPlants: PlantItem[], currentBoxes: Box[]) => {
+  const pushHistory = (
+    currentPlants: PlantItem[],
+    currentBoxes: Container[],
+  ) => {
     historyStack.current.push({ plants: currentPlants, boxes: currentBoxes });
     redoStack.current = [];
     setCanUndo(true);
@@ -120,18 +142,41 @@ function ObjectProvider({ children }: ObjectProps) {
   };
 
   const setPlants = (newPlants: PlantItem[]) => {
-    pushHistory(plants, boxes);
+    pushHistory(plants, containers);
     layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const toBoxRecord = ({ type, ...box }: Container) => box;
+
   const setBoxPosition = (id: number, x: number, y: number) => {
-    pushHistory(plants, boxes);
-    const newBoxes = boxes.map((box) =>
+    pushHistory(plants, containers);
+    const newBoxes = containers.map((box) =>
       box.id !== id ? box : { ...box, position: { x, y } },
     );
-    boxesMutation({ boxes: newBoxes });
+    boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
   };
-  const [selected, setSelected] = React.useState<{ id: number; type: DraggableType } | null>(null);
+
+  const setBoxSize = (
+    id: number,
+    width: number,
+    length: number,
+    height: number,
+  ) => {
+    pushHistory(plants, containers);
+    const newBoxes = containers.map((box: Container) =>
+      box.id !== id
+        ? box
+        : {
+            ...box,
+            width: { value: width, measure: "ft" },
+            length: { value: length, measure: "ft" },
+            height: { value: height, measure: "ft" },
+          },
+    );
+    boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
+  };
+  const [selected, setSelected] = React.useState<WorldObject | null>(null);
   const [currentTool, setCurrentTool] = React.useState("none");
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
   const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
@@ -143,14 +188,22 @@ function ObjectProvider({ children }: ObjectProps) {
   });
   const refRegistry = React.useRef<Map<string, RegistryEntry>>(new Map());
   const registerRef = React.useCallback(
-    (id: number, ref: React.RefObject<HTMLDivElement | null>, type: DraggableType, shape: string) => {
+    (
+      id: number,
+      ref: React.RefObject<HTMLDivElement | null>,
+      type: WorldObject["type"],
+      shape: string,
+    ) => {
       refRegistry.current.set(`${type}-${id}`, { ref, type, shape, id });
     },
     [],
   );
-  const unregisterRef = React.useCallback((id: number, type: DraggableType) => {
-    refRegistry.current.delete(`${type}-${id}`);
-  }, []);
+  const unregisterRef = React.useCallback(
+    (id: number, type: WorldObject["type"]) => {
+      refRegistry.current.delete(`${type}-${id}`);
+    },
+    [],
+  );
   const { viewportRef, viewport, clientSize, worldRef } = useViewportContext();
 
   React.useEffect(() => {
@@ -211,10 +264,13 @@ function ObjectProvider({ children }: ObjectProps) {
     function handlePointerUp(event: PointerEvent) {
       event.preventDefault();
       if (currentTool !== "none") {
-        const newId = plants.length > 0 ? Math.max(...plants.map((p) => p.id)) + 1 : 1;
+        const newId =
+          plants.length > 0 ? Math.max(...plants.map((p) => p.id)) + 1 : 1;
         const libraryItem = plantLibraryMap.get(currentTool);
         const radius = libraryItem
-          ? (libraryItem.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12) / 2
+          ? libraryItem.planting.fromSeed.outdoor.spacingBetweenPlants.minVal /
+            12 /
+            2
           : 0;
         const newPlant: PlantItem = new PlantItem(
           currentTool,
@@ -235,50 +291,56 @@ function ObjectProvider({ children }: ObjectProps) {
 
   const deleteSelected = React.useCallback(() => {
     if (!selected) return;
-    pushHistory(plants, boxes);
+    pushHistory(plants, containers);
     if (selected.type === "plant") {
       const newPlants = plants.filter((p) => p.id !== selected.id);
       layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
     } else {
-      const newBoxes = boxes.filter((b) => b.id !== selected.id);
+      const newBoxes = containers.filter((b) => b.id !== selected.id);
       const newPlants = plants.filter((p) => p.boxId !== selected.id);
-      boxesMutation({ boxes: newBoxes });
+      boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
       layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
     }
     setSelected(null);
-  }, [selected, plants, boxes]);
+  }, [selected, plants, containers]);
 
   const undo = React.useCallback(() => {
     const prev = historyStack.current.pop();
     if (!prev) return;
-    redoStack.current.push({ plants, boxes });
+    redoStack.current.push({ plants, boxes: containers });
     layoutMutation({ plants: prev.plants.map((p) => p.toJson()) });
-    boxesMutation({ boxes: prev.boxes });
+    boxesMutation({ boxes: prev.boxes.map(toBoxRecord) });
     setCanUndo(historyStack.current.length > 0);
     setCanRedo(true);
-  }, [plants, boxes]);
+  }, [plants, containers]);
 
   const redo = React.useCallback(() => {
     const next = redoStack.current.pop();
     if (!next) return;
-    historyStack.current.push({ plants, boxes });
+    historyStack.current.push({ plants, boxes: containers });
     layoutMutation({ plants: next.plants.map((p) => p.toJson()) });
-    boxesMutation({ boxes: next.boxes });
+    boxesMutation({ boxes: next.boxes.map(toBoxRecord) });
     setCanUndo(true);
     setCanRedo(redoStack.current.length > 0);
-  }, [plants, boxes]);
+  }, [plants, containers]);
 
   React.useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Delete" || event.key === "Backspace") {
         deleteSelected();
       }
-      if ((event.ctrlKey || event.metaKey) && !event.shiftKey && event.key === "z") {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey &&
+        event.key === "z"
+      ) {
         event.preventDefault();
         undo();
       }
       if (
-        ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === "z") ||
+        ((event.ctrlKey || event.metaKey) &&
+          event.shiftKey &&
+          event.key === "z") ||
         ((event.ctrlKey || event.metaKey) && event.key === "y")
       ) {
         event.preventDefault();
@@ -306,8 +368,9 @@ function ObjectProvider({ children }: ObjectProps) {
       setSearchQuery,
       filters,
       setFilters,
-      boxes,
+      containers: containers,
       setBoxPosition,
+      setBoxSize,
       selected,
       setSelected,
       deleteSelected,
@@ -316,7 +379,23 @@ function ObjectProvider({ children }: ObjectProps) {
       canUndo,
       canRedo,
     }),
-    [plants, boxes, currentTool, toolPosition, clientSize, viewport, collidingId, searchQuery, filters, selected, deleteSelected, undo, redo, canUndo, canRedo],
+    [
+      plants,
+      containers,
+      currentTool,
+      toolPosition,
+      clientSize,
+      viewport,
+      collidingId,
+      searchQuery,
+      filters,
+      selected,
+      deleteSelected,
+      undo,
+      redo,
+      canUndo,
+      canRedo,
+    ],
   );
 
   return (

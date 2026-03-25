@@ -18,6 +18,16 @@ class Viewport {
     return new Viewport(newX, newY, newWidth, newHeight);
   }
 
+  zoomAt(zoomlevel: number, fx: number, fy: number): Viewport {
+    const newWidth = this.width * zoomlevel;
+    const newHeight = this.height * zoomlevel;
+    const worldX = this.x + fx * this.width;
+    const worldY = this.y + fy * this.height;
+    const newX = worldX - fx * newWidth;
+    const newY = worldY - fy * newHeight;
+    return new Viewport(newX, newY, newWidth, newHeight);
+  }
+
   screenToWorld(fx: number, fy: number): number[] {
     //console.log("fx", fx);
     return [this.x + fx * this.width, this.y + fy * this.height];

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Header from "../components/Header";
 import GardenArea from "../components/GardenArea";
@@ -7,17 +7,22 @@ import Plant from "../components/Plant";
 import ViewportProvider from "../components/ViewportProvider";
 import Debug from "../components/Debug/Debug";
 import ObjectProvider from "../components/ObjectProvider";
-
+import { useObjectContext } from "../components/ObjectProvider";
+import ObjectProperties from "../components/ObjectProperties";
 export default function Home() {
+  const { selected } = useObjectContext();
   return (
     <div>
-        <main style={{display:"grid", gridTemplateColumns: "minmax(min-content, 5vw) auto", }}>
-          
-            <PlantLibrary />
-            <GardenArea />
-          
-          
-        </main>
+      <main
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(min-content, 5vw) auto",
+        }}
+      >
+        <PlantLibrary />
+        <GardenArea />
+      </main>
+      {selected && <ObjectProperties object={selected} />}
 
       <footer />
     </div>
