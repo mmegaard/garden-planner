@@ -19,6 +19,27 @@ function CurrentTool({ tool }: CurrentToolProps) {
   const { clientSize, viewport } = useViewportContext();
   const scale = clientSize.width / viewport.width;
 
+  if (currentTool === "add-container") {
+    const boxPx = 1 * scale;
+    const boxX = (toolPosition.x - viewport.x) * scale - boxPx / 2;
+    const boxY = (toolPosition.y - viewport.y) * scale - boxPx / 2;
+    return (
+      <div
+        style={{
+          position: "absolute",
+          left: boxX,
+          top: boxY,
+          width: boxPx,
+          height: boxPx,
+          backgroundColor: "lch(28.39% 34.86 67.29)",
+          border: "4px solid rgb(172, 107, 33)",
+          pointerEvents: "none",
+          opacity: 0.7,
+        }}
+      />
+    );
+  }
+
   const libraryItem = plantLibraryMap.get(currentTool);
   if (!libraryItem) return null;
 

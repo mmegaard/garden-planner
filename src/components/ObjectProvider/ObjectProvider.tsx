@@ -61,7 +61,12 @@ export const ObjectContext = React.createContext<
       setFilters: React.Dispatch<React.SetStateAction<PlantFilters>>;
       containers: Container[];
       setBoxPosition: (id: number, x: number, y: number) => void;
-      setBoxSize: (id: number, width: number, length: number, height: number) => void;
+      setBoxSize: (
+        id: number,
+        width: number,
+        length: number,
+        height: number,
+      ) => void;
       selected: WorldObject | null;
       setSelected: React.Dispatch<React.SetStateAction<WorldObject | null>>;
       deleteSelected: () => void;
@@ -209,7 +214,7 @@ function ObjectProvider({ children }: ObjectProps) {
   React.useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
       const clickedElement: HTMLElement = event.target as HTMLElement;
-
+      console.log(clickedElement.classList.contains("world"));
       if (
         currentTool !== "none" &&
         clickedElement.classList.contains("toolSelector")
@@ -263,6 +268,28 @@ function ObjectProvider({ children }: ObjectProps) {
   React.useEffect(() => {
     function handlePointerUp(event: PointerEvent) {
       event.preventDefault();
+      if (currentTool === "add-container") {
+        const newId =
+          containers.length > 0
+            ? Math.max(...containers.map((c) => c.id)) + 1
+            : 1;
+        const newContainer: Container = {
+          id: newId,
+          type: "container",
+          shape: "rectangle",
+          width: { value: 1, measure: "ft" },
+          length: { value: 1, measure: "ft" },
+          height: { value: 1, measure: "ft" },
+          position: { x: toolPosition.x - 0.5, y: toolPosition.y - 0.5 },
+        };
+        pushHistory(plants, containers);
+        boxesMutation({
+          boxes: [...containers.map(toBoxRecord), toBoxRecord(newContainer)],
+        });
+        setSelected(newContainer);
+        setCurrentTool("none");
+        return;
+      }
       if (currentTool !== "none") {
         const newId =
           plants.length > 0 ? Math.max(...plants.map((p) => p.id)) + 1 : 1;
@@ -287,7 +314,7 @@ function ObjectProvider({ children }: ObjectProps) {
     return () => {
       viewportRef.current?.removeEventListener("pointerup", handlePointerUp);
     };
-  }, [currentTool, toolPosition, clientSize, viewport]);
+  }, [currentTool, toolPosition, clientSize, viewport, containers]);
 
   const deleteSelected = React.useCallback(() => {
     if (!selected) return;

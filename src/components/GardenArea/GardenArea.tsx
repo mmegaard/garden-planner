@@ -21,7 +21,7 @@ import Plant from "../Plant";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { plants, setPlants, currentTool, containers, setBoxPosition } =
+  const { plants, setPlants, currentTool, containers, setBoxPosition, setSelected } =
     useObjectContext();
   const [panMode, setPanMode] = React.useState(false);
   const [editMode, setEditMode] = React.useState(false);
@@ -99,6 +99,12 @@ function GardenArea() {
         onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanEnd(event)
         }
+        onPointerDown={(event: React.PointerEvent<HTMLDivElement>) => {
+          const target = event.target as HTMLElement;
+          if (!target.closest(".planted")) {
+            setSelected(null);
+          }
+        }}
       >
         <div
           className={styles.world}
