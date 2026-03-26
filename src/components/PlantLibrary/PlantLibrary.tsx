@@ -228,7 +228,12 @@ function PlantLibrary() {
             justifyContent: "center",
           }}
         >
-          <Square width={"80%"} height={"80%"} color="rgb(172, 107, 33)" strokeWidth={3} />
+          <Square
+            width={"80%"}
+            height={"80%"}
+            color="rgb(172, 107, 33)"
+            strokeWidth={3}
+          />
         </div>
       </div>
       <div
@@ -238,12 +243,11 @@ function PlantLibrary() {
           flexDirection: "column",
           alignItems: "center",
           userSelect: "none",
-          height: "100vh",
+          height: "100%",
           overflow: "scroll",
           gap: "8px",
-          padding: "8px",
           position: "fixed",
-          top: "200px",
+          top: "320px",
         }}
       >
         {filteredPlants.map((plant: PlantLibraryItem) => (
