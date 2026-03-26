@@ -144,6 +144,7 @@ function Draggable({
   function handlePointerDown(event: React.PointerEvent) {
     if (enabled) return;
     event.preventDefault();
+    setDragPosition({ x: initialPosition.x, y: initialPosition.y });
     setIsDragging(true);
     checkCollision();
     event.currentTarget.setPointerCapture(event.pointerId);
