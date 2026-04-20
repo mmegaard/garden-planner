@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { motion, useMotionValue } from "motion/react";
 import GardenContainer from "../GardenContainer";
 import { Button } from "@radix-ui/themes";
 import { Move } from "react-feather";
@@ -18,13 +17,24 @@ import {
 import CurrentTool from "../CurrentTool/CurrentTool";
 import data from "../../../public/content/data.json";
 import Plant from "../Plant";
+import {
+  reconcilePlantPosition,
+  getPlantRadius,
+  getPlantSvgRadius,
+} from "../../helpers/containment";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { plants, setPlants, currentTool, containers, setBoxPosition, setSelected } =
+  const { plants, setPlants, currentTool, containers, setBoxPosition } =
     useObjectContext();
   const [panMode, setPanMode] = React.useState(false);
   const [editMode, setEditMode] = React.useState(false);
+
+  const plantLibraryMap = new Map(
+    PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map(
+      (p) => [p.plantId, p],
+    ),
+  );
 
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
@@ -36,42 +46,23 @@ function GardenArea() {
     setIsPanning(false);
   }
 
-  function findContainerAtPosition(x: number, y: number) {
-    return (
-      containers.find(
-        (container) =>
-          x >= container.position.x &&
-          x <= container.position.x + container.width.value &&
-          y >= container.position.y &&
-          y <= container.position.y + container.length.value,
-      ) ?? null
-    );
-  }
-
   function handleSetPlantPosition(id: number, x: number, y: number) {
-    const container = findContainerAtPosition(x, y);
-    const newPlants = plants.map((pl) =>
-      pl.id !== id
-        ? pl
-        : PlantItem.fromJson({
-            ...pl,
-            boxId: container?.id,
-            position: container
-              ? { x: x - container.position.x, y: y - container.position.y }
-              : { x, y },
-          }),
-    );
+    const newPlants = plants.map((pl) => {
+      if (pl.id !== id) return pl;
+      const moved = new PlantItem(pl.name, { x, y }, pl.id);
+      return reconcilePlantPosition(
+        moved,
+        containers,
+        plantLibraryMap,
+        clientSize.xScale,
+      );
+    });
     setPlants(newPlants);
   }
 
   function handleSetBoxPosition(id: number, x: number, y: number) {
     setBoxPosition(id, x, y);
   }
-  const plantLibraryMap = new Map(
-    PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map(
-      (p) => [p.plantId, p],
-    ),
-  );
   return (
     <div style={{ display: "inline-block" }}>
       <Button
@@ -99,12 +90,6 @@ function GardenArea() {
         onMouseUp={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanEnd(event)
         }
-        onPointerDown={(event: React.PointerEvent<HTMLDivElement>) => {
-          const target = event.target as HTMLElement;
-          if (!target.closest(".planted")) {
-            setSelected(null);
-          }
-        }}
       >
         <div
           className={styles.world}
@@ -137,6 +122,7 @@ function GardenArea() {
                   length={container.length.value * clientSize.xScale}
                   width={container.width.value * clientSize.yScale}
                   editable={editMode}
+                  shape={container.shape}
                 />
               </Draggable>
             );
@@ -161,6 +147,12 @@ function GardenArea() {
                 shape={"circle"}
                 className={styles.planted}
                 enabled={panMode || editMode}
+                plantRadius={getPlantRadius(planted.name, plantLibraryMap)}
+                plantSvgRadius={getPlantSvgRadius(
+                  planted.name,
+                  plantLibraryMap,
+                  clientSize.xScale,
+                )}
               >
                 {libraryItem && (
                   <Plant plant={libraryItem} icon={libraryItem.icon} />

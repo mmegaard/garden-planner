@@ -8,6 +8,7 @@ import {
   PlantIconConfig,
   PlantLibraryItem,
 } from "@/src/helpers/PlantClasses";
+import { PLANT_SVG_MAX_PX } from "@/src/helpers/containment";
 interface PlantProps {
   /** The text to display inside the button */
   plant: PlantLibraryItem;
@@ -22,7 +23,7 @@ function Plant({ plant, icon, displaySize }: PlantProps) {
     plant.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12;
   const width = displaySize ?? diameterInFeet * clientSize.xScale;
   const height = displaySize ?? diameterInFeet * clientSize.yScale;
-  const iconSize = displaySize ? width : Math.min(width, 80);
+  const iconSize = displaySize ? width : Math.min(width, PLANT_SVG_MAX_PX);
   const baseSize = Math.round(iconSize / icon.scale);
 
   return (

@@ -11,6 +11,7 @@ import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import data from "@/public/content/data.json";
+import { reconcilePlantPosition } from "../../helpers/containment";
 
 const plantLibraryMap = new Map(
   PlantLibraryItem.fromJsonArray(data.plants as PlantLibraryItemJson[]).map(
@@ -159,7 +160,11 @@ function ObjectProvider({ children }: ObjectProps) {
     const newBoxes = containers.map((box) =>
       box.id !== id ? box : { ...box, position: { x, y } },
     );
+    const newPlants = plants.map((p) =>
+      reconcilePlantPosition(p, newBoxes, plantLibraryMap, clientSize.xScale),
+    );
     boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
+    layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
   };
 
   const setBoxSize = (
@@ -268,7 +273,8 @@ function ObjectProvider({ children }: ObjectProps) {
   React.useEffect(() => {
     function handlePointerUp(event: PointerEvent) {
       event.preventDefault();
-      if (currentTool === "add-container") {
+      if (currentTool === "add-container" || currentTool === "add-circle-container") {
+        const isCircle = currentTool === "add-circle-container";
         const newId =
           containers.length > 0
             ? Math.max(...containers.map((c) => c.id)) + 1
@@ -276,7 +282,7 @@ function ObjectProvider({ children }: ObjectProps) {
         const newContainer: Container = {
           id: newId,
           type: "container",
-          shape: "rectangle",
+          shape: isCircle ? "circle" : "rectangle",
           width: { value: 1, measure: "ft" },
           length: { value: 1, measure: "ft" },
           height: { value: 1, measure: "ft" },
@@ -299,13 +305,17 @@ function ObjectProvider({ children }: ObjectProps) {
             12 /
             2
           : 0;
-        const newPlant: PlantItem = new PlantItem(
-          currentTool,
-          { x: toolPosition.x - radius, y: toolPosition.y - radius },
-          newId,
+        const worldPos = {
+          x: toolPosition.x - radius,
+          y: toolPosition.y - radius,
+        };
+        const newPlant = reconcilePlantPosition(
+          new PlantItem(currentTool, worldPos, newId),
+          containers,
+          plantLibraryMap,
+          clientSize.xScale,
         );
-        const newPlants = [...plants, newPlant];
-        setPlants(newPlants);
+        setPlants([...plants, newPlant]);
       }
     }
     viewportRef.current?.addEventListener("pointerup", handlePointerUp);

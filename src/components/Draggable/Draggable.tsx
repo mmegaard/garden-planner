@@ -4,6 +4,7 @@ import { useViewportContext } from "../ViewportProvider";
 import styles from "./Draggable.module.css";
 import { useObjectContext } from "../ObjectProvider";
 import { WorldObject } from "@/src/helpers/PlantClasses";
+import { getPlantClipPath } from "@/src/helpers/containment";
 interface DraggableProps {
   children: React.ReactNode;
   initialPosition: { x: number; y: number };
@@ -13,6 +14,8 @@ interface DraggableProps {
   className?: string;
   dragging?: boolean;
   enabled: boolean;
+  plantRadius?: number;
+  plantSvgRadius?: number;
 }
 
 const COLORS = {
@@ -46,6 +49,8 @@ function Draggable({
   shape,
   enabled,
   dragging,
+  plantRadius,
+  plantSvgRadius,
 }: DraggableProps) {
   const draggableRef = React.useRef<HTMLDivElement>(null);
   const [dragPosition, setDragPosition] = React.useState({
@@ -175,6 +180,7 @@ function Draggable({
 
   function handlePointerUp(event: React.PointerEvent) {
     if (enabled) return;
+    if (!pointerDownPos.current) return;
     event.preventDefault();
     setIsDragging(false);
     setCollidingId(new Set());
@@ -200,10 +206,23 @@ function Draggable({
     setObjectPosition(object.id, dragPosition.x, dragPosition.y);
   }
 
+  const clipPath =
+    object.type === "plant" && plantRadius && plantSvgRadius
+      ? getPlantClipPath(
+          isDragging ? dragPosition : initialPosition,
+          plantRadius,
+          plantSvgRadius,
+          containers,
+          clientSize.xScale,
+        )
+      : undefined;
+
   return (
     <div
       ref={draggableRef}
-      className={`${styles.draggable} planted ${isDragging && "dragging"}`}
+      className={`${styles.draggable} ${object.type === "plant" && "planted"} ${
+        isDragging ? "dragging" : ""
+      }`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -234,6 +253,8 @@ function Draggable({
         boxShadow: isDragging ? "0px 10px 20px rgba(0,0,0,0.2)" : "none",
         touchAction: "none",
         color: "white",
+        clipPath: clipPath,
+        WebkitClipPath: clipPath,
       }}
     >
       {children}
