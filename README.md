@@ -1,6 +1,6 @@
 # 🌱 Garden Bud 🌱
 
-I built this app for my wife and I to help us plan our garden for the year. There are many possible ways to go with it but currently you can:
+I'm building this app for my wife and I to help us plan our garden for the year. There are many possible ways to go with it but currently you can:
 
 <img width="2398" height="1542" alt="image" src="https://github.com/user-attachments/assets/1e8d8a43-2bed-412f-85e7-7b68fb525af3" />
 
