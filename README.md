@@ -60,7 +60,7 @@ Open [http://localhost:3000](http://localhost:3000) to start planning.
 1. **Add a container** — Click the square or circle icon in the sidebar to select that tool, then click on the canvas to place a raised bed or pot.
 2. **Resize it** — Click a container to select it, then use the properties panel to set exact dimensions.
 3. **Add plants** — Click any plant in the sidebar to select it as your tool, then click inside a container to place it. Use the filters to narrow down the list.
-4. **Move things around** — Hit the Pan button to enter pan mode, then drag containers and plants to rearrange your layout.
+4. **Move things around** — Drag plants to rearrange them. Press the unlock containers button to allow dragging of containers.
 5. **Press Escape** — Deselects the current tool and returns to the pointer.
 
 ## Plant Data
@@ -112,11 +112,11 @@ public/
 
 - [ ] User authentication so others can plan their own gardens
 - [ ] Zone-aware planting dates (currently hardcoded to 8b)
-- [ ] Spacing guides that show recommended distance between plants
-- [ ] Companion planting warnings when enemies are placed too close
-- [ ] Print / export layout
+- [ ] Guidelines
+- [ ] Friends/Foes functionality
+- [ ] Pollinatior status
 - [ ] Mobile support
 
 ## License
 
-This project is for personal use. Reach out if you'd like to use or contribute to it.
+This project is for personal use. Reach out if you'd like to use,contribute to it, or have ideas for features!
