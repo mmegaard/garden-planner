@@ -1,15 +1,13 @@
 # 🌱 Garden Bud 🌱
 
 I'm building this app for my wife and I to help us plan our garden for the year. There are many possible ways to go with it but currently you can:
-
-<img width="2398" height="1542" alt="image" src="https://github.com/user-attachments/assets/1e8d8a43-2bed-412f-85e7-7b68fb525af3" />
-
-
-
 - Add custom containers and plants to the canvas
 - Pick from plants in your zone based on their family, their suggested planting date, or their expected maturing date.
 - See the spacing guidelines visually and figure out what actually fits in your beds.
 - Zoom and pan around to create as large or many gardens as you want
+- 
+<img width="1798" height="1156" alt="image" src="https://github.com/user-attachments/assets/1e8d8a43-2bed-412f-85e7-7b68fb525af3" />
+
 
 **The plant library 📚** is a filterable list of plants from your zone from Roma Tomatoes to Marigolds. You can filter by plant family (nightshade, brassica, legume, etc.), which month you want to plant, or which month you want to harvest. There's also a search bar for finding specific plants by common or scientific name.
 
