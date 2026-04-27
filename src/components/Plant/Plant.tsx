@@ -9,14 +9,12 @@ import {
   PlantLibraryItem,
 } from "@/src/helpers/PlantClasses";
 interface PlantProps {
-  /** The text to display inside the button */
   plant: PlantLibraryItem;
   icon: PlantIconConfig;
   displaySize?: number;
 }
 
 function Plant({ plant, icon, displaySize }: PlantProps) {
-  //TODO: give the plant a size based on it's attributes from plant. It will drive the collision stuff in draggable.
   const { clientSize } = useViewportContext();
   const diameterInFeet =
     plant.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12;

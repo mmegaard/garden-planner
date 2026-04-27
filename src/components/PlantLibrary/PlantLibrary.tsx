@@ -263,11 +263,13 @@ function PlantLibrary() {
               backgroundColor: currentTool === plant.plantId ? "#acfda0" : "",
               borderRadius: "20%",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <Plant plant={plant} icon={plant.icon} displaySize={100} />
+            <p style={{ textAlign: "center" }}>{plant.displayName}</p>
           </div>
         ))}
       </div>
