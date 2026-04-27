@@ -5,9 +5,10 @@ interface ContainerProps {
   width: number;
   length: number;
   editable: boolean;
+  shape?: string;
 }
 
-function GardenContainer({ width, length, editable }: ContainerProps) {
+function GardenContainer({ width, length, editable, shape }: ContainerProps) {
   //if editable is true, and it is selected
   return (
     <div
@@ -15,6 +16,7 @@ function GardenContainer({ width, length, editable }: ContainerProps) {
       style={{
         width: `${length}px`,
         height: `${width}px`,
+        borderRadius: shape === "circle" ? "50%" : "0",
       }}
     ></div>
   );

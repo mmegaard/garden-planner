@@ -1,7 +1,10 @@
 .gardencontainer {
-  background-color: lch(28.39% 34.86 67.29);
+  background-image: url("/dirt-tile.svg");
+  background-repeat: repeat;
+  background-size: 100px 100px;
+  background-color: #5C3D2E;
   position: absolute;
-  border: 10px solid rgb(172, 107, 33);
+  border: 10px solid #C4985A;
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;

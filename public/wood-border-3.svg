@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Style 3: Light pine / fresh lumber -->
+  <rect width="40" height="40" fill="#C4985A"/>
+  <!-- Light grain lines -->
+  <path d="M0,3 Q10,2 20,4 T40,3" stroke="#B8894E" stroke-width="0.7" fill="none" opacity="0.5"/>
+  <path d="M0,8 Q15,6 25,9 T40,7" stroke="#AD7E42" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <path d="M0,13 Q8,12 18,14 T40,13" stroke="#B8894E" stroke-width="0.8" fill="none" opacity="0.45"/>
+  <path d="M0,18 Q12,16 22,19 T40,17" stroke="#AD7E42" stroke-width="0.5" fill="none" opacity="0.35"/>
+  <path d="M0,23 Q10,22 20,24 T40,23" stroke="#B8894E" stroke-width="0.7" fill="none" opacity="0.5"/>
+  <path d="M0,28 Q14,26 24,29 T40,27" stroke="#AD7E42" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <path d="M0,33 Q9,32 19,34 T40,33" stroke="#B8894E" stroke-width="0.8" fill="none" opacity="0.45"/>
+  <path d="M0,38 Q11,37 21,39 T40,38" stroke="#AD7E42" stroke-width="0.5" fill="none" opacity="0.35"/>
+  <!-- Color streaks typical of pine -->
+  <rect x="0" y="5" width="40" height="4" fill="#D4A864" opacity="0.2"/>
+  <rect x="0" y="20" width="40" height="6" fill="#BA8C4C" opacity="0.15"/>
+  <rect x="0" y="34" width="40" height="4" fill="#D4A864" opacity="0.18"/>
+  <!-- Small knot -->
+  <ellipse cx="12" cy="15" rx="2.5" ry="3.5" fill="#9E7340" opacity="0.3"/>
+  <ellipse cx="12" cy="15" rx="1" ry="1.5" fill="#8A6435" opacity="0.25"/>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Style 2: Rustic weathered cedar planks -->
+  <rect width="40" height="40" fill="#7D5A3C"/>
+  <!-- Plank division -->
+  <line x1="0" y1="20" x2="40" y2="20" stroke="#5C3E28" stroke-width="1.5" opacity="0.6"/>
+  <!-- Heavy grain - top plank -->
+  <path d="M0,3 Q8,2 16,4 T40,3" stroke="#6B4830" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M0,7 Q12,5 24,8 T40,6" stroke="#6B4830" stroke-width="0.7" fill="none" opacity="0.4"/>
+  <path d="M0,11 Q6,10 14,12 T40,11" stroke="#6B4830" stroke-width="0.9" fill="none" opacity="0.45"/>
+  <path d="M0,15 Q10,14 22,16 T40,15" stroke="#6B4830" stroke-width="0.6" fill="none" opacity="0.35"/>
+  <!-- Heavy grain - bottom plank -->
+  <path d="M0,24 Q9,23 18,25 T40,24" stroke="#6B4830" stroke-width="0.9" fill="none" opacity="0.5"/>
+  <path d="M0,28 Q14,26 26,29 T40,27" stroke="#6B4830" stroke-width="0.7" fill="none" opacity="0.4"/>
+  <path d="M0,33 Q7,32 16,34 T40,33" stroke="#6B4830" stroke-width="1" fill="none" opacity="0.45"/>
+  <path d="M0,37 Q11,36 20,38 T40,37" stroke="#6B4830" stroke-width="0.6" fill="none" opacity="0.35"/>
+  <!-- Weathering patches -->
+  <rect x="2" y="2" width="8" height="6" rx="2" fill="#8E6B4A" opacity="0.2"/>
+  <rect x="25" y="8" width="10" height="5" rx="2" fill="#6B4830" opacity="0.15"/>
+  <rect x="5" y="25" width="12" height="5" rx="2" fill="#8E6B4A" opacity="0.18"/>
+  <rect x="30" y="30" width="8" height="6" rx="2" fill="#6B4830" opacity="0.15"/>
+  <!-- Nail heads -->
+  <circle cx="5" cy="20" r="1.5" fill="#4A3520" opacity="0.5"/>
+  <circle cx="35" cy="20" r="1.5" fill="#4A3520" opacity="0.5"/>
+</svg>

@@ -19,7 +19,8 @@ function CurrentTool({ tool }: CurrentToolProps) {
   const { clientSize, viewport } = useViewportContext();
   const scale = clientSize.width / viewport.width;
 
-  if (currentTool === "add-container") {
+  if (currentTool === "add-container" || currentTool === "add-circle-container") {
+    const isCircle = currentTool === "add-circle-container";
     const boxPx = 1 * scale;
     const boxX = (toolPosition.x - viewport.x) * scale - boxPx / 2;
     const boxY = (toolPosition.y - viewport.y) * scale - boxPx / 2;
@@ -33,6 +34,7 @@ function CurrentTool({ tool }: CurrentToolProps) {
           height: boxPx,
           backgroundColor: "lch(28.39% 34.86 67.29)",
           border: "4px solid rgb(172, 107, 33)",
+          borderRadius: isCircle ? "50%" : "0",
           pointerEvents: "none",
           opacity: 0.7,
         }}

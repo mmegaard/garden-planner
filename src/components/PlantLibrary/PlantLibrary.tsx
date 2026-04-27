@@ -7,7 +7,7 @@ import {
   PlantLibraryItemJson,
 } from "../../helpers/PlantClasses";
 import { useObjectContext } from "../ObjectProvider";
-import { MousePointer, Square } from "react-feather";
+import { MousePointer, Square, Circle } from "react-feather";
 import styles from "./PlantLibrary.module.css";
 const MONTHS = [
   "Jan",
@@ -235,6 +235,32 @@ function PlantLibrary() {
             strokeWidth={3}
           />
         </div>
+        <div
+          key={"circlecontainericon"}
+          onPointerDown={(event) =>
+            handlePointerDown(event, "add-circle-container")
+          }
+          className="toolSelector"
+          title="Add circle container"
+          style={{
+            width: "100px",
+            padding: "5px",
+            height: "100px",
+            borderRadius: "20%",
+            backgroundColor:
+              currentTool === "add-circle-container" ? "#acfda0" : "",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Circle
+            width={"80%"}
+            height={"80%"}
+            color="rgb(172, 107, 33)"
+            strokeWidth={3}
+          />
+        </div>
       </div>
       <div
         id="plantLibraryContainer"
@@ -247,7 +273,8 @@ function PlantLibrary() {
           overflow: "scroll",
           gap: "8px",
           position: "fixed",
-          top: "320px",
+          top: "420px",
+          width: "120px",
         }}
       >
         {filteredPlants.map((plant: PlantLibraryItem) => (

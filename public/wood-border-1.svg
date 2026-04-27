@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Style 1: Smooth planed wood with subtle grain -->
+  <rect width="40" height="40" fill="#A0703C"/>
+  <!-- Grain lines -->
+  <path d="M0,5 Q10,4 20,6 T40,5" stroke="#8B5E30" stroke-width="0.8" fill="none" opacity="0.5"/>
+  <path d="M0,12 Q15,10 25,13 T40,11" stroke="#8B5E30" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <path d="M0,18 Q8,17 18,19 T40,18" stroke="#915F2E" stroke-width="0.7" fill="none" opacity="0.45"/>
+  <path d="M0,24 Q12,22 22,25 T40,23" stroke="#8B5E30" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <path d="M0,30 Q10,29 20,31 T40,30" stroke="#915F2E" stroke-width="0.8" fill="none" opacity="0.5"/>
+  <path d="M0,36 Q14,34 26,37 T40,35" stroke="#8B5E30" stroke-width="0.6" fill="none" opacity="0.35"/>
+  <!-- Subtle color variation -->
+  <rect x="0" y="0" width="40" height="8" fill="#B07D45" opacity="0.15"/>
+  <rect x="0" y="16" width="40" height="10" fill="#8B5E30" opacity="0.1"/>
+  <rect x="0" y="32" width="40" height="8" fill="#B07D45" opacity="0.12"/>
+  <!-- Knot hint -->
+  <ellipse cx="28" cy="20" rx="3" ry="4" fill="#7A4F28" opacity="0.25"/>
+  <ellipse cx="28" cy="20" rx="1.5" ry="2" fill="#6B4422" opacity="0.2"/>
+</svg>
