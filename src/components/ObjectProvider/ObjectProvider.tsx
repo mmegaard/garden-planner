@@ -68,6 +68,8 @@ export const ObjectContext = React.createContext<
       setDragTarget: React.Dispatch<
         React.SetStateAction<"plants" | "containers">
       >;
+      showGrid: boolean;
+      setShowGrid: React.Dispatch<React.SetStateAction<boolean>>;
       toolPosition: { x: number; y: number };
       setToolPosition: React.Dispatch<
         React.SetStateAction<{ x: number; y: number }>
@@ -218,6 +220,7 @@ function ObjectProvider({ children }: ObjectProps) {
   const [dragTarget, setDragTarget] = React.useState<"plants" | "containers">(
     "plants",
   );
+  const [showGrid, setShowGrid] = React.useState(false);
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
   const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -424,6 +427,8 @@ function ObjectProvider({ children }: ObjectProps) {
       setCurrentTool,
       dragTarget,
       setDragTarget,
+      showGrid,
+      setShowGrid,
       toolPosition,
       setToolPosition,
       refRegistry,
@@ -451,6 +456,7 @@ function ObjectProvider({ children }: ObjectProps) {
       containers,
       currentTool,
       dragTarget,
+      showGrid,
       toolPosition,
       clientSize,
       viewport,

@@ -26,6 +26,7 @@ function GardenArea() {
     setBoxPosition,
     setSelected,
     dragTarget,
+    showGrid,
   } = useObjectContext();
   const panMode = currentTool === "pan";
   const containersLocked = panMode || dragTarget !== "containers";
@@ -97,6 +98,57 @@ function GardenArea() {
           }
         }}
       >
+        {showGrid &&
+          (() => {
+            const pxPerUnitX = clientSize.width / viewport.width;
+            const pxPerUnitY = clientSize.height / viewport.height;
+            if (pxPerUnitX < 8 || pxPerUnitY < 8) return null;
+            const startX = Math.ceil(viewport.x);
+            const endX = Math.floor(viewport.x + viewport.width);
+            const startY = Math.ceil(viewport.y);
+            const endY = Math.floor(viewport.y + viewport.height);
+            const verticals: number[] = [];
+            for (let i = startX; i <= endX; i++) {
+              verticals.push(Math.round((i - viewport.x) * pxPerUnitX) + 0.5);
+            }
+            const horizontals: number[] = [];
+            for (let i = startY; i <= endY; i++) {
+              horizontals.push(Math.round((i - viewport.y) * pxPerUnitY) + 0.5);
+            }
+            return (
+              <svg
+                aria-hidden
+                className={styles.grid}
+                width={clientSize.width}
+                height={clientSize.height}
+              >
+                {verticals.map((x, i) => (
+                  <line
+                    key={`v${i}`}
+                    x1={x}
+                    y1={0}
+                    x2={x}
+                    y2={clientSize.height}
+                    stroke="rgba(0, 0, 0, 0.25)"
+                    strokeWidth={1}
+                    shapeRendering="crispEdges"
+                  />
+                ))}
+                {horizontals.map((y, i) => (
+                  <line
+                    key={`h${i}`}
+                    x1={0}
+                    y1={y}
+                    x2={clientSize.width}
+                    y2={y}
+                    stroke="rgba(0, 0, 0, 0.25)"
+                    strokeWidth={1}
+                    shapeRendering="crispEdges"
+                  />
+                ))}
+              </svg>
+            );
+          })()}
         <div
           className={`${styles.world} ${
             dragTarget === "containers" ? styles.containerDragMode : ""

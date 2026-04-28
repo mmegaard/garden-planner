@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { MousePointer, Square, Circle, Move } from "react-feather";
+import { MousePointer, Square, Circle, Move, Grid } from "react-feather";
 import { useObjectContext } from "../ObjectProvider";
 import styles from "./Toolbar.module.css";
 
@@ -37,8 +37,14 @@ const TOOLS: ToolDef[] = [
 ];
 
 function Toolbar() {
-  const { currentTool, setCurrentTool, dragTarget, setDragTarget } =
-    useObjectContext();
+  const {
+    currentTool,
+    setCurrentTool,
+    dragTarget,
+    setDragTarget,
+    showGrid,
+    setShowGrid,
+  } = useObjectContext();
   const segmentedDisabled = currentTool !== "none";
   return (
     <div className={styles.toolbar} role="toolbar" aria-label="Tools">
@@ -102,6 +108,20 @@ function Toolbar() {
           Containers
         </button>
       </div>
+      <div className={styles.divider} aria-hidden />
+      <button
+        type="button"
+        title="Toggle grid"
+        aria-label="Toggle grid"
+        aria-pressed={showGrid}
+        onPointerDown={(e) => {
+          e.preventDefault();
+          setShowGrid((v) => !v);
+        }}
+        className={`${styles.toolButton} ${showGrid ? styles.active : ""}`}
+      >
+        <Grid width={32} height={32} />
+      </button>
     </div>
   );
 }

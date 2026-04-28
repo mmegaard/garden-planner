@@ -23,3 +23,10 @@
 .containerDragMode :global(.plant-type) {
   pointer-events: none;
 }
+
+.grid {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
