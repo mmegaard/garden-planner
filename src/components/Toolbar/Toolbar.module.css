@@ -1,0 +1,74 @@
+.toolbar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.toolButton {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toolButton:hover {
+  background: #eee;
+}
+
+.toolButton.active {
+  background: #acfda0;
+}
+
+.divider {
+  width: 1px;
+  background: #d0d0d0;
+  margin: 4px 4px;
+}
+
+.segmented {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  overflow: hidden;
+  align-self: stretch;
+}
+
+.segmentedButton {
+  padding: 0 14px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: #444;
+}
+
+.segmentedButton:hover:not(:disabled) {
+  background: #eee;
+}
+
+.segmentedButton.active {
+  background: #acfda0;
+  color: #1a1a1a;
+}
+
+.segmentedButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

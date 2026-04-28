@@ -41,6 +41,10 @@ export const ObjectContext = React.createContext<
       setPlants: (newPlants: PlantItem[]) => void;
       currentTool: string;
       setCurrentTool: React.Dispatch<React.SetStateAction<string>>;
+      dragTarget: "plants" | "containers";
+      setDragTarget: React.Dispatch<
+        React.SetStateAction<"plants" | "containers">
+      >;
       toolPosition: { x: number; y: number };
       setToolPosition: React.Dispatch<
         React.SetStateAction<{ x: number; y: number }>
@@ -183,6 +187,9 @@ function ObjectProvider({ children }: ObjectProps) {
   };
   const [selected, setSelected] = React.useState<WorldObject | null>(null);
   const [currentTool, setCurrentTool] = React.useState("none");
+  const [dragTarget, setDragTarget] = React.useState<"plants" | "containers">(
+    "plants",
+  );
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
   const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -387,6 +394,8 @@ function ObjectProvider({ children }: ObjectProps) {
       setPlants,
       currentTool,
       setCurrentTool,
+      dragTarget,
+      setDragTarget,
       toolPosition,
       setToolPosition,
       refRegistry,
@@ -413,6 +422,7 @@ function ObjectProvider({ children }: ObjectProps) {
       plants,
       containers,
       currentTool,
+      dragTarget,
       toolPosition,
       clientSize,
       viewport,

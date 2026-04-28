@@ -1,5 +1,84 @@
+.panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  width: 140px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #d0d0d0;
+  color: #1a1a1a;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
 .sticky {
-  position: fixed;
-  width: 120px;
-  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: #fafafa;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.searchInput,
+.filterSelect {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  color: #1a1a1a;
+  font-size: 13px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.searchInput:focus,
+.filterSelect:focus {
+  border-color: #4a90d9;
+  box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.15);
+}
+
+.plantList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 4px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+
+.plantItem {
+  width: 100%;
+  padding: 6px 4px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.plantItem:hover {
+  background: #f3f3f3;
+  border-color: #e5e5e5;
+}
+
+.plantItem.active {
+  background: #acfda0;
+  border-color: #8edc83;
+}
+
+.plantName {
+  text-align: center;
+  font-size: 11px;
+  color: #444;
+  margin: 4px 0 0;
+  line-height: 1.2;
 }

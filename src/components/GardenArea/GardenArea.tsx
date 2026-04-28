@@ -1,8 +1,6 @@
 "use client";
 import * as React from "react";
 import GardenContainer from "../GardenContainer";
-import { Button } from "@radix-ui/themes";
-import { Move } from "react-feather";
 import Viewport from "../../helpers/Viewport";
 import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
@@ -20,10 +18,18 @@ import Plant from "../Plant";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
-  const { plants, setPlants, currentTool, containers, setBoxPosition, setSelected } =
-    useObjectContext();
-  const [panMode, setPanMode] = React.useState(false);
-  const [editMode, setEditMode] = React.useState(false);
+  const {
+    plants,
+    setPlants,
+    currentTool,
+    containers,
+    setBoxPosition,
+    setSelected,
+    dragTarget,
+  } = useObjectContext();
+  const panMode = currentTool === "pan";
+  const containersLocked = panMode || dragTarget !== "containers";
+  const plantsLocked = panMode || dragTarget !== "plants";
 
   function handlePanStart(event: React.MouseEvent<HTMLDivElement>) {
     if (event.button !== 0 || !panMode) return;
@@ -73,25 +79,11 @@ function GardenArea() {
   );
   return (
     <div style={{ display: "inline-block" }}>
-      <Button
-        className={styles.pan_button}
-        variant="soft"
-        onClick={() => setPanMode(!panMode)}
-      >
-        <Move />
-        {panMode ? "Panning" : "Pan"}
-      </Button>
-      <Button
-        className={styles.pan_button}
-        variant="soft"
-        onClick={() => setEditMode(!editMode)}
-      >
-        {editMode ? "Editing" : "Edit"}
-      </Button>
       <div
         id="viewport"
         className={styles.viewport}
         ref={viewportRef}
+        style={{ cursor: panMode ? "grab" : undefined }}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) =>
           handlePanStart(event)
         }
@@ -106,7 +98,9 @@ function GardenArea() {
         }}
       >
         <div
-          className={styles.world}
+          className={`${styles.world} ${
+            dragTarget === "containers" ? styles.containerDragMode : ""
+          }`}
           id="world"
           ref={worldRef}
           style={{
@@ -130,12 +124,12 @@ function GardenArea() {
                 }}
                 setObjectPosition={handleSetBoxPosition}
                 shape={container.shape}
-                enabled={panMode}
+                enabled={containersLocked}
               >
                 <GardenContainer
                   length={container.length.value * clientSize.xScale}
                   width={container.width.value * clientSize.yScale}
-                  editable={editMode}
+                  editable={dragTarget === "containers" && !panMode}
                   shape={container.shape}
                 />
               </Draggable>
@@ -160,7 +154,7 @@ function GardenArea() {
                 object={planted}
                 shape={"circle"}
                 className={styles.planted}
-                enabled={panMode || editMode}
+                enabled={plantsLocked}
               >
                 {libraryItem && (
                   <Plant plant={libraryItem} icon={libraryItem.icon} />

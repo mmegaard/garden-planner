@@ -7,7 +7,6 @@ import {
   PlantLibraryItemJson,
 } from "../../helpers/PlantClasses";
 import { useObjectContext } from "../ObjectProvider";
-import { MousePointer, Square, Circle } from "react-feather";
 import styles from "./PlantLibrary.module.css";
 const MONTHS = [
   "Jan",
@@ -135,24 +134,20 @@ function PlantLibrary() {
   }
 
   return (
-    <div
-      style={{
-        width: "120px",
-      }}
-    >
+    <div className={styles.panel}>
       <div className={styles.sticky}>
         <input
           type="text"
           placeholder="Search plants..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{ width: "100%", padding: "6px 8px", boxSizing: "border-box" }}
+          className={styles.searchInput}
         />
 
         <select
           value={filters.family ?? ""}
           onChange={(e) => setFilter("family", e.target.value || null)}
-          style={{ width: "100%" }}
+          className={styles.filterSelect}
         >
           <option value="">All families</option>
           {ALL_FAMILIES.map((f) => (
@@ -170,7 +165,7 @@ function PlantLibrary() {
               e.target.value ? parseInt(e.target.value) : null,
             )
           }
-          style={{ width: "100%" }}
+          className={styles.filterSelect}
         >
           <option value="">Plantable any month</option>
           {MONTHS.map((name, i) => (
@@ -188,7 +183,7 @@ function PlantLibrary() {
               e.target.value ? parseInt(e.target.value) : null,
             )
           }
-          style={{ width: "100%" }}
+          className={styles.filterSelect}
         >
           <option value="">Mature any month</option>
           {MONTHS.map((name, i) => (
@@ -197,106 +192,19 @@ function PlantLibrary() {
             </option>
           ))}
         </select>
-
-        <div
-          key={"pointericon"}
-          onPointerDown={(event) => handlePointerDown(event, "none")}
-          className="toolSelector"
-          style={{
-            width: "100px",
-            padding: "5px",
-            height: "100px",
-            borderRadius: "20%",
-            backgroundColor: currentTool === "none" ? "#acfda0" : "",
-          }}
-        >
-          <MousePointer width={"100%"} height={"100%"} />
-        </div>
-        <div
-          key={"containericon"}
-          onPointerDown={(event) => handlePointerDown(event, "add-container")}
-          className="toolSelector"
-          title="Add garden box"
-          style={{
-            width: "100px",
-            padding: "5px",
-            height: "100px",
-            borderRadius: "20%",
-            backgroundColor: currentTool === "add-container" ? "#acfda0" : "",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Square
-            width={"80%"}
-            height={"80%"}
-            color="rgb(172, 107, 33)"
-            strokeWidth={3}
-          />
-        </div>
-        <div
-          key={"circlecontainericon"}
-          onPointerDown={(event) =>
-            handlePointerDown(event, "add-circle-container")
-          }
-          className="toolSelector"
-          title="Add circle container"
-          style={{
-            width: "100px",
-            padding: "5px",
-            height: "100px",
-            borderRadius: "20%",
-            backgroundColor:
-              currentTool === "add-circle-container" ? "#acfda0" : "",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Circle
-            width={"80%"}
-            height={"80%"}
-            color="rgb(172, 107, 33)"
-            strokeWidth={3}
-          />
-        </div>
       </div>
-      <div
-        id="plantLibraryContainer"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          userSelect: "none",
-          height: "100%",
-          overflow: "scroll",
-          gap: "8px",
-          position: "fixed",
-          top: "420px",
-          width: "120px",
-        }}
-      >
+      <div id="plantLibraryContainer" className={styles.plantList}>
         {filteredPlants.map((plant: PlantLibraryItem) => (
           <div
             key={plant?.scientificName}
             onPointerDown={(event) => handlePointerDown(event, plant.plantId)}
-            className="toolSelector"
             title={plant.displayName}
-            style={{
-              width: "max-content%",
-              height: "max-content",
-              padding: "5px 0px",
-              backgroundColor: currentTool === plant.plantId ? "#acfda0" : "",
-              borderRadius: "20%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className={`toolSelector ${styles.plantItem} ${
+              currentTool === plant.plantId ? styles.active : ""
+            }`}
           >
             <Plant plant={plant} icon={plant.icon} displaySize={100} />
-            <p style={{ textAlign: "center" }}>{plant.displayName}</p>
+            <p className={styles.plantName}>{plant.displayName}</p>
           </div>
         ))}
       </div>

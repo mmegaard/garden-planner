@@ -203,7 +203,9 @@ function Draggable({
   return (
     <div
       ref={draggableRef}
-      className={`${styles.draggable} planted ${isDragging && "dragging"}`}
+      className={`${styles.draggable} planted ${
+        object.type === "plant" ? "plant-type" : "container-type"
+      } ${isDragging && "dragging"}`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

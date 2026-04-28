@@ -9,6 +9,7 @@ import Debug from "../components/Debug/Debug";
 import ObjectProvider from "../components/ObjectProvider";
 import { useObjectContext } from "../components/ObjectProvider";
 import ObjectProperties from "../components/ObjectProperties";
+import Toolbar from "../components/Toolbar";
 export default function Home() {
   const { selected } = useObjectContext();
   return (
@@ -16,14 +17,14 @@ export default function Home() {
       <main
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(min-content, 5vw) auto",
+          gridTemplateColumns: "140px auto",
         }}
       >
         <PlantLibrary />
         <GardenArea />
       </main>
       {selected && <ObjectProperties object={selected} />}
-
+      <Toolbar />
       <footer />
     </div>
   );
