@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { motion, useMotionValue } from "motion/react";
 import GardenContainer from "../GardenContainer";
 import { Button } from "@radix-ui/themes";
 import { Move } from "react-feather";
