@@ -136,6 +136,7 @@ function GardenArea() {
                   length={container.length.value * clientSize.xScale}
                   width={container.width.value * clientSize.yScale}
                   editable={editMode}
+                  shape={container.shape}
                 />
               </Draggable>
             );

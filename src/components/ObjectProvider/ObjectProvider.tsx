@@ -268,7 +268,10 @@ function ObjectProvider({ children }: ObjectProps) {
   React.useEffect(() => {
     function handlePointerUp(event: PointerEvent) {
       event.preventDefault();
-      if (currentTool === "add-container") {
+      if (
+        currentTool === "add-container" ||
+        currentTool === "add-circle-container"
+      ) {
         const newId =
           containers.length > 0
             ? Math.max(...containers.map((c) => c.id)) + 1
@@ -276,7 +279,7 @@ function ObjectProvider({ children }: ObjectProps) {
         const newContainer: Container = {
           id: newId,
           type: "container",
-          shape: "rectangle",
+          shape: currentTool === "add-circle-container" ? "circle" : "rectangle",
           width: { value: 1, measure: "ft" },
           length: { value: 1, measure: "ft" },
           height: { value: 1, measure: "ft" },
