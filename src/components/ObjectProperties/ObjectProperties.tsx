@@ -1,5 +1,5 @@
 import React from "react";
-import { useObjectContext } from "../ObjectProvider";
+import { useObjectContext, useLiveDrag } from "../ObjectProvider";
 import styles from "./ObjectProperties.module.css";
 import { Container, WorldObject } from "@/src/helpers/PlantClasses";
 
@@ -19,9 +19,14 @@ function formatWorldPos(val: number): string {
 
 function ObjectProperties({ object }: ObjectPropertiesProps) {
   const { setBoxSize } = useObjectContext();
+  const { liveDrag } = useLiveDrag();
   const isBox = object.type === "container";
   const box = isBox ? (object as Container) : null;
   const title = isBox ? "Garden Container" : (object as { name: string }).name;
+  const displayPosition =
+    liveDrag && liveDrag.id === object.id && liveDrag.type === object.type
+      ? { x: liveDrag.x, y: liveDrag.y }
+      : object.position;
 
   const [widthFt, setWidthFt] = React.useState(0);
   const [widthIn, setWidthIn] = React.useState(0);
@@ -84,13 +89,13 @@ function ObjectProperties({ object }: ObjectPropertiesProps) {
         <div className={styles.row}>
           <span className={styles.label}>X</span>
           <span className={styles.value}>
-            {formatWorldPos(object.position.x)}
+            {formatWorldPos(displayPosition.x)}
           </span>
         </div>
         <div className={styles.row}>
           <span className={styles.label}>Y</span>
           <span className={styles.value}>
-            {formatWorldPos(object.position.y)}
+            {formatWorldPos(displayPosition.y)}
           </span>
         </div>
       </section>

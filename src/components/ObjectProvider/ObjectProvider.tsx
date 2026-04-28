@@ -34,6 +34,29 @@ export interface RegistryEntry {
   id: number;
 }
 
+type LiveDrag = {
+  id: number;
+  type: WorldObject["type"];
+  x: number;
+  y: number;
+} | null;
+
+const LiveDragContext = React.createContext<
+  | {
+      liveDrag: LiveDrag;
+      setLiveDrag: React.Dispatch<React.SetStateAction<LiveDrag>>;
+    }
+  | undefined
+>(undefined);
+
+export function useLiveDrag() {
+  const context = React.useContext(LiveDragContext);
+  if (context === undefined) {
+    throw new Error("useLiveDrag must be used within ObjectProvider");
+  }
+  return context;
+}
+
 export const ObjectContext = React.createContext<
   | {
       //containers: ;
@@ -186,6 +209,11 @@ function ObjectProvider({ children }: ObjectProps) {
     boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
   };
   const [selected, setSelected] = React.useState<WorldObject | null>(null);
+  const [liveDrag, setLiveDrag] = React.useState<LiveDrag>(null);
+  const liveDragValue = React.useMemo(
+    () => ({ liveDrag, setLiveDrag }),
+    [liveDrag],
+  );
   const [currentTool, setCurrentTool] = React.useState("none");
   const [dragTarget, setDragTarget] = React.useState<"plants" | "containers">(
     "plants",
@@ -440,7 +468,9 @@ function ObjectProvider({ children }: ObjectProps) {
 
   return (
     <ObjectContext.Provider value={contextValue}>
-      {children}
+      <LiveDragContext.Provider value={liveDragValue}>
+        {children}
+      </LiveDragContext.Provider>
     </ObjectContext.Provider>
   );
 }

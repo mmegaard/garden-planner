@@ -2,7 +2,7 @@
 import React from "react";
 import { useViewportContext } from "../ViewportProvider";
 import styles from "./Draggable.module.css";
-import { useObjectContext } from "../ObjectProvider";
+import { useObjectContext, useLiveDrag } from "../ObjectProvider";
 import { WorldObject } from "@/src/helpers/PlantClasses";
 interface DraggableProps {
   children: React.ReactNode;
@@ -65,6 +65,7 @@ function Draggable({
     selected,
     setSelected,
   } = useObjectContext();
+  const { setLiveDrag } = useLiveDrag();
   const isSelected = selected?.id === object.id;
   const pointerDownPos = React.useRef<{ x: number; y: number } | null>(null);
   const [validity, setValidity] = React.useState<string>("");
@@ -152,6 +153,12 @@ function Draggable({
     event.preventDefault();
     setDragPosition({ x: initialPosition.x, y: initialPosition.y });
     setIsDragging(true);
+    setLiveDrag({
+      id: object.id,
+      type: object.type,
+      x: initialPosition.x,
+      y: initialPosition.y,
+    });
     checkCollision();
     event.currentTarget.setPointerCapture(event.pointerId);
     const rectDrag = draggableRef.current?.getBoundingClientRect()!;
@@ -176,6 +183,12 @@ function Draggable({
         x: worldCoords[0],
         y: worldCoords[1],
       });
+      setLiveDrag({
+        id: object.id,
+        type: object.type,
+        x: worldCoords[0],
+        y: worldCoords[1],
+      });
     }
   }
 
@@ -183,6 +196,7 @@ function Draggable({
     if (enabled) return;
     event.preventDefault();
     setIsDragging(false);
+    setLiveDrag(null);
     setCollidingId(new Set());
     event.currentTarget.releasePointerCapture(event.pointerId);
     if (pointerDownPos.current) {
