@@ -75,6 +75,12 @@ function Draggable({
     return () => unregisterRef(object.id, object.type);
   }, [object.id, object.type, shape]);
 
+  React.useEffect(() => {
+    if (!isDragging) {
+      setDragPosition({ x: initialPosition.x, y: initialPosition.y });
+    }
+  }, [initialPosition.x, initialPosition.y, isDragging]);
+
   function checkCollision() {
     const drag = draggableRef.current?.getBoundingClientRect();
     if (!drag) return;
