@@ -1,4 +1,4 @@
-# 🌱 Garden Bud 🌱
+# 🌱 Garden Bud 🧑‍🌾
 
 I'm building this app for my wife and I to help us plan our garden for the year. There are many possible ways to go with it but currently you can:
 - Add custom containers and plants to the canvas
