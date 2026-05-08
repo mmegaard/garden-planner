@@ -5,7 +5,7 @@ import Viewport from "../../helpers/Viewport";
 import styles from "./GardenArea.module.css";
 import Draggable from "../Draggable";
 import { useViewportContext } from "../ViewportProvider";
-import { useObjectContext } from "../ObjectProvider";
+import { useObjectContext, useLiveDrag } from "../ObjectProvider";
 import {
   PlantLibraryItem,
   PlantLibraryItemJson,
@@ -29,6 +29,7 @@ function GardenArea() {
     dragTarget,
     showGrid,
   } = useObjectContext();
+  const { liveDrag } = useLiveDrag();
 
   React.useEffect(() => {
     if (dragTarget === "containers" && selected?.type === "plant") {
@@ -56,15 +57,21 @@ function GardenArea() {
       containers.find(
         (container) =>
           x >= container.position.x &&
-          x <= container.position.x + container.width.value &&
+          x <= container.position.x + container.length.value &&
           y >= container.position.y &&
-          y <= container.position.y + container.length.value,
+          y <= container.position.y + container.width.value,
       ) ?? null
     );
   }
 
-  function handleSetPlantPosition(id: number, x: number, y: number) {
-    const container = findContainerAtPosition(x, y);
+  function handleSetPlantPosition(
+    id: number,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ) {
+    const container = findContainerAtPosition(x + width / 2, y + height / 2);
     const newPlants = plants.map((pl) =>
       pl.id !== id
         ? pl
@@ -201,10 +208,17 @@ function GardenArea() {
             const container = planted.boxId
               ? containers.find((b) => b.id === planted.boxId)
               : null;
-            const initialPosition = container
+            const containerLiveDrag =
+              container &&
+              liveDrag?.type === "container" &&
+              liveDrag.id === container.id
+                ? liveDrag
+                : null;
+            const containerPos = containerLiveDrag ?? container?.position;
+            const initialPosition = containerPos
               ? {
-                  x: container.position.x + planted.position.x,
-                  y: container.position.y + planted.position.y,
+                  x: containerPos.x + planted.position.x,
+                  y: containerPos.y + planted.position.y,
                 }
               : planted.position;
             return (

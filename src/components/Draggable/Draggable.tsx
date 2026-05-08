@@ -7,7 +7,13 @@ import { WorldObject } from "@/src/helpers/PlantClasses";
 interface DraggableProps {
   children: React.ReactNode;
   initialPosition: { x: number; y: number };
-  setObjectPosition: (id: number, x: number, y: number) => void;
+  setObjectPosition: (
+    id: number,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ) => void;
   object: WorldObject;
   shape: string;
   className?: string;
@@ -214,7 +220,16 @@ function Draggable({
       }
       pointerDownPos.current = null;
     }
-    setObjectPosition(object.id, dragPosition.x, dragPosition.y);
+    const rect = draggableRef.current?.getBoundingClientRect();
+    const worldWidth = rect ? rect.width / clientSize.xScale : 0;
+    const worldHeight = rect ? rect.height / clientSize.yScale : 0;
+    setObjectPosition(
+      object.id,
+      dragPosition.x,
+      dragPosition.y,
+      worldWidth,
+      worldHeight,
+    );
   }
 
   return (
@@ -261,7 +276,6 @@ function Draggable({
           (isDragging ? dragPosition.x : initialPosition.x) * clientSize.xScale,
         top:
           (isDragging ? dragPosition.y : initialPosition.y) * clientSize.yScale,
-        transform: isDragging ? "scale(1.1)" : "scale(1)",
         boxShadow: isDragging ? "0px 10px 20px rgba(0,0,0,0.2)" : "none",
         touchAction: "none",
         color: "white",
