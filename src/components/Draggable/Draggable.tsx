@@ -70,6 +70,9 @@ function Draggable({
   const pointerDownPos = React.useRef<{ x: number; y: number } | null>(null);
   const [validity, setValidity] = React.useState<string>("");
   const [offset, setOffset] = React.useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = React.useState(false);
+  const selectable = !enabled;
+  const showHover = selectable && isHovered && !isDragging && !isSelected;
 
   React.useEffect(() => {
     registerRef(object.id, draggableRef, object.type, shape);
@@ -223,6 +226,8 @@ function Draggable({
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
       style={{
         backgroundColor: isDragging
           ? validity
@@ -236,7 +241,12 @@ function Draggable({
           shape === "circle" && object.type !== "plant"
             ? "radial-gradient(white, black)"
             : undefined,
-        outline: isSelected ? "2px solid #4A90D9" : "none",
+        cursor: selectable ? (isDragging ? "grabbing" : "grab") : "default",
+        outline: isSelected
+          ? "2px solid #4A90D9"
+          : showHover
+          ? "2px dashed rgba(74, 144, 217, 0.6)"
+          : "none",
         outlineOffset: "2px",
         zIndex:
           object.type === "container"

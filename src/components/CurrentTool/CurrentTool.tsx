@@ -46,9 +46,9 @@ function CurrentTool({ tool }: CurrentToolProps) {
   if (!libraryItem) return null;
 
   const diameterFeet = libraryItem.planting.fromSeed.outdoor.spacingBetweenPlants.minVal / 12;
-  const iconSize = Math.min(diameterFeet * clientSize.xScale, 80) * scale / clientSize.xScale;
-  const imgX = (toolPosition.x - viewport.x) * scale - iconSize / 2;
-  const imgY = (toolPosition.y - viewport.y) * scale - iconSize / 2;
+  const sizePx = diameterFeet * scale;
+  const imgX = (toolPosition.x - viewport.x) * scale - sizePx / 2;
+  const imgY = (toolPosition.y - viewport.y) * scale - sizePx / 2;
 
   return (
     <div
@@ -60,7 +60,7 @@ function CurrentTool({ tool }: CurrentToolProps) {
         opacity: 0.7,
       }}
     >
-      <PlantLabel plant={libraryItem} icon={libraryItem.icon} displaySize={iconSize} />
+      <PlantLabel plant={libraryItem} icon={libraryItem.icon} displaySize={sizePx} />
     </div>
   );
 }
