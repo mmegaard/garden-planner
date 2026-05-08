@@ -252,10 +252,6 @@ function Draggable({
         opacity: isDragging || collidingId.has(object.id) ? ".5" : "1",
         borderRadius: shape === "circle" ? "50%" : "0",
         overflow: "visible",
-        maskImage:
-          shape === "circle" && object.type !== "plant"
-            ? "radial-gradient(white, black)"
-            : undefined,
         cursor: selectable ? (isDragging ? "grabbing" : "grab") : "default",
         outline: isSelected
           ? "2px solid #4A90D9"
