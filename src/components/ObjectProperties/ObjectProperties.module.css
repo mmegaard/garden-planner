@@ -56,6 +56,32 @@
   letter-spacing: 0.06em;
   color: #888;
   margin-bottom: 8px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionLabel::-webkit-details-marker {
+  display: none;
+}
+
+.sectionLabel::before {
+  content: "▸";
+  font-size: 10px;
+  color: #aaa;
+  transition: transform 0.15s ease;
+  display: inline-block;
+}
+
+details[open] > .sectionLabel::before {
+  transform: rotate(90deg);
+}
+
+details.section:not([open]) > .sectionLabel {
+  margin-bottom: 0;
 }
 
 .row {
@@ -122,4 +148,44 @@
 .dateInput:focus {
   border-color: #4a90d9;
   box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.15);
+}
+
+.note {
+  color: #666;
+  font-size: 11px;
+  font-style: italic;
+  padding: 4px 0 2px;
+  line-height: 1.4;
+}
+
+.chipRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  font-size: 11px;
+  border-radius: 10px;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.chipFriend {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.chipFoe {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
 }
