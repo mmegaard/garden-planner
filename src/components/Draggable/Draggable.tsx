@@ -231,8 +231,11 @@ function Draggable({
           : "",
         opacity: isDragging || collidingId.has(object.id) ? ".5" : "1",
         borderRadius: shape === "circle" ? "50%" : "0",
+        overflow: "visible",
         maskImage:
-          shape === "circle" ? "radial-gradient(white, black)" : undefined,
+          shape === "circle" && object.type !== "plant"
+            ? "radial-gradient(white, black)"
+            : undefined,
         outline: isSelected ? "2px solid #4A90D9" : "none",
         outlineOffset: "2px",
         zIndex:

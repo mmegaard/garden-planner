@@ -1,0 +1,58 @@
+.footprint {
+  position: relative;
+  border-radius: 50%;
+  background: rgba(34, 139, 34, 0.08);
+  border: 1px dashed rgba(34, 139, 34, 0.25);
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.dicot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-100% - 24px));
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border-radius: 4px;
+  padding: 3px 7px 3px 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid #d4d4d4;
+  white-space: nowrap;
+  z-index: 2;
+  width: max-content;
+  height: max-content;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.label::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 14px;
+  background: linear-gradient(to bottom, #d4d4d4, #b0b0b0);
+  border-radius: 0 0 1px 1px;
+}
+
+.name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}

@@ -2,7 +2,7 @@
 import React from "react";
 import { useViewportContext } from "../ViewportProvider";
 import { useObjectContext } from "../ObjectProvider";
-import Plant from "../Plant";
+import PlantLabel from "../PlantLabel";
 import { PlantLibraryItem, PlantLibraryItemJson } from "@/src/helpers/PlantClasses";
 import data from "@/public/content/data.json";
 
@@ -60,7 +60,7 @@ function CurrentTool({ tool }: CurrentToolProps) {
         opacity: 0.7,
       }}
     >
-      <Plant plant={libraryItem} icon={libraryItem.icon} displaySize={iconSize} />
+      <PlantLabel plant={libraryItem} icon={libraryItem.icon} displaySize={iconSize} />
     </div>
   );
 }

@@ -14,7 +14,7 @@ import {
 } from "@/src/helpers/PlantClasses";
 import CurrentTool from "../CurrentTool/CurrentTool";
 import data from "../../../public/content/data.json";
-import Plant from "../Plant";
+import PlantLabel from "../PlantLabel";
 function GardenArea() {
   const { viewportRef, setIsPanning, viewport, clientSize, worldRef } =
     useViewportContext();
@@ -24,10 +24,19 @@ function GardenArea() {
     currentTool,
     containers,
     setBoxPosition,
+    selected,
     setSelected,
     dragTarget,
     showGrid,
   } = useObjectContext();
+
+  React.useEffect(() => {
+    if (dragTarget === "containers" && selected?.type === "plant") {
+      setSelected(null);
+    } else if (dragTarget === "plants" && selected?.type === "container") {
+      setSelected(null);
+    }
+  }, [dragTarget, selected, setSelected]);
   const panMode = currentTool === "pan";
   const containersLocked = panMode || dragTarget !== "containers";
   const plantsLocked = panMode || dragTarget !== "plants";
@@ -209,7 +218,11 @@ function GardenArea() {
                 enabled={plantsLocked}
               >
                 {libraryItem && (
-                  <Plant plant={libraryItem} icon={libraryItem.icon} />
+                  <PlantLabel
+                    plant={libraryItem}
+                    icon={libraryItem.icon}
+                    hideRadius={dragTarget === "containers"}
+                  />
                 )}
               </Draggable>
             );

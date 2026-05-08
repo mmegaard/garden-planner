@@ -6,11 +6,7 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-}
-
-.draggable > div:nth-child(1) {
-  width: 100%;
-  height: 100%;
+  overflow: visible;
 }
 
 .draggable > div > p {
