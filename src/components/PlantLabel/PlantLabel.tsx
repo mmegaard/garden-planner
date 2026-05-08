@@ -8,6 +8,88 @@ import {
 } from "@/src/helpers/PlantClasses";
 import styles from "./PlantLabel.module.css";
 
+function MonocotSeedling() {
+  return (
+    <svg
+      className={styles.dicot}
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 22 L12 10"
+        stroke="#3f7a35"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 10 Q12 2 8 2"
+        stroke="#5fb353"
+        strokeWidth="2.2"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 10 Q12 2 16 2"
+        stroke="#5fb353"
+        strokeWidth="2.2"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function DicotSeedling() {
+  return (
+    <svg
+      className={styles.dicot}
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 22 L12 12"
+        stroke="#3f7a35"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <ellipse
+        cx="7"
+        cy="9"
+        rx="5.5"
+        ry="3.2"
+        fill="#5fb353"
+        transform="rotate(-25 7 9)"
+      />
+      <ellipse
+        cx="17"
+        cy="9"
+        rx="5.5"
+        ry="3.2"
+        fill="#5fb353"
+        transform="rotate(25 17 9)"
+      />
+      <path
+        d="M7 9 L11 11"
+        stroke="#3f7a35"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+      <path
+        d="M17 9 L13 11"
+        stroke="#3f7a35"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+    </svg>
+  );
+}
+
 interface PlantLabelProps {
   plant: PlantLibraryItem;
   icon: PlantIconConfig;
@@ -31,50 +113,7 @@ function PlantLabel({ plant, icon, displaySize, hideRadius }: PlantLabelProps) {
 
   return (
     <div className={styles.footprint} style={footprintStyle}>
-      <svg
-        className={styles.dicot}
-        viewBox="0 0 24 24"
-        width="20"
-        height="20"
-        aria-hidden="true"
-      >
-        <path
-          d="M12 22 L12 12"
-          stroke="#3f7a35"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
-        <ellipse
-          cx="7"
-          cy="9"
-          rx="5.5"
-          ry="3.2"
-          fill="#5fb353"
-          transform="rotate(-25 7 9)"
-        />
-        <ellipse
-          cx="17"
-          cy="9"
-          rx="5.5"
-          ry="3.2"
-          fill="#5fb353"
-          transform="rotate(25 17 9)"
-        />
-        <path
-          d="M7 9 L11 11"
-          stroke="#3f7a35"
-          strokeWidth="0.8"
-          strokeLinecap="round"
-          opacity="0.6"
-        />
-        <path
-          d="M17 9 L13 11"
-          stroke="#3f7a35"
-          strokeWidth="0.8"
-          strokeLinecap="round"
-          opacity="0.6"
-        />
-      </svg>
+      {plant.cotyledonType === "monocot" ? <MonocotSeedling /> : <DicotSeedling />}
       <div className={styles.label}>
         <PlantIcon icon={icon} baseSize={Math.round(iconBase / icon.scale)} />
         <span className={styles.name}>{plant.displayName}</span>

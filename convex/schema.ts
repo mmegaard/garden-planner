@@ -44,6 +44,7 @@ const plantValidator = v.object({
   boxId: v.optional(v.number()),
   name: v.string(),
   position: plantPositionValidator,
+  datePlanted: v.optional(v.string()),
 });
 
 // Default view validator

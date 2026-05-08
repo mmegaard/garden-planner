@@ -15,6 +15,7 @@ export const setGarden = mutation({
     boxId: v.optional(v.number()),
     name: v.string(),
     position: v.object({ x: v.number(), y: v.number() }),
+    datePlanted: v.optional(v.string()),
   })) },
   handler: async (ctx, args) => {
     const existing = await ctx.db.query("layouts").first();

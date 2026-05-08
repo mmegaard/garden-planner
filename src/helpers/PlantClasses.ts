@@ -16,17 +16,22 @@ export class PlantItem {
   type: "plant" = "plant";
   id: number;
   boxId?: number;
+  datePlanted?: string;
   constructor(
     name: string,
     position: { x: number; y: number },
     id: number,
     boxId?: number,
+    datePlanted?: string,
   ) {
     this.id = id;
     this.name = name;
     this.position = position;
     if (boxId) {
       this.boxId = boxId;
+    }
+    if (datePlanted) {
+      this.datePlanted = datePlanted;
     }
   }
 
@@ -35,20 +40,23 @@ export class PlantItem {
     name: string;
     position: { x: number; y: number };
     boxId?: number;
+    datePlanted?: string;
   }): PlantItem {
-    return new PlantItem(json.name, json.position, json.id, json.boxId);
+    return new PlantItem(json.name, json.position, json.id, json.boxId, json.datePlanted);
   }
   toJson(): {
     id: number;
     name: string;
     position: { x: number; y: number };
     boxId?: number;
+    datePlanted?: string;
   } {
     return {
       id: this.id,
       name: this.name,
       position: this.position,
       boxId: this.boxId,
+      datePlanted: this.datePlanted,
     };
   }
 }
@@ -95,6 +103,7 @@ export interface Planting {
 }
 
 export type LifeCycle = "Annual" | "Perennial" | "Biennial";
+export type CotyledonType = "monocot" | "dicot";
 
 // ─── Icon config ─────────────────────────────────────────────────────────────
 
@@ -124,6 +133,7 @@ export interface PlantLibraryItemJson {
   displayName: string;
   scientificName: string;
   family: string;
+  cotyledonType: CotyledonType;
   planting: Planting;
   timeToRipe: Measurement;
   friends: string[];
@@ -140,6 +150,7 @@ export class PlantLibraryItem {
   displayName: string;
   scientificName: string;
   family: string;
+  cotyledonType: CotyledonType;
   planting: Planting;
   timeToRipe: Measurement;
   friends: string[];
@@ -153,6 +164,7 @@ export class PlantLibraryItem {
     this.displayName = data.displayName;
     this.scientificName = data.scientificName;
     this.family = data.family;
+    this.cotyledonType = data.cotyledonType;
     this.planting = data.planting;
     this.timeToRipe = data.timeToRipe;
     this.friends = [...data.friends];
@@ -185,6 +197,7 @@ export class PlantLibraryItem {
       displayName: this.displayName,
       scientificName: this.scientificName,
       family: this.family,
+      cotyledonType: this.cotyledonType,
       planting: this.planting,
       timeToRipe: this.timeToRipe,
       friends: [...this.friends],

@@ -6,6 +6,7 @@ import {
   PlantLibraryItem,
   PlantLibraryItemJson,
   WorldObject,
+  CotyledonType,
 } from "../../helpers/PlantClasses";
 import { useViewportContext } from "../ViewportProvider";
 import { useMutation, useQuery } from "convex/react";
@@ -22,9 +23,9 @@ interface ObjectProps {
 }
 
 export interface PlantFilters {
-  family: string | null;
-  plantableMonth: number | null;
-  matureMonth: number | null;
+  family: string[];
+  plantableMonth: number[];
+  matureMonth: number[];
 }
 
 export interface RegistryEntry {
@@ -98,6 +99,8 @@ export const ObjectContext = React.createContext<
       ) => void;
       selected: WorldObject | null;
       setSelected: React.Dispatch<React.SetStateAction<WorldObject | null>>;
+      updatePlant: (id: number, updates: Partial<Pick<PlantItem, "datePlanted">>) => void;
+      getPlantLibraryItem: (plantId: string) => PlantLibraryItem | undefined;
       deleteSelected: () => void;
       undo: () => void;
       redo: () => void;
@@ -210,6 +213,19 @@ function ObjectProvider({ children }: ObjectProps) {
     );
     boxesMutation({ boxes: newBoxes.map(toBoxRecord) });
   };
+  const updatePlant = (id: number, updates: Partial<Pick<PlantItem, "datePlanted">>) => {
+    pushHistory(plants, containers);
+    const newPlants = plants.map((p) => {
+      if (p.id !== id) return p;
+      const updated = PlantItem.fromJson(p.toJson());
+      if (updates.datePlanted !== undefined) updated.datePlanted = updates.datePlanted;
+      return updated;
+    });
+    layoutMutation({ plants: newPlants.map((p) => p.toJson()) });
+  };
+
+  const getPlantLibraryItem = (plantId: string) => plantLibraryMap.get(plantId);
+
   const [selected, setSelected] = React.useState<WorldObject | null>(null);
   const [liveDrag, setLiveDrag] = React.useState<LiveDrag>(null);
   const liveDragValue = React.useMemo(
@@ -225,9 +241,9 @@ function ObjectProvider({ children }: ObjectProps) {
   const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filters, setFilters] = React.useState<PlantFilters>({
-    family: null,
-    plantableMonth: null,
-    matureMonth: null,
+    family: [],
+    plantableMonth: [],
+    matureMonth: [],
   });
   const refRegistry = React.useRef<Map<string, RegistryEntry>>(new Map());
   const registerRef = React.useCallback(
@@ -443,6 +459,8 @@ function ObjectProvider({ children }: ObjectProps) {
       containers: containers,
       setBoxPosition,
       setBoxSize,
+      updatePlant,
+      getPlantLibraryItem,
       selected,
       setSelected,
       deleteSelected,

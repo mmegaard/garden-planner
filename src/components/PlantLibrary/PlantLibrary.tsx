@@ -48,6 +48,81 @@ function addDaysToMonth(mmdd: string, days: number): number {
   return date.getMonth() + 1;
 }
 
+interface MultiSelectProps<T extends string | number> {
+  options: { value: T; label: string }[];
+  value: T[];
+  onChange: (next: T[]) => void;
+  emptyLabel: string;
+  sort?: (a: T, b: T) => number;
+}
+
+function MultiSelect<T extends string | number>({
+  options,
+  value,
+  onChange,
+  emptyLabel,
+  sort,
+}: MultiSelectProps<T>) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
+  function toggle(item: T) {
+    if (value.includes(item)) {
+      onChange(value.filter((v) => v !== item));
+    } else {
+      const next = [...value, item];
+      onChange(sort ? next.sort(sort) : next);
+    }
+  }
+
+  const labelByValue = new Map(options.map((o) => [o.value, o.label]));
+  const summary =
+    value.length === 0
+      ? emptyLabel
+      : value.map((v) => labelByValue.get(v) ?? String(v)).join(", ");
+
+  return (
+    <div className={styles.multiSelect} ref={ref}>
+      <button
+        type="button"
+        className={styles.multiSelectButton}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className={styles.multiSelectSummary}>{summary}</span>
+        <span className={styles.multiSelectCaret}>▾</span>
+      </button>
+      {open && (
+        <div className={styles.multiSelectMenu}>
+          {options.map((opt) => {
+            const checked = value.includes(opt.value);
+            return (
+              <label key={String(opt.value)} className={styles.multiSelectOption}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggle(opt.value)}
+                />
+                <span>{opt.label}</span>
+              </label>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PlantLibrary() {
   const {
     currentTool,
@@ -91,35 +166,31 @@ function PlantLibrary() {
         }
       }
 
-      if (filters.family && plant.family !== filters.family) {
+      if (filters.family.length > 0 && !filters.family.includes(plant.family)) {
         return false;
       }
 
-      if (filters.plantableMonth !== null) {
+      if (filters.plantableMonth.length > 0) {
         const { minDate, maxDate } =
           plant.planting.fromSeed.outdoor.whenToPlant;
         const minMonth = parseInt(minDate.split("-")[0]);
         const maxMonth = parseInt(maxDate.split("-")[0]);
-        if (
-          filters.plantableMonth < minMonth ||
-          filters.plantableMonth > maxMonth
-        ) {
-          return false;
-        }
+        const matches = filters.plantableMonth.some(
+          (m) => m >= minMonth && m <= maxMonth,
+        );
+        if (!matches) return false;
       }
 
-      if (filters.matureMonth !== null) {
+      if (filters.matureMonth.length > 0) {
         const { minDate, maxDate } =
           plant.planting.fromSeed.outdoor.whenToPlant;
         const { minVal, maxVal } = plant.timeToRipe;
         const earliestMature = addDaysToMonth(minDate, minVal);
         const latestMature = addDaysToMonth(maxDate, maxVal);
-        if (
-          filters.matureMonth < earliestMature ||
-          filters.matureMonth > latestMature
-        ) {
-          return false;
-        }
+        const matches = filters.matureMonth.some(
+          (m) => m >= earliestMature && m <= latestMature,
+        );
+        if (!matches) return false;
       }
 
       return true;
@@ -144,54 +215,38 @@ function PlantLibrary() {
           className={styles.searchInput}
         />
 
-        <select
-          value={filters.family ?? ""}
-          onChange={(e) => setFilter("family", e.target.value || null)}
-          className={styles.filterSelect}
-        >
-          <option value="">All families</option>
-          {ALL_FAMILIES.map((f) => (
-            <option key={f} value={f}>
-              {f}
-            </option>
-          ))}
-        </select>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Family</span>
+          <MultiSelect
+            options={ALL_FAMILIES.map((f) => ({ value: f, label: f }))}
+            value={filters.family}
+            onChange={(v) => setFilter("family", v)}
+            emptyLabel="All families"
+            sort={(a, b) => a.localeCompare(b)}
+          />
+        </div>
 
-        <select
-          value={filters.plantableMonth ?? ""}
-          onChange={(e) =>
-            setFilter(
-              "plantableMonth",
-              e.target.value ? parseInt(e.target.value) : null,
-            )
-          }
-          className={styles.filterSelect}
-        >
-          <option value="">Plantable any month</option>
-          {MONTHS.map((name, i) => (
-            <option key={name} value={i + 1}>
-              {name}
-            </option>
-          ))}
-        </select>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Plantable in</span>
+          <MultiSelect
+            options={MONTHS.map((name, i) => ({ value: i + 1, label: name }))}
+            value={filters.plantableMonth}
+            onChange={(v) => setFilter("plantableMonth", v)}
+            emptyLabel="Any month"
+            sort={(a, b) => a - b}
+          />
+        </div>
 
-        <select
-          value={filters.matureMonth ?? ""}
-          onChange={(e) =>
-            setFilter(
-              "matureMonth",
-              e.target.value ? parseInt(e.target.value) : null,
-            )
-          }
-          className={styles.filterSelect}
-        >
-          <option value="">Mature any month</option>
-          {MONTHS.map((name, i) => (
-            <option key={name} value={i + 1}>
-              {name}
-            </option>
-          ))}
-        </select>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Mature in</span>
+          <MultiSelect
+            options={MONTHS.map((name, i) => ({ value: i + 1, label: name }))}
+            value={filters.matureMonth}
+            onChange={(v) => setFilter("matureMonth", v)}
+            emptyLabel="Any month"
+            sort={(a, b) => a - b}
+          />
+        </div>
       </div>
       <div id="plantLibraryContainer" className={styles.plantList}>
         {filteredPlants.map((plant: PlantLibraryItem) => (

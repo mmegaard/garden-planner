@@ -1,7 +1,7 @@
 import React from "react";
 import { useObjectContext, useLiveDrag } from "../ObjectProvider";
 import styles from "./ObjectProperties.module.css";
-import { Container, WorldObject } from "@/src/helpers/PlantClasses";
+import { Container, PlantItem, WorldObject } from "@/src/helpers/PlantClasses";
 
 interface ObjectPropertiesProps {
   object: WorldObject;
@@ -18,10 +18,13 @@ function formatWorldPos(val: number): string {
 }
 
 function ObjectProperties({ object }: ObjectPropertiesProps) {
-  const { setBoxSize } = useObjectContext();
+  const { setBoxSize, updatePlant, getPlantLibraryItem } = useObjectContext();
   const { liveDrag } = useLiveDrag();
   const isBox = object.type === "container";
+  const isPlant = object.type === "plant";
   const box = isBox ? (object as Container) : null;
+  const plant = isPlant ? (object as PlantItem) : null;
+  const libraryItem = plant ? getPlantLibraryItem(plant.name) : null;
   const title = isBox ? "Garden Container" : (object as { name: string }).name;
   const displayPosition =
     liveDrag && liveDrag.id === object.id && liveDrag.type === object.type
@@ -99,6 +102,29 @@ function ObjectProperties({ object }: ObjectPropertiesProps) {
           </span>
         </div>
       </section>
+
+      {plant && (
+        <section className={styles.section}>
+          <div className={styles.sectionLabel}>Details</div>
+          {libraryItem && (
+            <div className={styles.row}>
+              <span className={styles.label}>Seedling</span>
+              <span className={styles.value} style={{ textTransform: "capitalize" }}>
+                {libraryItem.cotyledonType}
+              </span>
+            </div>
+          )}
+          <div className={styles.row}>
+            <span className={styles.label}>Planted</span>
+            <input
+              className={styles.dateInput}
+              type="date"
+              value={plant.datePlanted ?? ""}
+              onChange={(e) => updatePlant(plant.id, { datePlanted: e.target.value || undefined })}
+            />
+          </div>
+        </section>
+      )}
 
       {box && (
         <section className={styles.section}>
