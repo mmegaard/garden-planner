@@ -90,7 +90,7 @@ function Draggable({
     if (!drag) return;
 
     let containerCollidingId: number | null = null;
-    const plantCollidingIds = new Set<number>();
+    const plantCollidingIds = new Set<string>();
 
     for (const [
       compositeKey,
@@ -134,7 +134,7 @@ function Draggable({
             drag.bottom > target.top;
         }
         if (isColliding) {
-          plantCollidingIds.add(otherId);
+          plantCollidingIds.add(compositeKey);
         }
       }
     }
@@ -246,10 +246,13 @@ function Draggable({
       style={{
         backgroundColor: isDragging
           ? validity
-          : collidingId.has(object.id)
+          : collidingId.has(`${object.type}-${object.id}`)
           ? COLORS.red.value
           : "",
-        opacity: isDragging || collidingId.has(object.id) ? ".5" : "1",
+        opacity:
+          isDragging || collidingId.has(`${object.type}-${object.id}`)
+            ? ".5"
+            : "1",
         borderRadius: shape === "circle" ? "50%" : "0",
         overflow: "visible",
         cursor: selectable ? (isDragging ? "grabbing" : "grab") : "default",

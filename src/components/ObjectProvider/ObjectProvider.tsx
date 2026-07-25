@@ -83,8 +83,8 @@ export const ObjectContext = React.createContext<
         shape: string,
       ) => void;
       unregisterRef: (id: number, type: WorldObject["type"]) => void;
-      collidingId: Set<number>;
-      setCollidingId: React.Dispatch<React.SetStateAction<Set<number>>>;
+      collidingId: Set<string>;
+      setCollidingId: React.Dispatch<React.SetStateAction<Set<string>>>;
       searchQuery: string;
       setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
       filters: PlantFilters;
@@ -238,7 +238,7 @@ function ObjectProvider({ children }: ObjectProps) {
   );
   const [showGrid, setShowGrid] = React.useState(false);
   const [toolPosition, setToolPosition] = React.useState({ x: 0, y: 0 });
-  const [collidingId, setCollidingId] = React.useState<Set<number>>(new Set());
+  const [collidingId, setCollidingId] = React.useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filters, setFilters] = React.useState<PlantFilters>({
     family: [],
